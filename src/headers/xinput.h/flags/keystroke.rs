@@ -1,4 +1,3 @@
-use crate::xinput::Keystroke as Struct;
 use bytemuck::{Pod, Zeroable};
 use winapi::um::xinput::*;
 
@@ -8,11 +7,12 @@ use winapi::um::xinput::*;
 /// XINPUT_KEYSTROKE_\*
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[derive(Pod, Zeroable)]
-#[repr(transparent)] pub struct Keystroke(u16);
+#[repr(transparent)] pub struct KeystrokeFlags(u16);
+use KeystrokeFlags as Keystroke;
 
 flags! { Keystroke => u16; None, KeyDown, KeyUp, Repeat }
 
-#[allow(non_upper_case_globals)] impl Keystroke {
+#[allow(non_upper_case_globals)] impl KeystrokeFlags {
     /// No flags set
     pub const None : Keystroke = Keystroke(0);
 
@@ -26,7 +26,7 @@ flags! { Keystroke => u16; None, KeyDown, KeyUp, Repeat }
     pub const Repeat : Keystroke = Keystroke(XINPUT_KEYSTROKE_REPEAT);
 }
 
-#[allow(non_upper_case_globals)] impl Struct {
+#[allow(non_upper_case_globals)] impl crate::Keystroke {
     /// No flags set
     pub const None : Keystroke = Keystroke(0);
 

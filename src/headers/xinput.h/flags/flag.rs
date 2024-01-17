@@ -1,3 +1,4 @@
+#[cfg(doc)] use crate::*;
 use bytemuck::{Pod, Zeroable};
 use winapi::um::xinput::*;
 
@@ -17,7 +18,7 @@ flags! { Flag => u32; None, Gamepad }
 
     /// [XINPUT_FLAG_GAMEPAD](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetcapabilities)
     ///
-    /// Limit [xinput::get_capabilities](crate::xinput::get_capabilities) to Xbox 360 controllers.
+    /// Limit [get_capabilities] to Xbox 360 controllers.
     pub const Gamepad : Flag = Flag(XINPUT_FLAG_GAMEPAD);
 }
 

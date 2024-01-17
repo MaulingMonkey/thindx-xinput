@@ -1,3 +1,4 @@
+#[cfg(doc)] use crate::*;
 use bytemuck::{Pod, Zeroable};
 use winapi::um::xinput::*;
 
@@ -7,7 +8,7 @@ use winapi::um::xinput::*;
 /// BATTERY_DEVTYPE_\*
 ///
 /// ### See Also
-/// *   [xinput::get_battery_information](crate::xinput::get_battery_information)
+/// *   [get_battery_information]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[derive(Pod, Zeroable)]
 #[repr(transparent)] pub struct BatteryDevType(u8);

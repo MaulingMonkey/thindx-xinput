@@ -1,5 +1,6 @@
 #![allow(deprecated)] // Guide button flags! impl
 
+#[cfg(doc)] use crate::*;
 use bytemuck::{Pod, Zeroable};
 use winapi::um::xinput::*;
 
@@ -91,7 +92,7 @@ impl Buttons {
     pub const RightShoulder : Buttons = Buttons(XINPUT_GAMEPAD_RIGHT_SHOULDER as _);
 
     #[cfg(doc)]
-    /// ❌ **NOTE** ❌ Not actually exposed by XInput as [`Buttons`], see [`Gamepad::left_trigger`](crate::xinput::Gamepad::left_trigger) instead.
+    /// ❌ **NOTE** ❌ Not actually exposed by XInput as [`Buttons`], see [`Gamepad::left_trigger`] instead.
     ///
     /// | Controller    | Legend    | Where |
     /// | ------------- | --------- | ----- |
@@ -100,7 +101,7 @@ impl Buttons {
     pub const LeftTrigger : () = ();
 
     #[cfg(doc)]
-    /// ❌ **NOTE** ❌ Not actually available as part of [`Buttons`], see [`Gamepad::right_trigger`](crate::xinput::Gamepad::right_trigger) instead.
+    /// ❌ **NOTE** ❌ Not actually available as part of [`Buttons`], see [`Gamepad::right_trigger`] instead.
     ///
     /// | Controller    | Legend    | Where |
     /// | ------------- | --------- | ----- |

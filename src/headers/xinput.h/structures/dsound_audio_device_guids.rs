@@ -4,7 +4,7 @@ use bytemuck::*;
 
 
 /// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetdsoundaudiodeviceguids)\]
-/// DirectSound audio device [Guid]s retrieved with [get_dsound_audio_device_guids](crate::xinput::get_dsound_audio_device_guids)
+/// DirectSound audio device [Guid]s retrieved with [get_dsound_audio_device_guids]
 #[derive(Clone, Copy, Debug)]
 #[derive(Default, Pod, Zeroable)]
 #[repr(C)] pub struct DSoundAudioDeviceGuids {

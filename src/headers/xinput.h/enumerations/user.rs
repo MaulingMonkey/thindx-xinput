@@ -1,3 +1,4 @@
+#[cfg(doc)] use crate::*;
 use bytemuck::{Pod, Zeroable};
 use winapi::um::xinput::*;
 use std::fmt::{self, Debug, Formatter};
@@ -9,7 +10,7 @@ use std::fmt::{self, Debug, Formatter};
 ///
 /// A user index, typically from 0 ..= 3.
 ///
-/// **NOTE:** Despite most `XInput*` functions expecting a [`u32`], [Keystroke](crate::xinput::Keystroke) stores a [`u8`].  For ABI convenience, this stronger type is also a [`u8`]!
+/// **NOTE:** Despite most `XInput*` functions expecting a [`u32`], [Keystroke] stores a [`u8`].  For ABI convenience, this stronger type is also a [`u8`]!
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[derive(Default, Pod, Zeroable)]
 #[repr(transparent)]

@@ -11,7 +11,7 @@ use crate::*;
 ///
 /// "Disabling" xinput with `xinput::enable(false)` will:
 /// *   Stop all vibration
-/// *   Cause [xinput::get_state](crate::xinput::get_state) to retrieve neutral data (no buttons held, 0 axises)
+/// *   Cause [get_state] to retrieve neutral data (no buttons held, 0 axises)
 ///
 /// ### Arguments
 /// *   `enable` - `true` to accept input and allow vibration, `false` to block input and vibration

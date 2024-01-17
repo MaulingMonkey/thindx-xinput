@@ -14,6 +14,8 @@
 //! | [guiddef.h](const@guiddef_h) |   | ✔️ 1 of 1 |   |   | ⚠️ 1 of 7 | ⚠️ 4 of 7 |
 //! | [xinput.h](const@xinput_h) |   | ✔️ 6 of 6 |   | ✔️ 8 of 8 | ⚠️ 83 of 86 |   |
 
+use crate as xinput;
+
 
 
 /// # guiddef.h

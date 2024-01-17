@@ -3,7 +3,7 @@
 use crate::{Error, ErrorKind};
 use winresult::ERROR;
 
-macro_rules! check_success { ( $err:expr ) => { $crate::xinput::check_error_success(&_THINDX_FN_CONTEXT, $err) } }
+macro_rules! check_success { ( $err:expr ) => { $crate::check_error_success(&_THINDX_FN_CONTEXT, $err) } }
 
 mods! {
     inl mod dll {
@@ -24,7 +24,7 @@ mods! {
         inl mod buttons;
         inl mod caps;
         inl mod flag;
-        pub(crate) mod keystroke;
+        inl mod keystroke;
     }
 
     inl mod functions {
@@ -50,8 +50,6 @@ mods! {
         inl mod vibration;
     }
 }
-
-pub use flags::keystroke::Keystroke as KeystrokeFlags;
 
 pub(crate) fn check_error_success(fn_context: &'static crate::error_macros::FnContext, err: u32) -> Result<(), Error> {
     if err == ERROR::SUCCESS.to_u32() {

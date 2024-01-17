@@ -18,14 +18,14 @@ use bytemuck::{Pod, Zeroable};
 #[repr(C)] pub struct Gamepad {
 
     /// Buttons of the gamepad that are currently held.
-    pub buttons: xinput::Buttons,
+    pub buttons: Buttons,
 
     /// Analog trigger behind the left side of the gamepad.
     ///
     /// | Value | Description   |
     /// | -----:| ------------- |
     /// |     0 | Not held
-    /// |    30 | [xinput::Gamepad::TRIGGER_THRESHOLD]
+    /// |    30 | [Gamepad::TRIGGER_THRESHOLD]
     /// |   255 | Fully held
     pub left_trigger: u8,
 
@@ -34,7 +34,7 @@ use bytemuck::{Pod, Zeroable};
     /// | Value | Description   |
     /// | -----:| ------------- |
     /// |     0 | Not held
-    /// |    30 | [xinput::Gamepad::TRIGGER_THRESHOLD]
+    /// |    30 | [Gamepad::TRIGGER_THRESHOLD]
     /// |   255 | Fully held
     pub right_trigger: u8,
 
@@ -43,9 +43,9 @@ use bytemuck::{Pod, Zeroable};
     /// | Value     | Description   |
     /// | ---------:| ------------- |
     /// |    -32768 | Fully left
-    /// |     -7849 | - [xinput::Gamepad::LEFT_THUMB_DEADZONE]
+    /// |     -7849 | - [Gamepad::LEFT_THUMB_DEADZONE]
     /// |         0 | Centered
-    /// |     +7849 | + [xinput::Gamepad::LEFT_THUMB_DEADZONE]
+    /// |     +7849 | + [Gamepad::LEFT_THUMB_DEADZONE]
     /// |    +32767 | Fully right
     pub left_thumb_x: i16,
 
@@ -54,9 +54,9 @@ use bytemuck::{Pod, Zeroable};
     /// | Value     | Description   |
     /// | ---------:| ------------- |
     /// |    -32768 | Fully down
-    /// |     -7849 | - [xinput::Gamepad::LEFT_THUMB_DEADZONE]
+    /// |     -7849 | - [Gamepad::LEFT_THUMB_DEADZONE]
     /// |         0 | Centered
-    /// |     +7849 | + [xinput::Gamepad::LEFT_THUMB_DEADZONE]
+    /// |     +7849 | + [Gamepad::LEFT_THUMB_DEADZONE]
     /// |    +32767 | Fully up
     pub left_thumb_y: i16,
 
@@ -65,9 +65,9 @@ use bytemuck::{Pod, Zeroable};
     /// | Value     | Description   |
     /// | ---------:| ------------- |
     /// |    -32768 | Fully left
-    /// |     -8689 | - [xinput::Gamepad::RIGHT_THUMB_DEADZONE]
+    /// |     -8689 | - [Gamepad::RIGHT_THUMB_DEADZONE]
     /// |         0 | Centered
-    /// |     +8689 | + [xinput::Gamepad::RIGHT_THUMB_DEADZONE]
+    /// |     +8689 | + [Gamepad::RIGHT_THUMB_DEADZONE]
     /// |    +32767 | Fully right
     pub right_thumb_x: i16,
 
@@ -76,9 +76,9 @@ use bytemuck::{Pod, Zeroable};
     /// | Value     | Description   |
     /// | ---------:| ------------- |
     /// |    -32768 | Fully down
-    /// |     -8689 | - [xinput::Gamepad::RIGHT_THUMB_DEADZONE]
+    /// |     -8689 | - [Gamepad::RIGHT_THUMB_DEADZONE]
     /// |         0 | Centered
-    /// |     +8689 | + [xinput::Gamepad::RIGHT_THUMB_DEADZONE]
+    /// |     +8689 | + [Gamepad::RIGHT_THUMB_DEADZONE]
     /// |    +32767 | Fully up
     pub right_thumb_y: i16,
 }
