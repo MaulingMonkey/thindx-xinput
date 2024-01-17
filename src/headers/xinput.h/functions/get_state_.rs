@@ -15,7 +15,7 @@ use bytemuck::Zeroable;
 /// *   [ERROR::DEVICE_NOT_CONNECTED]   - [`User`] gamepad not connected
 pub fn get_state(user_index: impl Into<u32>) -> Result<State, Error> {
     fn_context!(xinput::get_state => XInputGetState);
-    #[allow(non_snake_case)] let XInputGetState = Imports::get().XInputGetState.ok_or(fn_error!(ERROR::INVALID_FUNCTION))?;
+    #[allow(non_snake_case)] let XInputGetState = Imports::get().XInputGetState;
     let mut state = State::zeroed();
     // SAFETY: ✔️
     //  * fuzzed        in `tests/fuzz-xinput.rs`

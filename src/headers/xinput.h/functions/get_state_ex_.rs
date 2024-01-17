@@ -18,21 +18,17 @@ use bytemuck::Zeroable;
 #[deprecated = "This undocumented function is reserved for system software to access Buttons::Guide."]
 pub fn get_state_ex(user_index: impl Into<u32>) -> Result<State, Error> {
     fn_context!(xinput::get_state_ex => XInputGetStateEx);
-    #[allow(non_snake_case)]
-    if let Some(XInputGetStateEx) = Imports::get()._XInputGetStateEx {
-        let mut state = State::zeroed();
-        // SAFETY: ✔️
-        //  * fuzzed        in `tests/fuzz-xinput.rs`
-        //  * tested        in `examples/xinput-exercise-all.rs` (Guide button works)
-        //  * `user_index`  is well tested
-        //  * `state`       is out-only, fixed size, no `cbSize` field, never null, all bit patterns sane
-        //  * `fn`          should be `None` or valid if returned by `Imports::get()`
-        let code = unsafe { XInputGetStateEx(user_index.into(), state.as_mut()) };
-        check_success!(code)?;
-        Ok(state)
-    } else {
-        get_state(user_index)
-    }
+    #[allow(non_snake_case)] let XInputGetStateEx = Imports::get()._XInputGetStateEx;
+    let mut state = State::zeroed();
+    // SAFETY: ✔️
+    //  * fuzzed        in `tests/fuzz-xinput.rs`
+    //  * tested        in `examples/xinput-exercise-all.rs` (Guide button works)
+    //  * `user_index`  is well tested
+    //  * `state`       is out-only, fixed size, no `cbSize` field, never null, all bit patterns sane
+    //  * `fn`          should be `None` or valid if returned by `Imports::get()`
+    let code = unsafe { XInputGetStateEx(user_index.into(), state.as_mut()) };
+    check_success!(code)?;
+    Ok(state)
 }
 
 #[test] #[allow(deprecated)] fn test_valid_params() {

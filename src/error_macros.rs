@@ -1,4 +1,3 @@
-macro_rules! fn_error       { ( $kind:expr ) => {        $crate::Error(&_THINDX_FN_CONTEXT, ($kind).into())  }}
 macro_rules! fn_param_error { ( $param:ident, $kind:expr ) => { $crate::Error(&$crate::error_macros::FnContext { parameter: Some(stringify!($param)), .._THINDX_FN_CONTEXT }, ($kind).into()) } }
 
 /// Annotate a Rust => C++ function mapping.

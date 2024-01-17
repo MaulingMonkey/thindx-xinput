@@ -13,7 +13,7 @@ use crate::*;
 /// *   [ERROR::DEVICE_NOT_CONNECTED]   - [`User`] is not connected
 pub fn set_state(user_index: impl Into<u32>, mut vibration: Vibration) -> Result<(), Error> {
     fn_context!(xinput::set_state => XInputSetState);
-    #[allow(non_snake_case)] let XInputSetState = Imports::get().XInputSetState.ok_or(fn_error!(ERROR::INVALID_FUNCTION))?;
+    #[allow(non_snake_case)] let XInputSetState = Imports::get().XInputSetState;
     // SAFETY: ✔️
     //  * fuzzed        in `fuzz-xinput.rs`
     //  * tested        in `d3d9-02-xinput.rs`

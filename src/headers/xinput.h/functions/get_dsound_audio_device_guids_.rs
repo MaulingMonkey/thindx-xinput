@@ -18,7 +18,7 @@ use bytemuck::Zeroable;
 pub fn get_dsound_audio_device_guids(user_index: impl Into<User>) -> Result<DSoundAudioDeviceGuids, Error> {
     fn_context!(xinput::get_dsound_audio_device_guids => XInputGetDSoundAudioDeviceGuids);
 
-    #[allow(non_snake_case)] let XInputGetDSoundAudioDeviceGuids = Imports::get().XInputGetDSoundAudioDeviceGuids.ok_or(fn_error!(ERROR::INVALID_FUNCTION))?;
+    #[allow(non_snake_case)] let XInputGetDSoundAudioDeviceGuids = Imports::get().XInputGetDSoundAudioDeviceGuids;
 
     let mut guids = DSoundAudioDeviceGuids::zeroed();
     // SAFETY: ❌ Untested (need a system actually defining XInputGetDSoundAudioDeviceGuids)

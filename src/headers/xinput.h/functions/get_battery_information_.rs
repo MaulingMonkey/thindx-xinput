@@ -19,7 +19,7 @@ use bytemuck::Zeroable;
 /// *   [ERROR::DEVICE_NOT_CONNECTED]   - Invalid [`BatteryDevType`]
 pub fn get_battery_information(user_index: impl Into<u32>, dev_type: impl Into<BatteryDevType>) -> Result<BatteryInformation, Error> {
     fn_context!(xinput::get_battery_information => XInputGetBatteryInformation);
-    #[allow(non_snake_case)] let XInputGetBatteryInformation = Imports::get().XInputGetBatteryInformation.ok_or(fn_error!(ERROR::INVALID_FUNCTION))?;
+    #[allow(non_snake_case)] let XInputGetBatteryInformation = Imports::get().XInputGetBatteryInformation;
     let mut info = BatteryInformation::zeroed();
     // SAFETY: ✔️
     //  * fuzzed        in `tests/fuzz-xinput.rs`

@@ -28,7 +28,7 @@ use std::os::windows::ffi::*;
 /// *   [Getting Audio Device Identifiers](https://learn.microsoft.com/en-us/windows/win32/xinput/getting-started-with-xinput#getting-audio-device-identifiers)
 pub fn get_audio_device_ids(user_index: impl Into<u32>) -> Result<AudioDeviceIds, Error> {
     fn_context!(xinput::get_audio_device_ids => XInputGetAudioDeviceIds);
-    #[allow(non_snake_case)] let XInputGetAudioDeviceIds = Imports::get().XInputGetAudioDeviceIds.ok_or(fn_error!(ERROR::INVALID_FUNCTION))?;
+    #[allow(non_snake_case)] let XInputGetAudioDeviceIds = Imports::get().XInputGetAudioDeviceIds;
 
     let mut render_id  = [0u16; 4096];
     let mut capture_id = [0u16; 4096];

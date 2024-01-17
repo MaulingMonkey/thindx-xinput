@@ -1,3 +1,5 @@
+use crate::*;
+
 use minidl::Library;
 
 use winapi::shared::guiddef::GUID;
@@ -20,7 +22,6 @@ lazy_static::lazy_static! {
 }
 
 #[allow(non_snake_case)]
-#[derive(Default)]
 pub(crate) struct Imports {
     // Official Imports
 
@@ -30,7 +31,7 @@ pub(crate) struct Imports {
     /// | XInput | State    |
     /// | ------ | -------- |
     /// | \*    | Available |
-    pub XInputGetState: Option<unsafe extern "system" fn(dwUserIndex: DWORD, pState: *mut XINPUT_STATE) -> DWORD>,
+    pub XInputGetState: unsafe extern "system" fn(dwUserIndex: DWORD, pState: *mut XINPUT_STATE) -> DWORD,
 
     /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputsetstate)\]
     /// Set gamepad vibration state.
@@ -38,7 +39,7 @@ pub(crate) struct Imports {
     /// | XInput | State    |
     /// | ------ | -------- |
     /// | \*    | Available |
-    pub XInputSetState: Option<unsafe extern "system" fn(dwUserIndex: DWORD, pVibration: *mut XINPUT_VIBRATION) -> DWORD>,
+    pub XInputSetState: unsafe extern "system" fn(dwUserIndex: DWORD, pVibration: *mut XINPUT_VIBRATION) -> DWORD,
 
     /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetcapabilities)\]
     /// Query the capabilities of a gamepad (vibration, wireless, voice, etc.)
@@ -46,7 +47,7 @@ pub(crate) struct Imports {
     /// | XInput | State    |
     /// | ------ | -------- |
     /// | \*    | Available |
-    pub XInputGetCapabilities: Option<unsafe extern "system" fn(dwUserIndex: DWORD, dwFlags: DWORD, pCapabilities: *mut XINPUT_CAPABILITIES) -> DWORD>,
+    pub XInputGetCapabilities: unsafe extern "system" fn(dwUserIndex: DWORD, dwFlags: DWORD, pCapabilities: *mut XINPUT_CAPABILITIES) -> DWORD,
 
     /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetdsoundaudiodeviceguids)]
     /// Get DirectSound Audio Device GUIDs (N/A for Windows Store apps).
@@ -59,7 +60,7 @@ pub(crate) struct Imports {
     /// | 1.2   | Available |
     /// | 1.1   | Available |
     /// | 9.1.0 | Available |
-    pub XInputGetDSoundAudioDeviceGuids: Option<unsafe extern "system" fn(dwUserIndex: DWORD, pDSoundRenderGuid: *mut GUID, pDSoundCaptureGuid: *mut GUID) -> DWORD>,
+    pub XInputGetDSoundAudioDeviceGuids: unsafe extern "system" fn(dwUserIndex: DWORD, pDSoundRenderGuid: *mut GUID, pDSoundCaptureGuid: *mut GUID) -> DWORD,
 
     // Windows 8+
 
@@ -74,7 +75,7 @@ pub(crate) struct Imports {
     /// | 1.2   | N/A       |
     /// | 1.1   | N/A       |
     /// | 9.1.0 | N/A       |
-    pub XInputGetAudioDeviceIds: Option<unsafe extern "system" fn(dwUserIndex: DWORD, pRenderDeviceId: LPWSTR, pRenderCount: *mut UINT, pCaptureDeviceId: LPWSTR, pCaptureCount: *mut UINT) -> DWORD>,
+    pub XInputGetAudioDeviceIds: unsafe extern "system" fn(dwUserIndex: DWORD, pRenderDeviceId: LPWSTR, pRenderCount: *mut UINT, pCaptureDeviceId: LPWSTR, pCaptureCount: *mut UINT) -> DWORD,
 
     /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputenable)]
     /// Enable or disable xinput (for use in window focus/blur events.)
@@ -87,7 +88,7 @@ pub(crate) struct Imports {
     /// | 1.2   | Available     |
     /// | 1.1   | Available     |
     /// | 9.1.0 | N/A           |
-    pub XInputEnable: Option<unsafe extern "system" fn(enable: BOOL)>,
+    pub XInputEnable: unsafe extern "system" fn(enable: BOOL),
 
     /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetbatteryinformation)]
     /// Get battery information for a wireless gamepad.
@@ -100,7 +101,7 @@ pub(crate) struct Imports {
     /// | 1.2   | N/A           |
     /// | 1.1   | N/A           |
     /// | 9.1.0 | N/A           |
-    pub XInputGetBatteryInformation: Option<unsafe extern "system" fn(dwUserIndex: DWORD, devType: BYTE, pBatteryInformation: *mut XINPUT_BATTERY_INFORMATION) -> DWORD>,
+    pub XInputGetBatteryInformation: unsafe extern "system" fn(dwUserIndex: DWORD, devType: BYTE, pBatteryInformation: *mut XINPUT_BATTERY_INFORMATION) -> DWORD,
 
     /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetkeystroke)]
     ///
@@ -112,7 +113,7 @@ pub(crate) struct Imports {
     /// | 1.2   | N/A           |
     /// | 1.1   | N/A           |
     /// | 9.1.0 | N/A           |
-    pub XInputGetKeystroke: Option<unsafe extern "system" fn(dwUserIndex: u32, dwReserved: u32, pKeystroke: PXINPUT_KEYSTROKE) -> DWORD>,
+    pub XInputGetKeystroke: unsafe extern "system" fn(dwUserIndex: u32, dwReserved: u32, pKeystroke: PXINPUT_KEYSTROKE) -> DWORD,
 
 
 
@@ -121,10 +122,10 @@ pub(crate) struct Imports {
     // https://www.reddit.com/r/ReverseEngineering/comments/148faa/xbox_360_controller_on_windows/c7ayith/
 
     // Ordinals 100-103, available as of XInput1_3.dll, N/A as of XInputUap.dll
-    pub _XInputGetStateEx:               Option<unsafe extern "system" fn(dwUserIndex: DWORD, pState: *mut XINPUT_STATE) -> DWORD>,
-    pub _XInputWaitForGuideButton:       Option<unsafe extern "system" fn(dwUserIndex: DWORD, dwFlag: DWORD, pUnknown: *mut c_void) -> DWORD>,
-    pub _XInputCancelGuideButtonWait:    Option<unsafe extern "system" fn(dwUserIndex: DWORD) -> DWORD>,
-    pub _XInputPowerOffController:       Option<unsafe extern "system" fn(dwUserIndex: DWORD) -> DWORD>,
+    pub _XInputGetStateEx:               unsafe extern "system" fn(dwUserIndex: DWORD, pState: *mut XINPUT_STATE) -> DWORD,
+    pub _XInputWaitForGuideButton:       unsafe extern "system" fn(dwUserIndex: DWORD, dwFlag: DWORD, pUnknown: *mut c_void) -> DWORD,
+    pub _XInputCancelGuideButtonWait:    unsafe extern "system" fn(dwUserIndex: DWORD) -> DWORD,
+    pub _XInputPowerOffController:       unsafe extern "system" fn(dwUserIndex: DWORD) -> DWORD,
 
     // Ordinals 104 / 108, available as of XInput1_4.dll, N/A as of XInputUap.dll
     // _XInputGetBaseBusInformation (Ordinal 104)
@@ -149,29 +150,71 @@ impl Imports {
                 .ok_or(io::ErrorKind::NotFound)
                 ?;
 
+            #[allow(non_snake_case)] let XInputGetState = lib.sym("XInputGetState\0")?;
+
             Ok(Self {
                 // not even remotely optional:
-                XInputGetState:                     Some(lib.sym("XInputGetState\0")?),
+                XInputGetState,
+                XInputSetState:                     lib.sym_opt("XInputSetState\0"                  ).unwrap_or(fallback::XInputSetState                    ),
+                XInputGetCapabilities:              lib.sym_opt("XInputGetCapabilities\0"           ).unwrap_or(fallback::XInputGetCapabilities             ),
+                XInputGetDSoundAudioDeviceGuids:    lib.sym_opt("XInputGetDSoundAudioDeviceGuids\0" ).unwrap_or(fallback::XInputGetDSoundAudioDeviceGuids   ),
+                XInputGetAudioDeviceIds:            lib.sym_opt("XInputGetAudioDeviceIds\0"         ).unwrap_or(fallback::XInputGetAudioDeviceIds           ),
+                XInputEnable:                       lib.sym_opt("XInputEnable\0"                    ).unwrap_or(fallback::XInputEnable                      ),
+                XInputGetBatteryInformation:        lib.sym_opt("XInputGetBatteryInformation\0"     ).unwrap_or(fallback::XInputGetBatteryInformation       ),
+                XInputGetKeystroke:                 lib.sym_opt("XInputGetKeystroke\0"              ).unwrap_or(fallback::XInputGetKeystroke                ),
 
-                XInputSetState:                     lib.sym_opt("XInputSetState\0"),
-                XInputGetCapabilities:              lib.sym_opt("XInputGetCapabilities\0"),
-                XInputGetDSoundAudioDeviceGuids:    lib.sym_opt("XInputGetDSoundAudioDeviceGuids\0"),
-                XInputGetAudioDeviceIds:            lib.sym_opt("XInputGetAudioDeviceIds\0"),
-                XInputEnable:                       lib.sym_opt("XInputEnable\0"),
-                XInputGetBatteryInformation:        lib.sym_opt("XInputGetBatteryInformation\0"),
-                XInputGetKeystroke:                 lib.sym_opt("XInputGetKeystroke\0"),
-
-                _XInputGetStateEx:                  lib.sym_opt_by_ordinal(100),
-                _XInputWaitForGuideButton:          lib.sym_opt_by_ordinal(101),
-                _XInputCancelGuideButtonWait:       lib.sym_opt_by_ordinal(102),
-                _XInputPowerOffController:          lib.sym_opt_by_ordinal(103),
+                _XInputGetStateEx:                  lib.sym_opt_by_ordinal(100                      ).unwrap_or(XInputGetState                              ),
+                _XInputWaitForGuideButton:          lib.sym_opt_by_ordinal(101                      ).unwrap_or(fallback::_XInputWaitForGuideButton         ),
+                _XInputCancelGuideButtonWait:       lib.sym_opt_by_ordinal(102                      ).unwrap_or(fallback::_XInputCancelGuideButtonWait      ),
+                _XInputPowerOffController:          lib.sym_opt_by_ordinal(103                      ).unwrap_or(fallback::_XInputPowerOffController         ),
 
                 // I don't have type information for these... yet
-                // _XInputGetBaseBusInformation:    lib.sym_opt_by_ordinal(104),
-                // _XInputGetCapabilitiesEx:        lib.sym_opt_by_ordinal(108),
+                // _XInputGetBaseBusInformation:    lib.sym_opt_by_ordinal(104                      ).unwrap_or(fallback::_XInputGetBaseBusInformation      ),
+                // _XInputGetCapabilitiesEx:        lib.sym_opt_by_ordinal(108                      ).unwrap_or(fallback::_XInputGetCapabilitiesEx          ),
             })
         }
     }
+}
+
+impl Default for Imports {
+    fn default() -> Self {
+        Self {
+            XInputGetState:                     fallback::XInputGetState,
+            XInputSetState:                     fallback::XInputSetState,
+            XInputGetCapabilities:              fallback::XInputGetCapabilities,
+            XInputGetDSoundAudioDeviceGuids:    fallback::XInputGetDSoundAudioDeviceGuids,
+            XInputGetAudioDeviceIds:            fallback::XInputGetAudioDeviceIds,
+            XInputEnable:                       fallback::XInputEnable,
+            XInputGetBatteryInformation:        fallback::XInputGetBatteryInformation,
+            XInputGetKeystroke:                 fallback::XInputGetKeystroke,
+
+            _XInputGetStateEx:                  fallback::XInputGetState,
+            _XInputWaitForGuideButton:          fallback::_XInputWaitForGuideButton,
+            _XInputCancelGuideButtonWait:       fallback::_XInputCancelGuideButtonWait,
+            _XInputPowerOffController:          fallback::_XInputPowerOffController,
+        }
+    }
+}
+
+mod fallback {
+    #![allow(non_snake_case)]
+    #![allow(unused_variables)]
+    use super::*;
+    const ERROR_INVALID_FUNCTION : u32 = ERROR::INVALID_FUNCTION.to_u32();
+
+    pub extern "system" fn XInputGetState(                  dwUserIndex: DWORD, pState: *mut XINPUT_STATE                                                                               ) -> DWORD { ERROR_INVALID_FUNCTION }
+    pub extern "system" fn XInputSetState(                  dwUserIndex: DWORD, pVibration: *mut XINPUT_VIBRATION                                                                       ) -> DWORD { ERROR_INVALID_FUNCTION }
+    pub extern "system" fn XInputGetCapabilities(           dwUserIndex: DWORD, dwFlags: DWORD, pCapabilities: *mut XINPUT_CAPABILITIES                                                 ) -> DWORD { ERROR_INVALID_FUNCTION }
+    pub extern "system" fn XInputGetDSoundAudioDeviceGuids( dwUserIndex: DWORD, pDSoundRenderGuid: *mut GUID, pDSoundCaptureGuid: *mut GUID                                             ) -> DWORD { ERROR_INVALID_FUNCTION }
+    pub extern "system" fn XInputGetAudioDeviceIds(         dwUserIndex: DWORD, pRenderDeviceId: LPWSTR, pRenderCount: *mut UINT, pCaptureDeviceId: LPWSTR, pCaptureCount: *mut UINT    ) -> DWORD { ERROR_INVALID_FUNCTION }
+    pub extern "system" fn XInputEnable(                    enable: BOOL                                                                                                                ) {}
+    pub extern "system" fn XInputGetBatteryInformation(     dwUserIndex: DWORD, devType: BYTE, pBatteryInformation: *mut XINPUT_BATTERY_INFORMATION                                     ) -> DWORD { ERROR_INVALID_FUNCTION }
+    pub extern "system" fn XInputGetKeystroke(              dwUserIndex: u32, dwReserved: u32, pKeystroke: PXINPUT_KEYSTROKE                                                            ) -> DWORD { ERROR_INVALID_FUNCTION }
+
+    //b extern "system" fn _XInputGetStateEx(               dwUserIndex: DWORD, pState: *mut XINPUT_STATE                                                                               ) -> DWORD { ERROR_INVALID_FUNCTION }
+    pub extern "system" fn _XInputWaitForGuideButton(       dwUserIndex: DWORD, dwFlag: DWORD, pUnknown: *mut c_void                                                                    ) -> DWORD { ERROR_INVALID_FUNCTION }
+    pub extern "system" fn _XInputCancelGuideButtonWait(    dwUserIndex: DWORD                                                                                                          ) -> DWORD { ERROR_INVALID_FUNCTION }
+    pub extern "system" fn _XInputPowerOffController(       dwUserIndex: DWORD                                                                                                          ) -> DWORD { ERROR_INVALID_FUNCTION }
 }
 
 

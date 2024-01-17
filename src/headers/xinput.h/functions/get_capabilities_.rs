@@ -15,7 +15,7 @@ use bytemuck::Zeroable;
 /// *   [ERROR::DEVICE_NOT_CONNECTED]   - [`User`] in bounds, but without a gamepad
 pub fn get_capabilities(user_index: impl Into<u32>, flags: Flag) -> Result<Capabilities, Error> {
     fn_context!(xinput::get_capabilities => XInputGetCapabilities);
-    #[allow(non_snake_case)] let XInputGetCapabilities = Imports::get().XInputGetCapabilities.ok_or(fn_error!(ERROR::INVALID_FUNCTION))?;
+    #[allow(non_snake_case)] let XInputGetCapabilities = Imports::get().XInputGetCapabilities;
     let mut caps = Capabilities::zeroed();
     // SAFETY: ✔️
     //  * fuzzed        in `tests/fuzz-xinput.rs`

@@ -17,7 +17,7 @@ use bytemuck::Zeroable;
 /// *   [ERROR::EMPTY]                  → Returns <code>[Ok]\([None]\)</code> instead.
 pub fn get_keystroke(user_index: impl Into<u32>, _reserved: ()) -> Result<Option<Keystroke>, Error> {
     fn_context!(xinput::get_keystroke => XInputGetKeystroke);
-    #[allow(non_snake_case)] let XInputGetKeystroke = Imports::get().XInputGetKeystroke.ok_or(fn_error!(ERROR::INVALID_FUNCTION))?;
+    #[allow(non_snake_case)] let XInputGetKeystroke = Imports::get().XInputGetKeystroke;
     let mut keystroke = Keystroke::zeroed();
     // SAFETY: ✔️
     //  * fuzzed        in `tests/fuzz-xinput.rs`
