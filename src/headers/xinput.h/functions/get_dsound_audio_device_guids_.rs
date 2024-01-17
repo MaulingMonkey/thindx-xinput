@@ -6,14 +6,9 @@ use bytemuck::Zeroable;
 
 /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetdsoundaudiodeviceguids)\]
 /// XInputGetDSoundAudioDeviceGuids
+/// <span style="opacity: 50%">(..= 1.3)</span>
 ///
 /// Get DirectSound Audio Device GUIDs (N/A for Windows Store apps, isn't supported by Windows 8.)
-///
-/// | XInput | State    |
-/// | ------ | -------- |
-/// | 1.4   | N/A       |
-/// | 1.3   | Available |
-/// | 9.1.0 | Available |
 ///
 /// ### Errors
 /// *   [ERROR::INVALID_FUNCTION]       - DirectSound GUIDs unavailable: XInput 1.3 or earlier

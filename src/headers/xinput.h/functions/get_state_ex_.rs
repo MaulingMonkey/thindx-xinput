@@ -3,12 +3,13 @@ use bytemuck::Zeroable;
 
 
 
-/// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetstate)\]
+/// \[<strike>microsoft.com</strike>\]
 /// XInputGetStateEx
+/// <span style="opacity: 50%">(1.3 ..= 1.4)</span>
 ///
 /// ⚠️ **NOTE** ⚠️ This undocumented function is reserved for system software to access [Buttons::Guide].
 ///
-/// Silently falls back on `XInputGetState` if `XInputGetStateEx` is unavailable.
+/// Silently falls back on [`XInputGetState`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetstate) if `XInputGetStateEx` is unavailable.
 ///
 /// ### Errors
 /// *   [ERROR::INVALID_FUNCTION]       - Couldn't find an XInput DLL

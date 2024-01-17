@@ -6,6 +6,7 @@ use bytemuck::Zeroable;
 
 /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetkeystroke)\]
 /// XInputGetKeystroke
+/// <span style="opacity: 50%">(1.3+)</span>
 ///
 /// Retrieves gamepad input events.
 ///

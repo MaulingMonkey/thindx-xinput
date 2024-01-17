@@ -7,16 +7,11 @@ use std::os::windows::ffi::*;
 
 /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetaudiodeviceids)\]
 /// XInputGetAudioDeviceIds
+/// <span style="opacity: 50%">(1.4+)</span>
 ///
 /// Get XAudio2 / Windows Core Audio Device Names.
 ///
 /// **NOTE:** This tends to succeed, even when no gamepad is connected, with empty/None paths.
-///
-// | XInput | State    |
-// | ------ | -------- |
-// | 1.4   | Available |
-// | 1.3   | N/A       |
-// | 9.1.0 | N/A       |
 ///
 /// ### Errors
 /// *   [ERROR::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]

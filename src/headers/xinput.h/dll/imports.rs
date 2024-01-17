@@ -120,13 +120,13 @@ pub(crate) struct Imports {
     // https://gist.github.com/robindegen/9446175
     // https://www.reddit.com/r/ReverseEngineering/comments/148faa/xbox_360_controller_on_windows/c7ayith/
 
-    // Ordinals 100-103, available as of XInput1_3.dll
+    // Ordinals 100-103, available as of XInput1_3.dll, N/A as of XInputUap.dll
     pub _XInputGetStateEx:               Option<unsafe extern "system" fn(dwUserIndex: DWORD, pState: *mut XINPUT_STATE) -> DWORD>,
     pub _XInputWaitForGuideButton:       Option<unsafe extern "system" fn(dwUserIndex: DWORD, dwFlag: DWORD, pUnknown: *mut c_void) -> DWORD>,
     pub _XInputCancelGuideButtonWait:    Option<unsafe extern "system" fn(dwUserIndex: DWORD) -> DWORD>,
     pub _XInputPowerOffController:       Option<unsafe extern "system" fn(dwUserIndex: DWORD) -> DWORD>,
 
-    // Ordinals 104 / 108, available as of XInput1_4.dll
+    // Ordinals 104 / 108, available as of XInput1_4.dll, N/A as of XInputUap.dll
     // _XInputGetBaseBusInformation (Ordinal 104)
     // _XInputGetCapabilitiesEx     (Ordinal 108)
 }

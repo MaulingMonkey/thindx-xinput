@@ -4,6 +4,7 @@ use crate::*;
 
 /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputenable)\]
 /// XInputEnable
+/// <span style="opacity: 50%">(1.1+)</span>
 ///
 /// Meant to be called when an application gains or loses focus
 /// (such as via [WM_ACTIVATEAPP](https://learn.microsoft.com/en-us/windows/desktop/winmsg/wm-activateapp)\),
@@ -35,7 +36,6 @@ use crate::*;
 /// ```
 ///
 /// ### Errors
-/// *   [ERROR::INVALID_FUNCTION]       - Enable/disable API unavailable: requires XInput 1.1 or later
 /// *   [ERROR::INVALID_FUNCTION]       - Enable/disable API unavailable: requires XInput 1.1 or later
 pub fn enable(enable: bool) -> Result<(), Error> {
     fn_context!(xinput::enable => XInputEnable);

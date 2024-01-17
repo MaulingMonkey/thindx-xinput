@@ -6,6 +6,7 @@ use bytemuck::Zeroable;
 
 /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetbatteryinformation)\]
 /// XInputGetBatteryInformation
+/// <span style="opacity: 50%">(1.3+)</span>
 ///
 /// ### Arguments
 /// *   `user_index`    Identify which user's controller to get the battery information of

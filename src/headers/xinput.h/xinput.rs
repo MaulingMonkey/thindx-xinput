@@ -37,6 +37,7 @@ mods! {
         inl mod get_state_;
         inl mod get_state_ex_;
         inl mod set_state_;
+        #[cfg(doc)] pub mod todo;
     }
 
     inl mod structures {
