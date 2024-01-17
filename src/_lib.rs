@@ -34,7 +34,6 @@
 
 pub mod error; #[doc(no_inline)] pub use error::Error;
 
-#[path="headers/guiddef.h/guiddef.rs"]          mod guiddef_h;  pub use guiddef_h::*;
 #[path="headers/xinput.h/xinput.rs"]            mod xinput_h;   pub use xinput_h::*;
 
 //#[cfg(doc)] #[doc = include_str!("../doc/changelog.md")] pub mod _changelog {}

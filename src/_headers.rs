@@ -22,7 +22,7 @@ use crate as xinput;
 ///
 /// ### C++ Structs -> Rust Structs
 ///
-/// [`GUID`](https://learn.microsoft.com/en-us/windows/win32/api/guiddef/ns-guiddef-guid)&nbsp;→ [`Guid`] <br>
+/// [`GUID`](https://learn.microsoft.com/en-us/windows/win32/api/guiddef/ns-guiddef-guid)&nbsp;→ [`DSoundAudioDeviceGuid`] <br>
 /// ### C++ Constants → Rust Constants
 ///
 /// `CLSID_NULL`&nbsp;→&nbsp;❌ <br>
@@ -30,16 +30,16 @@ use crate as xinput;
 /// `IID_NULL`&nbsp;→&nbsp;❌ <br>
 /// `REFCLSID`&nbsp;→&nbsp;❌ <br>
 /// `REFFMTID`&nbsp;→&nbsp;❌ <br>
-/// `REFGUID`&nbsp;→ <code>&[Guid](Guid)</code> <br>
+/// `REFGUID`&nbsp;→ <code>&[DSoundAudioDeviceGuid]</code> <br>
 /// `REFIID`&nbsp;→&nbsp;❌ <br>
 /// ### C++ Macros → Rust fns/macros
 ///
 /// `DEFINE_GUID`&nbsp;→&nbsp;❌ <br>
 /// `DEFINE_OLEGUID`&nbsp;→&nbsp;❌ <br>
-/// `InlineIsEqualGUID`&nbsp;→ [`Guid::eq`] <br>
+/// `InlineIsEqualGUID`&nbsp;→ [`DSoundAudioDeviceGuid::eq`] <br>
 /// `IsEqualCLSID`&nbsp;→&nbsp;❌ <br>
 /// `IsEqualFMTID`&nbsp;→&nbsp;❌ <br>
-/// `IsEqualGUID`&nbsp;→ [`Guid::eq`] <br>
+/// `IsEqualGUID`&nbsp;→ [`DSoundAudioDeviceGuid::eq`] <br>
 /// `IsEqualIID`&nbsp;→&nbsp;❌ <br>
 pub const guiddef_h : cxx_header = cxx_header;
 
