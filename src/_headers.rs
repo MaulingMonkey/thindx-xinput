@@ -11,7 +11,7 @@
 //!
 //! | C++ Header | Interfaces | Structs | Enums | Functions | Constants | Macros |
 //! | ---------- | ---------- | ------- | ----- | --------- | --------- | ------ |
-//! | [guiddef.h](const@guiddef_h) |   | ✔️ 1 of 1 |   |   | ⚠️ 1 of 7 | ⚠️ 4 of 7 |
+//! | [guiddef.h](const@guiddef_h) |   | ✔️ 1 of 1 |   |   | ⚠️ 1 of 7 | ⚠️ 2 of 7 |
 //! | [xinput.h](const@xinput_h) |   | ✔️ 6 of 6 |   | ✔️ 8 of 8 | ⚠️ 83 of 86 |   |
 
 use crate as xinput;
@@ -34,7 +34,7 @@ use crate as xinput;
 /// `REFIID`&nbsp;→&nbsp;❌ <br>
 /// ### C++ Macros → Rust fns/macros
 ///
-/// `DEFINE_GUID`&nbsp;→ [`guid!`] <br>
+/// `DEFINE_GUID`&nbsp;→&nbsp;❌ <br>
 /// `DEFINE_OLEGUID`&nbsp;→&nbsp;❌ <br>
 /// `InlineIsEqualGUID`&nbsp;→ [`Guid::eq`] <br>
 /// `IsEqualCLSID`&nbsp;→&nbsp;❌ <br>
