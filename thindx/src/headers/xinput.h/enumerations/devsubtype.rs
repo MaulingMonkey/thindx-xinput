@@ -1,4 +1,4 @@
-#[cfg_attr(not(doc), allow(unused_imports))] use crate::xinput::*;
+#[cfg_attr(not(doc), allow(unused_imports))] use crate::*;
 use bytemuck::{Pod, Zeroable};
 use winapi::um::xinput::*;
 const XINPUT_DEVSUBTYPE_FLIGHT_STICK : u8 = 0x04; // winapi missing def

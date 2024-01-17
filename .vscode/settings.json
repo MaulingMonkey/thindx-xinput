@@ -2,24 +2,7 @@
     "files.exclude": {
         "**/.git": true,
         "target/*/*/*": true,
-
-        "thindx/LICENSE*": true,
-        "thindx/Readme.md": true,
-
-        "xtask/target/*": true,
-        ".worktree/gh-pages/preview/coverage/*": true,
-        ".worktree/gh-pages/preview/docs/*": true,
     },
-    "terminal.integrated.cwd": "${workspaceFolder}",
-    "terminal.integrated.env.windows": {
-        "RUSTC_LOG":    "rustc_metadata=error",
-        "TESTFAST":     "1",
-    },
-    "coverage-gutters.lcovname":            "${workspaceFolder}/target/coverage/lcov.info",
-    "coverage-gutters.manualCoverageFilePaths": ["${workspaceFolder}/target/coverage/lcov.info"],
-    "coverage-gutters.showGutterCoverage":  false,  // interferes with breakpoints
-    "coverage-gutters.showLineCoverage":    true,   // really in your face, but I like it
-    "coverage-gutters.showRulerCoverage":   true,   // scrollbar
     "editor.rulers": [
         94,     // docs limit (before scrollbar, without line numbers enabled)
         120,    // author preference

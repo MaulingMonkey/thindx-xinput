@@ -4,7 +4,7 @@ use std::io::*;
 use std::ptr::null_mut;
 use std::time::*;
 
-use thindx::xinput::{self, *};
+use xinput::*;
 use winapi::um::objbase::CoInitialize;
 
 fn main() {

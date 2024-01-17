@@ -309,53 +309,9 @@ macro_rules! flags {
     }
 }
 
-/// COM conversion boilerplate
-///
-/// ### ⚠️ Safety ⚠️
-/// *   Assumes `$outer` and `$inner` are `#[repr(transparent)]` wrappers around [mcom::Rc] and ABI compatible
-/// *   Typechecked via some `From` impls, but sufficiently malicious `Deref` impls might be able to defeat that.
-///
-/// ### Usage
-/// *   `convert!(unsafe $outer => $inner, $winapi);`
-/// *   `convert!(unsafe $outer,           $winapi);`
-macro_rules! convert {
-    ( unsafe $outer:ty => $deref:ty, $winapi:ty ) => {
-        convert!(unsafe $outer, $winapi);
-
-        impl std::ops::Deref for $outer {
-            type Target = $deref;
-            fn deref(&self) -> &Self::Target { self.0.up_ref().into() }
-        }
-    };
-    ( unsafe $outer:ty, $winapi:ty ) => {
-        impl From<mcom::Rc<$winapi>> for $outer { fn from(value: mcom::Rc<$winapi>) -> Self { Self(value) } }
-        impl From<$outer> for mcom::Rc<$winapi> { fn from(value: $outer) -> Self { value.0 } }
-
-        impl From<&mcom::Rc<$winapi>> for &$outer { fn from(value: &mcom::Rc<$winapi>) -> Self {
-            #[allow(clippy::undocumented_unsafe_blocks)]
-            // SAFETY: ✔️ sound per documented `#[repr(transparent)]` safety precondition of this `unsafe`-marked macro
-            unsafe { std::mem::transmute(value) }
-        }}
-        impl From<&$outer> for &mcom::Rc<$winapi> { fn from(value: &$outer) -> Self {
-            #[allow(clippy::undocumented_unsafe_blocks)]
-            // SAFETY: ✔️ sound per documented `#[repr(transparent)]` safety precondition of this `unsafe`-marked macro
-            unsafe { std::mem::transmute(value) }
-        }}
-
-        unsafe impl $crate::Raw for $outer {
-            type Raw = $winapi;
-
-            unsafe fn from_raw(raw: *mut Self::Raw) -> Self { Self(unsafe { mcom::Rc::from_raw(raw) }) }
-            unsafe fn from_raw_opt(raw: *mut Self::Raw) -> Option<Self> { Some(Self(unsafe { mcom::Rc::from_raw_opt(raw) }?)) }
-            fn into_raw(self) -> *mut Self::Raw { self.0.into_raw() }
-            fn as_raw(&self) -> *mut Self::Raw { self.0.as_ptr() }
-        }
-    };
-}
-
 macro_rules! mods {
-    ( $( #[$attr:meta] )* inl      mod $mod:ident ;                $($tt:tt)* ) => { $(#[$attr])* pub(crate) mod $mod;                       #[allow(unused_imports)] pub use $mod::*; mods!{ $($tt)* } };
-    ( $( #[$attr:meta] )* inl      mod $mod:ident { $($body:tt)* } $($tt:tt)* ) => { $(#[$attr])* pub(crate) mod $mod { mods!{ $($body)* } } #[allow(unused_imports)] pub use $mod::*; mods!{ $($tt)* } };
+    ( $( #[$attr:meta] )* inl      mod $mod:ident ;                $($tt:tt)* ) => { $(#[$attr])* pub(crate) mod $mod;                       #[allow(unused_imports)] pub use self::$mod::*; mods!{ $($tt)* } };
+    ( $( #[$attr:meta] )* inl      mod $mod:ident { $($body:tt)* } $($tt:tt)* ) => { $(#[$attr])* pub(crate) mod $mod { mods!{ $($body)* } } #[allow(unused_imports)] pub use self::$mod::*; mods!{ $($tt)* } };
     ( $( #[$attr:meta] )* $vis:vis mod $mod:ident ;                $($tt:tt)* ) => { $(#[$attr])* $vis mod $mod;                                                                 mods!{ $($tt)* } };
     ( $( #[$attr:meta] )* $vis:vis mod $mod:ident { $($body:tt)* } $($tt:tt)* ) => { $(#[$attr])* $vis mod $mod { mods!{ $($body)* } }                                           mods!{ $($tt)* } };
     () => {};

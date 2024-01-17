@@ -15,27 +15,12 @@ use std::hash::*;
 #[derive(Clone, Copy)]
 #[repr(transparent)] pub struct Guid(GUID);
 
-/// = [Guid]
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/wmformat/interface-identifiers)\]
-/// **I**nterface **Id**entifier - used for uniquely identifiying COM interfaces
-pub type IID    = Guid;
-
-/// = [Guid]
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/com/com-class-objects-and-clsids)\]
-/// **Cl**as**s** **Id**entifier - used for uniquely identifying COM classes
-pub type ClsID  = Guid;
-
-/// = [Guid]
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/stg/format-identifiers)\]
-/// **F**or**m**a**t** **Id**entifier - used for tagging sections in e.g. structured storage property sets
-pub type FmtID  = Guid;
-
 /// Define a [Guid] constant.
 ///
 /// ### Examples
 /// ```rust
-/// # use thindx::*;
-/// const IID_NULL : Guid = guid!("00000000-0000-0000-0000-000000000000");
+/// # use xinput::*;
+/// const GUID_NULL : Guid = guid!("00000000-0000-0000-0000-000000000000");
 /// ```
 #[macro_export]
 macro_rules! guid {
@@ -208,34 +193,8 @@ impl Guid {
 }
 
 //#cpp2rust GUID                = Guid
-//#cpp2rust IID                 = IID
-//#cpp2rust CLSID               = ClsID
-//#cpp2rust FMTID               = FmtID
-
 //#cpp2rust REFGUID             = &Guid
-//#cpp2rust REFIID              = &IID
-//#cpp2rust REFCLSID            = &ClsID
-//#cpp2rust REFFMTID            = &FmtID
-
 //#cpp2rust GUID_NULL           = Guid::NULL
-//#cpp2rust IID_NULL            = IID::NULL
-//#cpp2rust CLSID_NULL          = ClsID::NULL
-//#cpp2rust FMTID_NULL          = FmtID::NULL
-
 //#cpp2rust DEFINE_GUID         = guid!
-//#cpp2rust DEFINE_OLEGUID      = guid!
-
-//#cpp2rust DECLSPEC_UUID       = impl winapi::Interface
-
 //#cpp2rust InlineIsEqualGUID   = Guid::eq
-//#cpp2rust IsEqualCLSID        = ClsID::eq
-//#cpp2rust IsEqualFMTID        = FmtID::eq
 //#cpp2rust IsEqualGUID         = Guid::eq
-//#cpp2rust IsEqualIID          = IID::eq
-
-// ABI/linker cruft
-//#cpp2ignore EXTERN_C
-//#cpp2ignore DECLSPEC_SELECTANY
-
-// 16-bit Windows cruft
-//#cpp2ignore FAR

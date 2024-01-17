@@ -1,4 +1,4 @@
-use crate::dll::{Library, LibraryExt};
+use minidl::Library;
 
 use winapi::shared::guiddef::GUID;
 use winapi::shared::minwindef::*;
@@ -225,7 +225,7 @@ unsafe fn try_find_loaded_xinput() -> Option<Library> {
     }
 
     // SAFETY: ⚠️ `m` should be a permanently loaded library... probably...
-    modules.retain(|&m| unsafe { Library::from_hmodule(m) }.map_or(false, |m| m.has_sym("XInputGetState\0")));
+    modules.retain(|&m| unsafe { Library::from_ptr(m.cast()) }.map_or(false, |m| m.has_sym("XInputGetState\0")));
 
     let hmodule = match modules[..] {
         [] => None,
@@ -245,5 +245,5 @@ unsafe fn try_find_loaded_xinput() -> Option<Library> {
     };
 
     // SAFETY: ✔️ `hmodule` should be a valid HMODULE
-    hmodule.and_then(|hmodule| unsafe { Library::from_hmodule(hmodule) })
+    hmodule.and_then(|hmodule| unsafe { Library::from_ptr(hmodule.cast()) })
 }

@@ -3,13 +3,13 @@
 
     <!-- xinput.h enumerations -->
 
-    <Type Name="thindx::xinput_h::enumerations::battery_devtype::BatteryDevType">
+    <Type Name="xinput::xinput_h::enumerations::battery_devtype::BatteryDevType">
         <DisplayString Condition="__0 == 0x00">xinput::BatteryDevType::Gamepad</DisplayString>
         <DisplayString Condition="__0 == 0x01">xinput::BatteryDevType::Headset</DisplayString>
         <DisplayString>xinput::BatteryDevType({__0,x})</DisplayString>
     </Type>
 
-    <Type Name="thindx::xinput_h::enumerations::battery_level::BatteryLevel">
+    <Type Name="xinput::xinput_h::enumerations::battery_level::BatteryLevel">
         <DisplayString Condition="__0 == 0x00">xinput::BatteryLevel::Empty</DisplayString>
         <DisplayString Condition="__0 == 0x01">xinput::BatteryLevel::Low</DisplayString>
         <DisplayString Condition="__0 == 0x02">xinput::BatteryLevel::Medium</DisplayString>
@@ -17,7 +17,7 @@
         <DisplayString>xinput::BatteryLevel({__0,x})</DisplayString>
     </Type>
 
-    <Type Name="thindx::xinput_h::enumerations::battery_type::BatteryType">
+    <Type Name="xinput::xinput_h::enumerations::battery_type::BatteryType">
         <DisplayString Condition="__0 == 0x00">xinput::BatteryType::Disconnected</DisplayString>
         <DisplayString Condition="__0 == 0x01">xinput::BatteryType::Wired</DisplayString>
         <DisplayString Condition="__0 == 0x02">xinput::BatteryType::Alkaline</DisplayString>
@@ -26,7 +26,7 @@
         <DisplayString>xinput::BatteryType({__0,x})</DisplayString>
     </Type>
 
-    <Type Name="thindx::xinput_h::enumerations::devsubtype::DevSubType">
+    <Type Name="xinput::xinput_h::enumerations::devsubtype::DevSubType">
         <DisplayString Condition="__0 == 0x00">xinput::DevSubType::Unknown</DisplayString>
         <DisplayString Condition="__0 == 0x01">xinput::DevSubType::Gamepad</DisplayString>
         <DisplayString Condition="__0 == 0x02">xinput::DevSubType::Wheel</DisplayString>
@@ -41,17 +41,17 @@
         <DisplayString>xinput::DevSubType({__0,x})</DisplayString>
     </Type>
 
-    <Type Name="thindx::xinput_h::enumerations::devtype::DevType">
+    <Type Name="xinput::xinput_h::enumerations::devtype::DevType">
         <DisplayString Condition="__0 == 0x01">xinput::DevType::Gamepad</DisplayString>
         <DisplayString>xinput::DevType({__0,x})</DisplayString>
     </Type>
 
-    <Type Name="thindx::xinput_h::enumerations::user::User">
+    <Type Name="xinput::xinput_h::enumerations::user::User">
         <DisplayString Condition="__0 == 0xFF">xinput::User::Any</DisplayString>
         <DisplayString>xinput::User({__0,x})</DisplayString>
     </Type>
 
-    <Type Name="thindx::xinput_h::enumerations::vk::VK">
+    <Type Name="xinput::xinput_h::enumerations::vk::VK">
         <DisplayString Condition="__0 == 0x0000">xinput::VK::None</DisplayString>
 
         <DisplayString Condition="__0 == 0x5800">xinput::VK::PadA</DisplayString>
@@ -95,7 +95,7 @@
 
     <!-- xinput.h flags -->
 
-    <Type Name="thindx::xinput_h::flags::caps::Caps">
+    <Type Name="xinput::xinput_h::flags::caps::Caps">
         <DisplayString Condition="__0 == 0x0000">xinput::Caps::None</DisplayString>
         <DisplayString Condition="__0 == 0x0001">xinput::Caps::FfbSupported</DisplayString>
         <DisplayString Condition="__0 == 0x0002">xinput::Caps::Wireless</DisplayString>
@@ -113,7 +113,7 @@
         </Expand>
     </Type>
 
-    <Type Name="thindx::xinput_h::flags::buttons::Buttons">
+    <Type Name="xinput::xinput_h::flags::buttons::Buttons">
         <DisplayString Condition="__0 == 0x0000">xinput::Buttons::None</DisplayString>
         <DisplayString Condition="__0 == 0x0001">xinput::Buttons::DPadUp</DisplayString>
         <DisplayString Condition="__0 == 0x0002">xinput::Buttons::DPadDown</DisplayString>
@@ -152,7 +152,7 @@
         </Expand>
     </Type>
 
-    <Type Name="thindx::xinput_h::flags::caps::Caps">
+    <Type Name="xinput::xinput_h::flags::caps::Caps">
         <DisplayString Condition="__0 == 0x0000">xinput::Caps::None</DisplayString>
         <DisplayString Condition="__0 == 0x0001">xinput::Caps::FfbSupported</DisplayString>
         <DisplayString Condition="__0 == 0x0002">xinput::Caps::Wireless</DisplayString>
@@ -170,7 +170,7 @@
         </Expand>
     </Type>
 
-    <Type Name="thindx::xinput_h::flags::flag::Flag">
+    <Type Name="xinput::xinput_h::flags::flag::Flag">
         <DisplayString Condition="__0 == 0x0000">xinput::Flag::None</DisplayString>
         <DisplayString Condition="__0 == 0x0001">xinput::Flag::Gamepad</DisplayString>
         <!--<DisplayString>xinput::Flag({__0,b})</DisplayString>-->
@@ -180,7 +180,7 @@
         </Expand>
     </Type>
 
-    <Type Name="thindx::xinput_h::flags::keystroke::Keystroke">
+    <Type Name="xinput::xinput_h::flags::keystroke::Keystroke">
         <DisplayString Condition="__0 == 0x0000">xinput::KeystrokeFlags::None</DisplayString>
         <DisplayString Condition="__0 == 0x0001">xinput::KeystrokeFlags::KeyDown</DisplayString>
         <DisplayString Condition="__0 == 0x0002">xinput::KeystrokeFlags::KeyUp</DisplayString>

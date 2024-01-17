@@ -3,283 +3,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name":                     "d3d9-00-clear-winit • debug",
-            "type":                     "cppdbg",
-            "request":                  "launch",
-            "internalConsoleOptions":   "openOnSessionStart",
-            "preLaunchTask":            "cargo b --package thindx --example d3d9-00-clear-winit",
-            "program":                  "${workspaceFolder}/target/debug/examples/d3d9-00-clear-winit",
-            "cwd":                      "${workspaceFolder}",
-            "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
-            "symbolOptions":            { "searchMicrosoftSymbolServer": true },
-            "windows": {
-                "type":                     "cppvsdbg",
-                "program":                  "${workspaceFolder}/target/debug/examples/d3d9-00-clear-winit.exe",
-                "enableDebugHeap":          true,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
-            }
-        },
-        {
-            "name":                     "d3d9-00-clear-winit • release",
-            "type":                     "cppdbg",
-            "request":                  "launch",
-            "internalConsoleOptions":   "openOnSessionStart",
-            "preLaunchTask":            "cargo b --package thindx --example d3d9-00-clear-winit --release",
-            "program":                  "${workspaceFolder}/target/release/examples/d3d9-00-clear-winit",
-            "cwd":                      "${workspaceFolder}",
-            "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
-            "symbolOptions":            { "searchMicrosoftSymbolServer": true },
-            "windows": {
-                "type":                     "cppvsdbg",
-                "program":                  "${workspaceFolder}/target/release/examples/d3d9-00-clear-winit.exe",
-                "enableDebugHeap":          false,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
-            }
-        },
-        {
-            "name":                     "d3d9-01-clear-winapi • debug",
-            "type":                     "cppdbg",
-            "request":                  "launch",
-            "internalConsoleOptions":   "openOnSessionStart",
-            "preLaunchTask":            "cargo b --package thindx --example d3d9-01-clear-winapi",
-            "program":                  "${workspaceFolder}/target/debug/examples/d3d9-01-clear-winapi",
-            "cwd":                      "${workspaceFolder}",
-            "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
-            "symbolOptions":            { "searchMicrosoftSymbolServer": true },
-            "windows": {
-                "type":                     "cppvsdbg",
-                "program":                  "${workspaceFolder}/target/debug/examples/d3d9-01-clear-winapi.exe",
-                "enableDebugHeap":          true,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
-            }
-        },
-        {
-            "name":                     "d3d9-01-clear-winapi • release",
-            "type":                     "cppdbg",
-            "request":                  "launch",
-            "internalConsoleOptions":   "openOnSessionStart",
-            "preLaunchTask":            "cargo b --package thindx --example d3d9-01-clear-winapi --release",
-            "program":                  "${workspaceFolder}/target/release/examples/d3d9-01-clear-winapi",
-            "cwd":                      "${workspaceFolder}",
-            "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
-            "symbolOptions":            { "searchMicrosoftSymbolServer": true },
-            "windows": {
-                "type":                     "cppvsdbg",
-                "program":                  "${workspaceFolder}/target/release/examples/d3d9-01-clear-winapi.exe",
-                "enableDebugHeap":          false,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
-            }
-        },
-        {
-            "name":                     "d3d9-02-xinput • debug",
-            "type":                     "cppdbg",
-            "request":                  "launch",
-            "internalConsoleOptions":   "openOnSessionStart",
-            "preLaunchTask":            "cargo b --package thindx --example d3d9-02-xinput",
-            "program":                  "${workspaceFolder}/target/debug/examples/d3d9-02-xinput",
-            "cwd":                      "${workspaceFolder}",
-            "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
-            "symbolOptions":            { "searchMicrosoftSymbolServer": true },
-            "windows": {
-                "type":                     "cppvsdbg",
-                "program":                  "${workspaceFolder}/target/debug/examples/d3d9-02-xinput.exe",
-                "enableDebugHeap":          true,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
-            }
-        },
-        {
-            "name":                     "d3d9-02-xinput • release",
-            "type":                     "cppdbg",
-            "request":                  "launch",
-            "internalConsoleOptions":   "openOnSessionStart",
-            "preLaunchTask":            "cargo b --package thindx --example d3d9-02-xinput --release",
-            "program":                  "${workspaceFolder}/target/release/examples/d3d9-02-xinput",
-            "cwd":                      "${workspaceFolder}",
-            "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
-            "symbolOptions":            { "searchMicrosoftSymbolServer": true },
-            "windows": {
-                "type":                     "cppvsdbg",
-                "program":                  "${workspaceFolder}/target/release/examples/d3d9-02-xinput.exe",
-                "enableDebugHeap":          false,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
-            }
-        },
-        {
-            "name":                     "d3dcompiler-01-construction • debug",
-            "type":                     "cppdbg",
-            "request":                  "launch",
-            "internalConsoleOptions":   "openOnSessionStart",
-            "preLaunchTask":            "cargo b --package thindx --example d3dcompiler-01-construction",
-            "program":                  "${workspaceFolder}/target/debug/examples/d3dcompiler-01-construction",
-            "cwd":                      "${workspaceFolder}",
-            "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
-            "symbolOptions":            { "searchMicrosoftSymbolServer": true },
-            "windows": {
-                "type":                     "cppvsdbg",
-                "program":                  "${workspaceFolder}/target/debug/examples/d3dcompiler-01-construction.exe",
-                "enableDebugHeap":          true,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
-            }
-        },
-        {
-            "name":                     "d3dcompiler-01-construction • release",
-            "type":                     "cppdbg",
-            "request":                  "launch",
-            "internalConsoleOptions":   "openOnSessionStart",
-            "preLaunchTask":            "cargo b --package thindx --example d3dcompiler-01-construction --release",
-            "program":                  "${workspaceFolder}/target/release/examples/d3dcompiler-01-construction",
-            "cwd":                      "${workspaceFolder}",
-            "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
-            "symbolOptions":            { "searchMicrosoftSymbolServer": true },
-            "windows": {
-                "type":                     "cppvsdbg",
-                "program":                  "${workspaceFolder}/target/release/examples/d3dcompiler-01-construction.exe",
-                "enableDebugHeap":          false,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
-            }
-        },
-        {
-            "name":                     "d3dcompiler-02-compile • debug",
-            "type":                     "cppdbg",
-            "request":                  "launch",
-            "internalConsoleOptions":   "openOnSessionStart",
-            "preLaunchTask":            "cargo b --package thindx --example d3dcompiler-02-compile",
-            "program":                  "${workspaceFolder}/target/debug/examples/d3dcompiler-02-compile",
-            "cwd":                      "${workspaceFolder}",
-            "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
-            "symbolOptions":            { "searchMicrosoftSymbolServer": true },
-            "windows": {
-                "type":                     "cppvsdbg",
-                "program":                  "${workspaceFolder}/target/debug/examples/d3dcompiler-02-compile.exe",
-                "enableDebugHeap":          true,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
-            }
-        },
-        {
-            "name":                     "d3dcompiler-02-compile • release",
-            "type":                     "cppdbg",
-            "request":                  "launch",
-            "internalConsoleOptions":   "openOnSessionStart",
-            "preLaunchTask":            "cargo b --package thindx --example d3dcompiler-02-compile --release",
-            "program":                  "${workspaceFolder}/target/release/examples/d3dcompiler-02-compile",
-            "cwd":                      "${workspaceFolder}",
-            "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
-            "symbolOptions":            { "searchMicrosoftSymbolServer": true },
-            "windows": {
-                "type":                     "cppvsdbg",
-                "program":                  "${workspaceFolder}/target/release/examples/d3dcompiler-02-compile.exe",
-                "enableDebugHeap":          false,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
-            }
-        },
-        {
-            "name":                     "d3dcompiler-03-link • debug",
-            "type":                     "cppdbg",
-            "request":                  "launch",
-            "internalConsoleOptions":   "openOnSessionStart",
-            "preLaunchTask":            "cargo b --package thindx --example d3dcompiler-03-link",
-            "program":                  "${workspaceFolder}/target/debug/examples/d3dcompiler-03-link",
-            "cwd":                      "${workspaceFolder}",
-            "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
-            "symbolOptions":            { "searchMicrosoftSymbolServer": true },
-            "windows": {
-                "type":                     "cppvsdbg",
-                "program":                  "${workspaceFolder}/target/debug/examples/d3dcompiler-03-link.exe",
-                "enableDebugHeap":          true,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
-            }
-        },
-        {
-            "name":                     "d3dcompiler-03-link • release",
-            "type":                     "cppdbg",
-            "request":                  "launch",
-            "internalConsoleOptions":   "openOnSessionStart",
-            "preLaunchTask":            "cargo b --package thindx --example d3dcompiler-03-link --release",
-            "program":                  "${workspaceFolder}/target/release/examples/d3dcompiler-03-link",
-            "cwd":                      "${workspaceFolder}",
-            "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
-            "symbolOptions":            { "searchMicrosoftSymbolServer": true },
-            "windows": {
-                "type":                     "cppvsdbg",
-                "program":                  "${workspaceFolder}/target/release/examples/d3dcompiler-03-link.exe",
-                "enableDebugHeap":          false,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
-            }
-        },
-        {
-            "name":                     "d3dcompiler-04-reflect-shader • debug",
-            "type":                     "cppdbg",
-            "request":                  "launch",
-            "internalConsoleOptions":   "openOnSessionStart",
-            "preLaunchTask":            "cargo b --package thindx --example d3dcompiler-04-reflect-shader",
-            "program":                  "${workspaceFolder}/target/debug/examples/d3dcompiler-04-reflect-shader",
-            "cwd":                      "${workspaceFolder}",
-            "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
-            "symbolOptions":            { "searchMicrosoftSymbolServer": true },
-            "windows": {
-                "type":                     "cppvsdbg",
-                "program":                  "${workspaceFolder}/target/debug/examples/d3dcompiler-04-reflect-shader.exe",
-                "enableDebugHeap":          true,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
-            }
-        },
-        {
-            "name":                     "d3dcompiler-04-reflect-shader • release",
-            "type":                     "cppdbg",
-            "request":                  "launch",
-            "internalConsoleOptions":   "openOnSessionStart",
-            "preLaunchTask":            "cargo b --package thindx --example d3dcompiler-04-reflect-shader --release",
-            "program":                  "${workspaceFolder}/target/release/examples/d3dcompiler-04-reflect-shader",
-            "cwd":                      "${workspaceFolder}",
-            "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
-            "symbolOptions":            { "searchMicrosoftSymbolServer": true },
-            "windows": {
-                "type":                     "cppvsdbg",
-                "program":                  "${workspaceFolder}/target/release/examples/d3dcompiler-04-reflect-shader.exe",
-                "enableDebugHeap":          false,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
-            }
-        },
-        {
-            "name":                     "d3dcompiler-05-reflect-library • debug",
-            "type":                     "cppdbg",
-            "request":                  "launch",
-            "internalConsoleOptions":   "openOnSessionStart",
-            "preLaunchTask":            "cargo b --package thindx --example d3dcompiler-05-reflect-library",
-            "program":                  "${workspaceFolder}/target/debug/examples/d3dcompiler-05-reflect-library",
-            "cwd":                      "${workspaceFolder}",
-            "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
-            "symbolOptions":            { "searchMicrosoftSymbolServer": true },
-            "windows": {
-                "type":                     "cppvsdbg",
-                "program":                  "${workspaceFolder}/target/debug/examples/d3dcompiler-05-reflect-library.exe",
-                "enableDebugHeap":          true,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
-            }
-        },
-        {
-            "name":                     "d3dcompiler-05-reflect-library • release",
-            "type":                     "cppdbg",
-            "request":                  "launch",
-            "internalConsoleOptions":   "openOnSessionStart",
-            "preLaunchTask":            "cargo b --package thindx --example d3dcompiler-05-reflect-library --release",
-            "program":                  "${workspaceFolder}/target/release/examples/d3dcompiler-05-reflect-library",
-            "cwd":                      "${workspaceFolder}",
-            "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
-            "symbolOptions":            { "searchMicrosoftSymbolServer": true },
-            "windows": {
-                "type":                     "cppvsdbg",
-                "program":                  "${workspaceFolder}/target/release/examples/d3dcompiler-05-reflect-library.exe",
-                "enableDebugHeap":          false,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
-            }
-        },
-        {
             "name":                     "xinput-exercise-all • debug",
             "type":                     "cppdbg",
             "request":                  "launch",
             "externalConsole":          true,
-            "preLaunchTask":            "cargo b --package thindx --example xinput-exercise-all",
+            "preLaunchTask":            "cargo b --example xinput-exercise-all",
             "program":                  "${workspaceFolder}/target/debug/examples/xinput-exercise-all",
             "cwd":                      "${workspaceFolder}",
             "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
@@ -288,7 +16,7 @@
                 "type":                     "cppvsdbg",
                 "program":                  "${workspaceFolder}/target/debug/examples/xinput-exercise-all.exe",
                 "enableDebugHeap":          true,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
+                "visualizerFile":           "${workspaceFolder}/thindx/xinput.natvis"
             }
         },
         {
@@ -296,7 +24,7 @@
             "type":                     "cppdbg",
             "request":                  "launch",
             "externalConsole":          true,
-            "preLaunchTask":            "cargo b --package thindx --example xinput-exercise-all --release",
+            "preLaunchTask":            "cargo b --example xinput-exercise-all --release",
             "program":                  "${workspaceFolder}/target/release/examples/xinput-exercise-all",
             "cwd":                      "${workspaceFolder}",
             "environment":              [ { "name": "RUST_BACKTRACE", "value": "1" } ],
@@ -305,7 +33,7 @@
                 "type":                     "cppvsdbg",
                 "program":                  "${workspaceFolder}/target/release/examples/xinput-exercise-all.exe",
                 "enableDebugHeap":          false,
-                "visualizerFile":           "${workspaceFolder}/.vscode/merged.natvis"
+                "visualizerFile":           "${workspaceFolder}/thindx/xinput.natvis"
             }
         },
     ]

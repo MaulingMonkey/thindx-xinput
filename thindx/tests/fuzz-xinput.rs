@@ -3,7 +3,7 @@ const WITH_COM      : Duration = Duration::from_secs(if std::option_env!("TESTFA
 
 
 
-use thindx::*;
+use xinput::{Error, ErrorKind, ERROR, THINERR};
 
 use mmrbi::*;
 

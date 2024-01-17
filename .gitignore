@@ -1,15 +1,8 @@
-# downloaded on demand
-/thindx/examples/assets
-
 # build output
 /target
 /*.log
 /Cargo.lock
-/.vscode/merged.natvis
 
 # build output (copied from workspace root)
 /thindx/LICENSE*
 #/thindx/Readme.md      # checkin so this is git-dependency ready
-
-# build output
-/xtask/target

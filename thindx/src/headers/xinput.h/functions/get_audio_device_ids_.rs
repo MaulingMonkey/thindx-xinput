@@ -1,5 +1,4 @@
 use crate::*;
-use crate::xinput::*;
 
 use std::ffi::OsString;
 use std::os::windows::ffi::*;

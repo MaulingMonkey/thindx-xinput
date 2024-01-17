@@ -20,5 +20,7 @@ jobs:
         rustc -V
         cargo -V
         cmd /C ver
-    - name: Test
+    - name: Build
       run: cargo b
+    - name: Test
+      run: cargo t

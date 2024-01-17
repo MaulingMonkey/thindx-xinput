@@ -1,33 +1,17 @@
 use crate::*;
 use crate::error_macros::FnContext;
 
-use winapi::shared::winerror::{HRESULT, SUCCEEDED};
 use winresult::{ErrorCode, HResultError};
 
 use std::fmt::{self, Debug, Display, Formatter};
 
 
 
-/// An error about some specific method returning an [HRESULT](https://www.hresult.info/)
+/// An error returned by some XInput function (or wrapper thereof.)
 #[derive(Clone)]
 pub struct Error(pub(crate) &'static FnContext, pub(crate) ErrorKind);
 
-// TODO: replace Error with a generic Error that takes a single `&'static ErrorSite` payload.
-// This wil allow:
-//  1. a cheaper Error type (narrow ref instead of a fat ref)
-//  2. extra metadata (detailed reason, d3d method + thindx method, ...)
-// Start with a `method_error!(...)` macro to replace existing `Error(...)` tuple construction?
-
 impl Error {
-    /// Returns an `Err(Error(...))` if `!SUCCEEDED(hr)`
-    pub(crate) fn check(ctx: &'static FnContext, hr: HRESULT) -> Result<(), Self> {
-        if SUCCEEDED(hr) {
-            Ok(())
-        } else {
-            Err(Error(ctx, ErrorKind::from_winapi(hr)))
-        }
-    }
-
     pub(crate) fn method(&self) -> &'static str { self.0.directx_method.unwrap_or(self.0.thindx_method) }
 
     /// Returns the [ErrorKind] of the error
@@ -35,7 +19,7 @@ impl Error {
 }
 
 impl Debug   for Error { fn fmt(&self, fmt: &mut Formatter) -> fmt::Result { write!(fmt, "Error({:?}, {:?})", self.method(), self.1) } }
-impl Display for Error { fn fmt(&self, fmt: &mut Formatter) -> fmt::Result { write!(fmt, "{} failed with HRESULT == {}", self.method(), self.1) } }
+impl Display for Error { fn fmt(&self, fmt: &mut Formatter) -> fmt::Result { write!(fmt, "{} failed with return == {}", self.method(), self.1) } }
 
 impl std::error::Error for Error {}
 impl From<Error> for std::io::Error { fn from(err: Error) -> Self { std::io::Error::new(std::io::ErrorKind::Other, err) } }

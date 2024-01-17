@@ -1,5 +1,4 @@
 use crate::*;
-use crate::xinput::*;
 
 
 
@@ -19,7 +18,6 @@ use crate::xinput::*;
 ///
 /// ### Example
 /// ```rust
-/// # use thindx::xinput;
 /// # use winapi::shared::minwindef::*;
 /// # use winapi::shared::windef::*;
 /// # use winapi::um::winuser::*;

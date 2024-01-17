@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
 
-    <Type Name="thindx::error::Error">
+    <Type Name="xinput::error::Error">
         <DisplayString>{__1} ({__0->thindx_method,sb})</DisplayString>
         <!--
         <DisplayString>{__1} - Error({__0}, ...)</DisplayString>
@@ -9,19 +9,12 @@
         -->
     </Type>
 
-    <Type Name="thindx::error_kind::ErrorKind">
+    <Type Name="xinput::error_kind::ErrorKind">
         <DisplayString>{(::HRESULT)__0}</DisplayString>
     </Type>
 
-    <HResult Name="THINERR_NONSPECIFIC"                ><HRValue>0xA7D80000</HRValue></HResult>
-    <HResult Name="THINERR_SLICE_OVERFLOW (removed)"   ><HRValue>0xA7D80001</HRValue></HResult>
-    <HResult Name="THINERR_DEVICE_MISMATCH"            ><HRValue>0xA7D80002</HRValue></HResult>
-    <HResult Name="THINERR_ALLOC_OVERFLOW"             ><HRValue>0xA7D80003</HRValue></HResult>
-    <HResult Name="THINERR_INVALID_STRUCT_FIELD"       ><HRValue>0xA7D80004</HRValue></HResult>
     <HResult Name="THINERR_MISSING_DLL_EXPORT"         ><HRValue>0xA7D80005</HRValue></HResult>
     <HResult Name="THINERR_SLICE_TOO_LARGE"            ><HRValue>0xA7D80006</HRValue></HResult>
-    <HResult Name="THINERR_STRING_CONTAINS_NULS"       ><HRValue>0xA7D80007</HRValue></HResult>
-    <HResult Name="THINERR_INVALID_BYTECODE"           ><HRValue>0xA7D80008</HRValue></HResult>
 
     <!-- vscode doesn't have d3d hresults by default, but `winerr` does, which we reference via `natvis-pdbs` -->
 

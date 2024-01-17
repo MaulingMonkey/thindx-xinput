@@ -1,4 +1,4 @@
-use crate::xinput::*;
+use crate::*;
 use bytemuck::{Pod, Zeroable};
 
 
