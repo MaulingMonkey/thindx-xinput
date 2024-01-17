@@ -22,7 +22,7 @@ use crate as xinput;
 ///
 /// ### C++ Structs -> Rust Structs
 ///
-/// [`GUID`](https://docs.microsoft.com/en-us/windows/win32/api/guiddef/ns-guiddef-guid)&nbsp;→ [`Guid`] <br>
+/// [`GUID`](https://learn.microsoft.com/en-us/windows/win32/api/guiddef/ns-guiddef-guid)&nbsp;→ [`Guid`] <br>
 /// ### C++ Constants → Rust Constants
 ///
 /// `CLSID_NULL`&nbsp;→&nbsp;❌ <br>
@@ -49,22 +49,22 @@ pub const guiddef_h : cxx_header = cxx_header;
 ///
 /// ### C++ Structs -> Rust Structs
 ///
-/// [`XINPUT_BATTERY_INFORMATION`](https://docs.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_battery_information)&nbsp;→ [`xinput::BatteryInformation`] <br>
-/// [`XINPUT_CAPABILITIES`](https://docs.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_capabilities)&nbsp;→ [`xinput::Capabilities`] <br>
-/// [`XINPUT_GAMEPAD`](https://docs.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_gamepad)&nbsp;→ [`xinput::Gamepad`] <br>
-/// [`XINPUT_KEYSTROKE`](https://docs.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_keystroke)&nbsp;→ [`xinput::Keystroke`] <br>
-/// [`XINPUT_STATE`](https://docs.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_state)&nbsp;→ [`xinput::State`] <br>
-/// [`XINPUT_VIBRATION`](https://docs.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_vibration)&nbsp;→ [`xinput::Vibration`] <br>
+/// [`XINPUT_BATTERY_INFORMATION`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_battery_information)&nbsp;→ [`xinput::BatteryInformation`] <br>
+/// [`XINPUT_CAPABILITIES`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_capabilities)&nbsp;→ [`xinput::Capabilities`] <br>
+/// [`XINPUT_GAMEPAD`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_gamepad)&nbsp;→ [`xinput::Gamepad`] <br>
+/// [`XINPUT_KEYSTROKE`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_keystroke)&nbsp;→ [`xinput::Keystroke`] <br>
+/// [`XINPUT_STATE`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_state)&nbsp;→ [`xinput::State`] <br>
+/// [`XINPUT_VIBRATION`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_vibration)&nbsp;→ [`xinput::Vibration`] <br>
 /// ### C++ Functions → Rust Fns
 ///
-/// [`XInputEnable`](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputenable)&nbsp;→ [`xinput::enable`] <br>
-/// [`XInputGetAudioDeviceIds`](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetaudiodeviceids)&nbsp;→ [`xinput::get_audio_device_ids`] <br>
-/// [`XInputGetBatteryInformation`](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetbatteryinformation)&nbsp;→ [`xinput::get_battery_information`] <br>
-/// [`XInputGetCapabilities`](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetcapabilities)&nbsp;→ [`xinput::get_capabilities`] <br>
-/// [`XInputGetDSoundAudioDeviceGuids`](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetdsoundaudiodeviceguids)&nbsp;→ [`xinput::get_dsound_audio_device_guids`] <br>
-/// [`XInputGetKeystroke`](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetkeystroke)&nbsp;→ [`xinput::get_keystroke`] <br>
-/// [`XInputGetState`](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetstate)&nbsp;→ [`xinput::get_state`] <br>
-/// [`XInputSetState`](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputsetstate)&nbsp;→ [`xinput::set_state`] <br>
+/// [`XInputEnable`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputenable)&nbsp;→ [`xinput::enable`] <br>
+/// [`XInputGetAudioDeviceIds`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetaudiodeviceids)&nbsp;→ [`xinput::get_audio_device_ids`] <br>
+/// [`XInputGetBatteryInformation`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetbatteryinformation)&nbsp;→ [`xinput::get_battery_information`] <br>
+/// [`XInputGetCapabilities`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetcapabilities)&nbsp;→ [`xinput::get_capabilities`] <br>
+/// [`XInputGetDSoundAudioDeviceGuids`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetdsoundaudiodeviceguids)&nbsp;→ [`xinput::get_dsound_audio_device_guids`] <br>
+/// [`XInputGetKeystroke`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetkeystroke)&nbsp;→ [`xinput::get_keystroke`] <br>
+/// [`XInputGetState`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetstate)&nbsp;→ [`xinput::get_state`] <br>
+/// [`XInputSetState`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputsetstate)&nbsp;→ [`xinput::set_state`] <br>
 /// ### C++ Constants → Rust Constants
 ///
 /// `BATTERY_DEVTYPE_GAMEPAD`&nbsp;→ [`xinput::BatteryDevType::Gamepad`] <br>

@@ -10,7 +10,7 @@ use std::hash::*;
 
 
 
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/api/guiddef/ns-guiddef-guid)\]
+/// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/guiddef/ns-guiddef-guid)\]
 /// A 128-bit identifier used for COM interfaces, COM class objects, and various other purpouses.
 #[derive(Clone, Copy)]
 #[repr(transparent)] pub struct Guid(GUID);

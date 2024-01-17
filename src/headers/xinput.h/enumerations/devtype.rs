@@ -3,7 +3,7 @@ use winapi::um::xinput::*;
 
 
 
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_capabilities)\]
+/// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_capabilities)\]
 /// XINPUT_DEVTYPE_\*
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[derive(Pod, Zeroable)]

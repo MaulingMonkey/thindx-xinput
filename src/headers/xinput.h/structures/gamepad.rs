@@ -4,7 +4,7 @@ use bytemuck::{Pod, Zeroable};
 
 
 
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_gamepad)\]
+/// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_gamepad)\]
 /// XINPUT_GAMEPAD
 ///
 /// Describes the state of an Xbox 360 controller.

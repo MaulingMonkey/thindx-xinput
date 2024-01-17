@@ -3,7 +3,7 @@ use bytemuck::{Pod, Zeroable};
 
 
 
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/api/XInput/ns-xinput-xinput_battery_information)\]
+/// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/XInput/ns-xinput-xinput_battery_information)\]
 /// XINPUT_BATTERY_INFORMATION
 ///
 /// Battery type and charge.

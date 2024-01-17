@@ -3,7 +3,7 @@ use winapi::um::xinput::*;
 
 
 
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/api/XInput/ns-xinput-xinput_battery_information)\]
+/// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/XInput/ns-xinput-xinput_battery_information)\]
 /// BATTERY_LEVEL_\*
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[derive(Pod, Zeroable)]

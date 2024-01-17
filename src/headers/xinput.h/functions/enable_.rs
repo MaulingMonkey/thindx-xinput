@@ -2,11 +2,11 @@ use crate::*;
 
 
 
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputenable)\]
+/// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputenable)\]
 /// XInputEnable
 ///
 /// Meant to be called when an application gains or loses focus
-/// (such as via [WM_ACTIVATEAPP](https://docs.microsoft.com/en-us/windows/desktop/winmsg/wm-activateapp)\),
+/// (such as via [WM_ACTIVATEAPP](https://learn.microsoft.com/en-us/windows/desktop/winmsg/wm-activateapp)\),
 /// to enable or disable XInput for this app.
 ///
 /// "Disabling" xinput with `xinput::enable(false)` will:

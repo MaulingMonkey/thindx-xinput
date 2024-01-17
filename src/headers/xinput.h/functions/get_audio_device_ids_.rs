@@ -5,7 +5,7 @@ use std::os::windows::ffi::*;
 
 
 
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetaudiodeviceids)\]
+/// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetaudiodeviceids)\]
 /// XInputGetAudioDeviceIds
 ///
 /// Get XAudio2 / Windows Core Audio Device Names.
@@ -30,7 +30,7 @@ use std::os::windows::ffi::*;
 /// | "SACRILEGE"       | 10.0.19041.1415   | Windows 10 Pro        | Succeeds when called on missing gamepads
 ///
 /// ### See Also
-/// *   [Getting Audio Device Identifiers](https://docs.microsoft.com/en-us/windows/win32/xinput/getting-started-with-xinput#getting-audio-device-identifiers)
+/// *   [Getting Audio Device Identifiers](https://learn.microsoft.com/en-us/windows/win32/xinput/getting-started-with-xinput#getting-audio-device-identifiers)
 pub fn get_audio_device_ids(user_index: impl Into<u32>) -> Result<AudioDeviceIds, Error> {
     fn_context!(xinput::get_audio_device_ids => XInputGetAudioDeviceIds);
     #[allow(non_snake_case)] let XInputGetAudioDeviceIds = Imports::get().XInputGetAudioDeviceIds.ok_or(fn_error!(ERROR::INVALID_FUNCTION))?;

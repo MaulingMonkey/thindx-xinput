@@ -3,7 +3,7 @@ use winapi::um::xinput::*;
 
 
 
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_keystroke#remarks)\]
+/// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_keystroke#remarks)\]
 /// VK_* values specific to Xbox 360 controllers
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[derive(Default, Pod, Zeroable)]

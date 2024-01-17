@@ -6,7 +6,7 @@ use winapi::um::xinput::*;
 
 
 
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_gamepad#members)\]
+/// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_gamepad#members)\]
 /// XINPUT_GAMEPAD_\*
 ///
 /// Bitmask of the device digital buttons of an Xbox 360 style gamepad.
@@ -111,7 +111,7 @@ impl Buttons {
 
     /// ⚠️ **NOTE** ⚠️ This undocumented button is not returned by most APIs, being reserved for system software.
     ///
-    /// Specifically, you must use the undocumented `XInputGetStateEx` function (same API as [`XInputGetState`](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetstate)?) to ever retrieve this value.
+    /// Specifically, you must use the undocumented `XInputGetStateEx` function (same API as [`XInputGetState`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetstate)?) to ever retrieve this value.
     /// Additionally, this is generally meant to be reserved by the system software.
     /// Windows, Steam, and other store apps all hook this globally regardless of what app/window has focus.
     ///

@@ -20,7 +20,7 @@
         },
         {
             "label":   "clippy",
-            "command": "cargo +nightly clippy --no-deps",
+            "command": "cargo +nightly clippy",
         },
         {
             "label":   "test",
@@ -33,11 +33,11 @@
         },
         {
             "label":   "doc",
-            "command": "cargo doc --no-deps",
+            "command": "cargo doc",
         },
         {
             "label":   "help",
-            "command": "cargo doc --no-deps --open",
+            "command": "cargo doc --open",
         },
         {
             "label":   "vsc",
@@ -76,9 +76,9 @@
         },
         {
             "label":        "open documentation",
-            "windows":      { "command": "start \"\"    \"https://docs.rs/thindx\"" },
-            "linux":        { "command": "xdg-open      \"https://docs.rs/thindx\"" },
-            "osx":          { "command": "open          \"https://docs.rs/thindx\"" },
+            "windows":      { "command": "start \"\"    \"https://learn.rs/thindx\"" },
+            "linux":        { "command": "xdg-open      \"https://learn.rs/thindx\"" },
+            "osx":          { "command": "open          \"https://learn.rs/thindx\"" },
             "presentation": { "clear": true, "panel": "shared", "reveal": "silent" },
         },
     ]

@@ -3,7 +3,7 @@ use bytemuck::{Pod, Zeroable};
 
 
 
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_state)\]
+/// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_state)\]
 /// XINPUT_STATE
 ///
 /// Packet number + [Gamepad] state.

@@ -4,7 +4,7 @@ use winapi::um::xinput::*;
 
 
 
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetcapabilities#parameters)\]
+/// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetcapabilities#parameters)\]
 /// XINPUT_FLAG_\*
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[derive(Pod, Zeroable)]
@@ -16,7 +16,7 @@ flags! { Flag => u32; None, Gamepad }
     /// No flags set
     pub const None : Flag = Flag(0);
 
-    /// [XINPUT_FLAG_GAMEPAD](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetcapabilities)
+    /// [XINPUT_FLAG_GAMEPAD](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetcapabilities)
     ///
     /// Limit [get_capabilities] to Xbox 360 controllers.
     pub const Gamepad : Flag = Flag(XINPUT_FLAG_GAMEPAD);

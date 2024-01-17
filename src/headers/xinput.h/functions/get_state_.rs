@@ -4,7 +4,7 @@ use bytemuck::Zeroable;
 
 
 
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetstate)\]
+/// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetstate)\]
 /// XInputGetState
 ///
 /// Retrieves the current state of the specified controller.

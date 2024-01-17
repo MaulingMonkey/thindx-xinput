@@ -3,7 +3,7 @@ use winapi::um::xinput::*;
 
 
 
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_capabilities#members)\]
+/// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_capabilities#members)\]
 /// XINPUT_CAPS_\*
 ///
 /// Bitmask of the device digital caps of an Xbox 360 style gamepad.

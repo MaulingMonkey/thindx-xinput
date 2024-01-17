@@ -5,7 +5,7 @@ const XINPUT_DEVSUBTYPE_FLIGHT_STICK : u8 = 0x04; // winapi missing def
 
 
 
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/xinput/xinput-and-controller-subtypes)\]
+/// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/xinput/xinput-and-controller-subtypes)\]
 /// XINPUT_DEVSUBTYPE_\*
 ///
 /// Subtypes of [DevType::Gamepad].

@@ -5,7 +5,7 @@ use std::fmt::{self, Debug, Formatter};
 
 
 
-/// \[<strike>docs.microsoft.com</strike>\]
+/// \[<strike>microsoft.com</strike>\]
 /// XUSER_\*
 ///
 /// A user index, typically from 0 ..= 3.

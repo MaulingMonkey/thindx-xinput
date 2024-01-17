@@ -2,7 +2,7 @@ use bytemuck::{Pod, Zeroable};
 
 
 
-/// \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_vibration)\]
+/// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/ns-xinput-xinput_vibration)\]
 /// XINPUT_VIBRATION
 ///
 /// Specifies motor speed levels for the vibration function of a controller.

@@ -24,7 +24,7 @@ lazy_static::lazy_static! {
 pub(crate) struct Imports {
     // Official Imports
 
-    /// \[[MSDN](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetstate)\]
+    /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetstate)\]
     /// Get gamepad button state.
     ///
     /// | XInput | State    |
@@ -32,7 +32,7 @@ pub(crate) struct Imports {
     /// | \*    | Available |
     pub XInputGetState: Option<unsafe extern "system" fn(dwUserIndex: DWORD, pState: *mut XINPUT_STATE) -> DWORD>,
 
-    /// \[[MSDN](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputsetstate)\]
+    /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputsetstate)\]
     /// Set gamepad vibration state.
     ///
     /// | XInput | State    |
@@ -40,7 +40,7 @@ pub(crate) struct Imports {
     /// | \*    | Available |
     pub XInputSetState: Option<unsafe extern "system" fn(dwUserIndex: DWORD, pVibration: *mut XINPUT_VIBRATION) -> DWORD>,
 
-    /// \[[MSDN](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetcapabilities)\]
+    /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetcapabilities)\]
     /// Query the capabilities of a gamepad (vibration, wireless, voice, etc.)
     ///
     /// | XInput | State    |
@@ -48,7 +48,7 @@ pub(crate) struct Imports {
     /// | \*    | Available |
     pub XInputGetCapabilities: Option<unsafe extern "system" fn(dwUserIndex: DWORD, dwFlags: DWORD, pCapabilities: *mut XINPUT_CAPABILITIES) -> DWORD>,
 
-    /// \[[MSDN](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetdsoundaudiodeviceguids)]
+    /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetdsoundaudiodeviceguids)]
     /// Get DirectSound Audio Device GUIDs (N/A for Windows Store apps).
     ///
     /// | XInput | State    |
@@ -63,7 +63,7 @@ pub(crate) struct Imports {
 
     // Windows 8+
 
-    /// \[[MSDN](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetaudiodeviceids)]
+    /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetaudiodeviceids)]
     /// Get XAudio2 Device Names.
     ///
     /// | XInput | State    |
@@ -76,7 +76,7 @@ pub(crate) struct Imports {
     /// | 9.1.0 | N/A       |
     pub XInputGetAudioDeviceIds: Option<unsafe extern "system" fn(dwUserIndex: DWORD, pRenderDeviceId: LPWSTR, pRenderCount: *mut UINT, pCaptureDeviceId: LPWSTR, pCaptureCount: *mut UINT) -> DWORD>,
 
-    /// \[[MSDN](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputenable)]
+    /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputenable)]
     /// Enable or disable xinput (for use in window focus/blur events.)
     ///
     /// | XInput | State        |
@@ -89,7 +89,7 @@ pub(crate) struct Imports {
     /// | 9.1.0 | N/A           |
     pub XInputEnable: Option<unsafe extern "system" fn(enable: BOOL)>,
 
-    /// \[[MSDN](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetbatteryinformation)]
+    /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetbatteryinformation)]
     /// Get battery information for a wireless gamepad.
     ///
     /// | XInput | State        |
@@ -102,7 +102,7 @@ pub(crate) struct Imports {
     /// | 9.1.0 | N/A           |
     pub XInputGetBatteryInformation: Option<unsafe extern "system" fn(dwUserIndex: DWORD, devType: BYTE, pBatteryInformation: *mut XINPUT_BATTERY_INFORMATION) -> DWORD>,
 
-    /// \[[MSDN](https://docs.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetkeystroke)]
+    /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetkeystroke)]
     ///
     /// | XInput | State        |
     /// | ------ | ------------ |
@@ -190,7 +190,7 @@ impl Imports {
 /// > yet initialized, or if the module list changes during the function call as a result of DLLs being loaded or
 /// > unloaded, EnumProcessModulesEx may fail or return incorrect information."
 /// >
-/// > <https://docs.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-enumprocessmodulesex>
+/// > <https://learn.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-enumprocessmodulesex>
 ///
 /// Additionally, there's technically nothing stopping you from loading an evil `xinput_.dll`, that takes priority over
 /// the real xinput DLLs, that defines XInputGetState and exposes unsound functions, which immediately invokes undefined
