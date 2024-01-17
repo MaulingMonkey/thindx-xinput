@@ -35,10 +35,11 @@ use crate::*;
 /// ```
 ///
 /// ### Errors
-/// *   [THINERR::MISSING_DLL_EXPORT]   - Enable/disable API unavailable: requires XInput 1.1 or later
+/// *   [ERROR::INVALID_FUNCTION]       - Enable/disable API unavailable: requires XInput 1.1 or later
+/// *   [ERROR::INVALID_FUNCTION]       - Enable/disable API unavailable: requires XInput 1.1 or later
 pub fn enable(enable: bool) -> Result<(), Error> {
     fn_context!(xinput::enable => XInputEnable);
-    #[allow(non_snake_case)] let XInputEnable = Imports::get().XInputEnable.ok_or(fn_error!(THINERR::MISSING_DLL_EXPORT))?;
+    #[allow(non_snake_case)] let XInputEnable = Imports::get().XInputEnable.ok_or(fn_error!(ERROR::INVALID_FUNCTION))?;
     // SAFETY: ✔️
     //  * fuzzed        in `tests/fuzz-xinput.rs`
     //  * `enable`      can be true or false.  Pretty easy to have exhaustive test coverage.

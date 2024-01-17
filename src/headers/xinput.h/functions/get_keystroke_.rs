@@ -12,12 +12,12 @@ use winapi::shared::winerror::ERROR_EMPTY;
 /// Retrieves gamepad input events.
 ///
 /// ### Errors
-/// *   [THINERR::MISSING_DLL_EXPORT]   - Keystrokes API unavailable: requires XInput 1.3+
+/// *   [ERROR::INVALID_FUNCTION]       - Keystrokes API unavailable: requires XInput 1.3+
 /// *   [ERROR::BAD_ARGUMENTS]          - Invalid [`User`]
 /// *   [ERROR::DEVICE_NOT_CONNECTED]   - Disconnected [`User`]
 pub fn get_keystroke(user_index: impl Into<u32>, _reserved: ()) -> Result<Option<Keystroke>, Error> {
     fn_context!(xinput::get_keystroke => XInputGetKeystroke);
-    #[allow(non_snake_case)] let XInputGetKeystroke = Imports::get().XInputGetKeystroke.ok_or(fn_error!(THINERR::MISSING_DLL_EXPORT))?;
+    #[allow(non_snake_case)] let XInputGetKeystroke = Imports::get().XInputGetKeystroke.ok_or(fn_error!(ERROR::INVALID_FUNCTION))?;
     let mut keystroke = Keystroke::zeroed();
     // SAFETY: ✔️
     //  * fuzzed        in `tests/fuzz-xinput.rs`

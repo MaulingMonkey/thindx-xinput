@@ -3,7 +3,7 @@ const WITH_COM      : Duration = Duration::from_secs(if std::option_env!("TESTFA
 
 
 
-use xinput::{Error, ErrorKind, ERROR, THINERR};
+use xinput::{Error, ErrorKind, ERROR};
 
 use mmrbi::*;
 
@@ -50,14 +50,14 @@ macro_rules! fuzz {
                     #[allow(deprecated)] |u| xinput::get_audio_device_ids(u),
                     ERROR::BAD_ARGUMENTS,
                     ERROR::DEVICE_NOT_CONNECTED,    // only on some systems
-                    THINERR::MISSING_DLL_EXPORT,    // untested
+                    ERROR::INVALID_FUNCTION,        // untested
                 );
 
                 fuzz!(
                     #[allow(deprecated)] |u| xinput::get_dsound_audio_device_guids(u),
                     ERROR::BAD_ARGUMENTS,           // untested
                     ERROR::DEVICE_NOT_CONNECTED,    // untested
-                    THINERR::MISSING_DLL_EXPORT,
+                    ERROR::INVALID_FUNCTION,
                 );
 
                 for bt in [

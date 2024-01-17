@@ -16,26 +16,8 @@
 // TODO: Cleanup formatting etc.
 
 #[allow(unused_imports)] use crate::*;
-use winresult::HResultError;
 
 
-
-/// `0xA7D8....` • **T**hin**DX** [ErrorKind]s
-///
-/// *   `0xA.......`  - **S**everity and **C**ustomer bits for [HRESULT](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-erref/0642cb2f-2075-4469-918c-4441e69c548a)s
-/// *   `0x.7D8....`  - **T**hin **DX** error codes
-pub mod THINERR {
-    use super::*;
-
-    // General errors
-
-    /// `0xA7D80005`    This version of the DLL doesn't support this fn
-    pub const MISSING_DLL_EXPORT : HResultError = HResultError::from_constant(0xA7D80005);
-
-    /// `0xA7D80006`    Slice length exceeded some kind of length limit (typically a conversion to a 32-bit length, or
-    ///                 an extra cap introduced by thindx to avoid undefined behavior from allocation size overflows.)
-    pub const SLICE_TOO_LARGE : HResultError = HResultError::from_constant(0xA7D80006);
-}
 
 /// `0x0000....` • \[[docs.microsoft.com](https://docs.microsoft.com/en-us/windows/win32/debug/system-error-codes--0-499-)\] • Non-hresult [ErrorKind](crate::ErrorKind)s
 pub use winresult::ERROR;

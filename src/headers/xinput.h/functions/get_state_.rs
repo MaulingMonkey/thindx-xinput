@@ -10,12 +10,12 @@ use bytemuck::Zeroable;
 /// Retrieves the current state of the specified controller.
 ///
 /// ### Errors
-/// *   [THINERR::MISSING_DLL_EXPORT]   - Couldn't find an XInput DLL
+/// *   [ERROR::INVALID_FUNCTION]       - Couldn't find an XInput DLL
 /// *   [ERROR::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
 /// *   [ERROR::DEVICE_NOT_CONNECTED]   - [`User`] gamepad not connected
 pub fn get_state(user_index: impl Into<u32>) -> Result<State, Error> {
     fn_context!(xinput::get_state => XInputGetState);
-    #[allow(non_snake_case)] let XInputGetState = Imports::get().XInputGetState.ok_or(fn_error!(THINERR::MISSING_DLL_EXPORT))?;
+    #[allow(non_snake_case)] let XInputGetState = Imports::get().XInputGetState.ok_or(fn_error!(ERROR::INVALID_FUNCTION))?;
     let mut state = State::zeroed();
     // SAFETY: ✔️
     //  * fuzzed        in `tests/fuzz-xinput.rs`
