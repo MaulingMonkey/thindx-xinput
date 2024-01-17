@@ -2,7 +2,3 @@
 /target
 /*.log
 /Cargo.lock
-
-# build output (copied from workspace root)
-/thindx/LICENSE*
-#/thindx/Readme.md      # checkin so this is git-dependency ready
