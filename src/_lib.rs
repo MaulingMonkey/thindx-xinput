@@ -24,9 +24,6 @@
 
 // #![warn(clippy::undocumented_unsafe_blocks)]    // too noisy to implement yet
 
-#[doc(no_inline)] pub use ::winresult::ERROR;
-#[doc(no_inline)] pub use ::winresult::ErrorHResultOrCode as ErrorKind;
-
 #[cfg(doc)] #[doc = include_str!("../doc/apis.md")] pub mod apis {}
 #[cfg(doc)] #[doc = include_str!("../doc/crates.md")] pub mod crates {}
 
@@ -35,7 +32,8 @@
 #[macro_use] mod macros;
 #[macro_use] mod error_macros;
 
-mod error;                                                      pub use error::*;
+pub mod error; #[doc(no_inline)] pub use error::Error;
+
 #[path="headers/guiddef.h/guiddef.rs"]          mod guiddef_h;  pub use guiddef_h::*;
 #[path="headers/xinput.h/xinput.rs"]            mod xinput_h;   pub use xinput_h::*;
 

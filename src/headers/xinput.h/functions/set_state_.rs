@@ -8,9 +8,9 @@ use crate::*;
 /// Control the vibration of a controller.
 ///
 /// ### Errors
-/// *   [ERROR::INVALID_FUNCTION]       - Couldn't find an XInput DLL
-/// *   [ERROR::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
-/// *   [ERROR::DEVICE_NOT_CONNECTED]   - [`User`] is not connected
+/// *   [error::INVALID_FUNCTION]       - Couldn't find an XInput DLL
+/// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
+/// *   [error::DEVICE_NOT_CONNECTED]   - [`User`] is not connected
 pub fn set_state(user_index: impl Into<u32>, mut vibration: Vibration) -> Result<(), Error> {
     fn_context!(xinput::set_state => XInputSetState);
     #[allow(non_snake_case)] let XInputSetState = Imports::get().XInputSetState;
@@ -25,16 +25,16 @@ pub fn set_state(user_index: impl Into<u32>, mut vibration: Vibration) -> Result
 
 #[test] fn test_valid_params() {
     let v = Vibration::default();
-    if let Err(err) = set_state(0u32, v) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = set_state(1u32, v) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = set_state(2u32, v) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = set_state(3u32, v) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = set_state(0u32, v) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = set_state(1u32, v) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = set_state(2u32, v) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = set_state(3u32, v) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
 }
 
 #[test] fn test_bad_arguments() {
     let v = Vibration::default();
-    assert_eq!(ERROR::BAD_ARGUMENTS, set_state(User::Any, v));
+    assert_eq!(error::BAD_ARGUMENTS, set_state(User::Any, v));
     for u in User::iter_invalid() {
-        assert_eq!(ERROR::BAD_ARGUMENTS, set_state(u, v));
+        assert_eq!(error::BAD_ARGUMENTS, set_state(u, v));
     }
 }

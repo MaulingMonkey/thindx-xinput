@@ -8,11 +8,11 @@ use bytemuck::Zeroable;
 /// XInputGetCapabilities
 ///
 /// ### Errors
-/// *   [ERROR::INVALID_FUNCTION]       - Couldn't find an XInput DLL
-/// *   [ERROR::BAD_ARGUMENTS]          - Invalid [`Flag`]
-/// *   [ERROR::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
-/// *   [ERROR::DEVICE_NOT_CONNECTED]   - [`Flag::None`]
-/// *   [ERROR::DEVICE_NOT_CONNECTED]   - [`User`] in bounds, but without a gamepad
+/// *   [error::INVALID_FUNCTION]       - Couldn't find an XInput DLL
+/// *   [error::BAD_ARGUMENTS]          - Invalid [`Flag`]
+/// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
+/// *   [error::DEVICE_NOT_CONNECTED]   - [`Flag::None`]
+/// *   [error::DEVICE_NOT_CONNECTED]   - [`User`] in bounds, but without a gamepad
 pub fn get_capabilities(user_index: impl Into<u32>, flags: Flag) -> Result<Capabilities, Error> {
     fn_context!(xinput::get_capabilities => XInputGetCapabilities);
     #[allow(non_snake_case)] let XInputGetCapabilities = Imports::get().XInputGetCapabilities;
@@ -28,25 +28,25 @@ pub fn get_capabilities(user_index: impl Into<u32>, flags: Flag) -> Result<Capab
 }
 
 #[test] fn test_valid_params() {
-    if let Err(err) = get_capabilities(0u32, Flag::Gamepad) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(1u32, Flag::Gamepad) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(2u32, Flag::Gamepad) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(3u32, Flag::Gamepad) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_capabilities(0u32, Flag::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_capabilities(1u32, Flag::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_capabilities(2u32, Flag::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_capabilities(3u32, Flag::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
 
-    if let Err(err) = get_capabilities(0u32, Flag::None   ) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(1u32, Flag::None   ) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(2u32, Flag::None   ) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(3u32, Flag::None   ) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_capabilities(0u32, Flag::None   ) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_capabilities(1u32, Flag::None   ) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_capabilities(2u32, Flag::None   ) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_capabilities(3u32, Flag::None   ) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
 }
 
 #[test] fn test_bad_arguments() {
-    assert_eq!(ERROR::BAD_ARGUMENTS,        get_capabilities(User::Any,                 Flag::Gamepad));            // Bad User (any)
-    assert_eq!(ERROR::BAD_ARGUMENTS,        get_capabilities(User::from_unchecked(4),   Flag::Gamepad));            // Bad User (obb)
-    assert_eq!(ERROR::BAD_ARGUMENTS,        get_capabilities(User::Zero,                Flag::from_unchecked(42))); // Bad Flag (obb)
-    assert_eq!(ERROR::BAD_ARGUMENTS,        get_capabilities(User::Zero,                Flag::from_unchecked(!0))); // Bad Flag (obb)
+    assert_eq!(error::BAD_ARGUMENTS,        get_capabilities(User::Any,                 Flag::Gamepad));            // Bad User (any)
+    assert_eq!(error::BAD_ARGUMENTS,        get_capabilities(User::from_unchecked(4),   Flag::Gamepad));            // Bad User (obb)
+    assert_eq!(error::BAD_ARGUMENTS,        get_capabilities(User::Zero,                Flag::from_unchecked(42))); // Bad Flag (obb)
+    assert_eq!(error::BAD_ARGUMENTS,        get_capabilities(User::Zero,                Flag::from_unchecked(!0))); // Bad Flag (obb)
     for u in User::iter_invalid() {
-        assert_eq!(ERROR::BAD_ARGUMENTS, get_capabilities(u, Flag::Gamepad)); // Bad user only
-        assert_eq!(ERROR::BAD_ARGUMENTS, get_capabilities(u, Flag::from_unchecked(42))); // Bad Flag (obb)
-        assert_eq!(ERROR::BAD_ARGUMENTS, get_capabilities(u, Flag::from_unchecked(!0))); // Bad Flag (obb)
+        assert_eq!(error::BAD_ARGUMENTS, get_capabilities(u, Flag::Gamepad)); // Bad user only
+        assert_eq!(error::BAD_ARGUMENTS, get_capabilities(u, Flag::from_unchecked(42))); // Bad Flag (obb)
+        assert_eq!(error::BAD_ARGUMENTS, get_capabilities(u, Flag::from_unchecked(!0))); // Bad Flag (obb)
     }
 }

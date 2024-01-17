@@ -1,6 +1,6 @@
 #![warn(clippy::undocumented_unsafe_blocks)]
 
-use crate::{Error, ErrorKind};
+use crate::*;
 use winresult::ERROR;
 
 macro_rules! check_success { ( $err:expr ) => { $crate::check_error_success(&_THINDX_FN_CONTEXT, $err) } }
@@ -56,6 +56,6 @@ pub(crate) fn check_error_success(fn_context: &'static crate::error_macros::FnCo
     if err == ERROR::SUCCESS.to_u32() {
         Ok(())
     } else {
-        Err(Error(fn_context, ErrorKind::from(err)))
+        Err(Error(fn_context, error::Kind::from_u32(err)))
     }
 }

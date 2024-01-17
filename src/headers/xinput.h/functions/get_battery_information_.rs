@@ -13,10 +13,10 @@ use bytemuck::Zeroable;
 /// *   `dev_type`      [BatteryDevType::Gamepad] or [BatteryDevType::Headset]
 ///
 /// ### Errors
-/// *   [ERROR::INVALID_FUNCTION]       - Battery information unavailable: requires XInput 1.3 or later
-/// *   [ERROR::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
-/// *   [ERROR::DEVICE_NOT_CONNECTED]   - Disconnected [`User`]
-/// *   [ERROR::DEVICE_NOT_CONNECTED]   - Invalid [`BatteryDevType`]
+/// *   [error::INVALID_FUNCTION]       - Battery information unavailable: requires XInput 1.3 or later
+/// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
+/// *   [error::DEVICE_NOT_CONNECTED]   - Disconnected [`User`]
+/// *   [error::DEVICE_NOT_CONNECTED]   - Invalid [`BatteryDevType`]
 pub fn get_battery_information(user_index: impl Into<u32>, dev_type: impl Into<BatteryDevType>) -> Result<BatteryInformation, Error> {
     fn_context!(xinput::get_battery_information => XInputGetBatteryInformation);
     #[allow(non_snake_case)] let XInputGetBatteryInformation = Imports::get().XInputGetBatteryInformation;
@@ -32,21 +32,21 @@ pub fn get_battery_information(user_index: impl Into<u32>, dev_type: impl Into<B
 }
 
 #[test] fn test_valid_params() {
-    if let Err(err) = get_battery_information(0u32, BatteryDevType::Gamepad) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_battery_information(1u32, BatteryDevType::Gamepad) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_battery_information(2u32, BatteryDevType::Gamepad) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_battery_information(3u32, BatteryDevType::Gamepad) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_battery_information(0u32, BatteryDevType::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_battery_information(1u32, BatteryDevType::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_battery_information(2u32, BatteryDevType::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_battery_information(3u32, BatteryDevType::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
 
-    if let Err(err) = get_battery_information(0u32, BatteryDevType::Headset) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_battery_information(1u32, BatteryDevType::Headset) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_battery_information(2u32, BatteryDevType::Headset) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_battery_information(3u32, BatteryDevType::Headset) { assert_eq!(err, ERROR::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_battery_information(0u32, BatteryDevType::Headset) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_battery_information(1u32, BatteryDevType::Headset) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_battery_information(2u32, BatteryDevType::Headset) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_battery_information(3u32, BatteryDevType::Headset) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
 }
 
 #[test] fn test_bad_arguments() {
-    assert_eq!(ERROR::DEVICE_NOT_CONNECTED, get_battery_information(User::Zero, BatteryDevType::from_unchecked(42))); // bad devtype
-    assert_eq!(ERROR::BAD_ARGUMENTS,        get_battery_information(User::Any,  BatteryDevType::Gamepad));
+    assert_eq!(error::DEVICE_NOT_CONNECTED, get_battery_information(User::Zero, BatteryDevType::from_unchecked(42))); // bad devtype
+    assert_eq!(error::BAD_ARGUMENTS,        get_battery_information(User::Any,  BatteryDevType::Gamepad));
     for u in User::iter_invalid() {
-        assert_eq!(ERROR::BAD_ARGUMENTS, get_battery_information(u, BatteryDevType::Gamepad));
+        assert_eq!(error::BAD_ARGUMENTS, get_battery_information(u, BatteryDevType::Gamepad));
     }
 }

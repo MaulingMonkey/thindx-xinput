@@ -36,7 +36,7 @@ use crate::*;
 /// ```
 ///
 /// ### Errors
-/// *   [ERROR::INVALID_FUNCTION]       - Enable/disable API unavailable: requires XInput 1.1 or later
+/// *   [error::INVALID_FUNCTION]       - Enable/disable API unavailable: requires XInput 1.1 or later
 pub fn enable(enable: bool) -> Result<(), Error> {
     fn_context!(xinput::enable => XInputEnable);
     #[allow(non_snake_case)] let XInputEnable = Imports::get().XInputEnable;

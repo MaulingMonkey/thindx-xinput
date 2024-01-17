@@ -200,7 +200,7 @@ mod fallback {
     #![allow(non_snake_case)]
     #![allow(unused_variables)]
     use super::*;
-    const ERROR_INVALID_FUNCTION : u32 = ERROR::INVALID_FUNCTION.to_u32();
+    const ERROR_INVALID_FUNCTION : u32 = error::INVALID_FUNCTION.to_u32();
 
     pub extern "system" fn XInputGetState(                  dwUserIndex: DWORD, pState: *mut XINPUT_STATE                                                                               ) -> DWORD { ERROR_INVALID_FUNCTION }
     pub extern "system" fn XInputSetState(                  dwUserIndex: DWORD, pVibration: *mut XINPUT_VIBRATION                                                                       ) -> DWORD { ERROR_INVALID_FUNCTION }

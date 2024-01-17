@@ -3,7 +3,7 @@ const WITH_COM      : Duration = Duration::from_secs(if std::option_env!("TESTFA
 
 
 
-use xinput::{Error, ErrorKind, ERROR};
+use xinput::*;
 
 use mmrbi::*;
 
@@ -48,16 +48,16 @@ macro_rules! fuzz {
 
                 fuzz!(
                     #[allow(deprecated)] |u| xinput::get_audio_device_ids(u),
-                    ERROR::BAD_ARGUMENTS,
-                    ERROR::DEVICE_NOT_CONNECTED,    // only on some systems
-                    ERROR::INVALID_FUNCTION,        // untested
+                    error::BAD_ARGUMENTS,
+                    error::DEVICE_NOT_CONNECTED,    // only on some systems
+                    error::INVALID_FUNCTION,        // untested
                 );
 
                 fuzz!(
                     #[allow(deprecated)] |u| xinput::get_dsound_audio_device_guids(u),
-                    ERROR::BAD_ARGUMENTS,           // untested
-                    ERROR::DEVICE_NOT_CONNECTED,    // untested
-                    ERROR::INVALID_FUNCTION,
+                    error::BAD_ARGUMENTS,           // untested
+                    error::DEVICE_NOT_CONNECTED,    // untested
+                    error::INVALID_FUNCTION,
                 );
 
                 for bt in [
@@ -69,8 +69,8 @@ macro_rules! fuzz {
                 ].iter().copied() {
                     fuzz!(
                         |u| xinput::get_battery_information(u, bt),
-                        ERROR::BAD_ARGUMENTS,
-                        ERROR::DEVICE_NOT_CONNECTED,
+                        error::BAD_ARGUMENTS,
+                        error::DEVICE_NOT_CONNECTED,
                     );
                 }
 
@@ -88,27 +88,27 @@ macro_rules! fuzz {
                 ].iter().copied() {
                     fuzz!(
                         |u| xinput::get_capabilities(u, flag),
-                        ERROR::BAD_ARGUMENTS,
-                        ERROR::DEVICE_NOT_CONNECTED,
+                        error::BAD_ARGUMENTS,
+                        error::DEVICE_NOT_CONNECTED,
                     );
                 }
 
                 fuzz!(
                     |u| xinput::get_keystroke(u, ()),
-                    ERROR::BAD_ARGUMENTS,
-                    ERROR::DEVICE_NOT_CONNECTED,
+                    error::BAD_ARGUMENTS,
+                    error::DEVICE_NOT_CONNECTED,
                 );
 
                 fuzz!(
                     |u| xinput::get_state(u),
-                    ERROR::BAD_ARGUMENTS,
-                    ERROR::DEVICE_NOT_CONNECTED,
+                    error::BAD_ARGUMENTS,
+                    error::DEVICE_NOT_CONNECTED,
                 );
 
                 fuzz!(
                     #[allow(deprecated)] |u| xinput::get_state_ex(u),
-                    ERROR::BAD_ARGUMENTS,
-                    ERROR::DEVICE_NOT_CONNECTED,
+                    error::BAD_ARGUMENTS,
+                    error::DEVICE_NOT_CONNECTED,
                 );
 
                 for enable in [false, true].iter().copied() {
@@ -119,8 +119,8 @@ macro_rules! fuzz {
                     ].iter().copied() {
                         fuzz!(
                             |u| xinput::set_state(u, vibration),
-                            ERROR::BAD_ARGUMENTS,
-                            ERROR::DEVICE_NOT_CONNECTED,
+                            error::BAD_ARGUMENTS,
+                            error::DEVICE_NOT_CONNECTED,
                         );
                     }
                 }
@@ -154,7 +154,7 @@ fn initialize_com_for_the_first_time_on_this_thread(mta: bool) {
     // We don't ever try to pair this with uninitializing COM
 }
 
-fn fuzz<T>(title: &str, file: &str, line: u32, codes: &[ErrorKind], f: impl Fn(xinput::User) -> Result<T, Error>) {
+fn fuzz<T>(title: &str, file: &str, line: u32, codes: &[xinput::error::Kind], f: impl Fn(xinput::User) -> Result<T, Error>) {
     for _ in 0 ..= 100 { let _ = f(xinput::User::Zero ); }
     for _ in 0 ..= 100 { let _ = f(xinput::User::One  ); }
     for _ in 0 ..= 100 { let _ = f(xinput::User::Two  ); }
