@@ -216,10 +216,11 @@ unsafe fn try_find_loaded_xinput() -> Option<Library> {
         }
         let needed_elements = usize::try_from(needed_bytes).unwrap_or(!0usize) / size_of::<HMODULE>();
         if needed_bytes <= available_bytes {
-            modules.shrink_to(needed_elements);
+            modules.truncate(needed_elements);
             break // success!
         } else {
             modules.resize(needed_elements, null_mut());
+            modules.resize(modules.capacity(), null_mut());
             continue // not enough modules
         }
     }
