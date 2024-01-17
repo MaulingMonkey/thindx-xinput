@@ -13,10 +13,10 @@ use bytemuck::Zeroable;
 /// *   `dev_type`      [BatteryDevType::Gamepad] or [BatteryDevType::Headset]
 ///
 /// ### Errors
-/// *   [error::INVALID_FUNCTION]       - Battery information unavailable: requires XInput 1.3 or later
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
 /// *   [error::DEVICE_NOT_CONNECTED]   - Disconnected [`User`]
 /// *   [error::DEVICE_NOT_CONNECTED]   - Invalid [`BatteryDevType`]
+/// *   [error::INVALID_FUNCTION]       - API unavailable: requires XInput 1.3 or later
 pub fn get_battery_information(user_index: impl Into<u32>, dev_type: impl Into<BatteryDevType>) -> Result<BatteryInformation, Error> {
     fn_context!(xinput::get_battery_information => XInputGetBatteryInformation);
     #[allow(non_snake_case)] let XInputGetBatteryInformation = Imports::get().XInputGetBatteryInformation;

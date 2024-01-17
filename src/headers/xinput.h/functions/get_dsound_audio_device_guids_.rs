@@ -11,9 +11,9 @@ use bytemuck::Zeroable;
 /// Get DirectSound Audio Device GUIDs (N/A for Windows Store apps, isn't supported by Windows 8.)
 ///
 /// ### Errors
-/// *   [error::INVALID_FUNCTION]       - DirectSound GUIDs unavailable: XInput 1.3 or earlier
 /// *   [error::BAD_ARGUMENTS]?         - [`User`] out of bounds?
 /// *   [error::DEVICE_NOT_CONNECTED]?  - [`User`] in bounds, but without a gamepad?
+/// *   [error::INVALID_FUNCTION]       - API unavailable: requires XInput 1.3 or earlier
 #[deprecated = "Deprecated in favor of xinput::get_audio_device_ids.  Unavailable for Windows Store apps, may fail on Windows 8."]
 pub fn get_dsound_audio_device_guids(user_index: impl Into<User>) -> Result<DSoundAudioDeviceGuids, Error> {
     fn_context!(xinput::get_dsound_audio_device_guids => XInputGetDSoundAudioDeviceGuids);

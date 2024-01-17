@@ -8,11 +8,11 @@ use bytemuck::Zeroable;
 /// XInputGetCapabilities
 ///
 /// ### Errors
-/// *   [error::INVALID_FUNCTION]       - Couldn't find an XInput DLL
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`Flag`]
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
 /// *   [error::DEVICE_NOT_CONNECTED]   - [`Flag::None`]
 /// *   [error::DEVICE_NOT_CONNECTED]   - [`User`] in bounds, but without a gamepad
+/// *   [error::INVALID_FUNCTION]       - API unavailable: XInput not loaded
 pub fn get_capabilities(user_index: impl Into<u32>, flags: Flag) -> Result<Capabilities, Error> {
     fn_context!(xinput::get_capabilities => XInputGetCapabilities);
     #[allow(non_snake_case)] let XInputGetCapabilities = Imports::get().XInputGetCapabilities;

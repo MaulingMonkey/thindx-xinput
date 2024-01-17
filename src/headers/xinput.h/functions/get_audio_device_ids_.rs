@@ -15,9 +15,9 @@ use std::os::windows::ffi::*;
 ///
 /// ### Errors
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
-/// *   [error::DEVICE_NOT_CONNECTED]   - **Unreliably.**
-/// *   [error::INVALID_FUNCTION]       - XAudio2 / Windows Core Audio Device Names unavailable: XInput 1.4 or later
 /// *   [error::BUFFER_TOO_SMALL]       - Audio device paths exceedingly large (doesn't fit in e.g. `[wchar_t; 4096]`.)
+/// *   [error::DEVICE_NOT_CONNECTED]   - **Unreliably.**
+/// *   [error::INVALID_FUNCTION]       - API unavailable: requires XInput 1.4 or later
 ///
 /// | System            | Windows `ver`     | Windows SKU           | Behavior |
 /// | ----------------- | ----------------- | --------------------- | -------- |

@@ -8,9 +8,9 @@ use crate::*;
 /// Control the vibration of a controller.
 ///
 /// ### Errors
-/// *   [error::INVALID_FUNCTION]       - Couldn't find an XInput DLL
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
 /// *   [error::DEVICE_NOT_CONNECTED]   - [`User`] is not connected
+/// *   [error::INVALID_FUNCTION]       - API unavailable: XInput not loaded
 pub fn set_state(user_index: impl Into<u32>, mut vibration: Vibration) -> Result<(), Error> {
     fn_context!(xinput::set_state => XInputSetState);
     #[allow(non_snake_case)] let XInputSetState = Imports::get().XInputSetState;

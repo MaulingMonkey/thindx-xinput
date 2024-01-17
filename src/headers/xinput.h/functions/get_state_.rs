@@ -10,9 +10,9 @@ use bytemuck::Zeroable;
 /// Retrieves the current state of the specified controller.
 ///
 /// ### Errors
-/// *   [error::INVALID_FUNCTION]       - Couldn't find an XInput DLL
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
 /// *   [error::DEVICE_NOT_CONNECTED]   - [`User`] gamepad not connected
+/// *   [error::INVALID_FUNCTION]       - API unavailable: XInput not loaded
 pub fn get_state(user_index: impl Into<u32>) -> Result<State, Error> {
     fn_context!(xinput::get_state => XInputGetState);
     #[allow(non_snake_case)] let XInputGetState = Imports::get().XInputGetState;

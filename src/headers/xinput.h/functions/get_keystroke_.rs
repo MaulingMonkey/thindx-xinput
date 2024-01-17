@@ -11,10 +11,10 @@ use bytemuck::Zeroable;
 /// Retrieves gamepad input events.
 ///
 /// ### Errors
-/// *   [error::INVALID_FUNCTION]       - Keystrokes API unavailable: requires XInput 1.3+
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`User`]
 /// *   [error::DEVICE_NOT_CONNECTED]   - Disconnected [`User`]
-/// *   ~~error::EMPTY~~                → Returns <code>[Ok]\([None]\)</code> instead.
+/// *   ~~error::EMPTY~~                - No [`Keystroke`]s available.  Returns <code>[Ok]\([None]\)</code> instead.
+/// *   [error::INVALID_FUNCTION]       - API unavailable: requires XInput 1.3 or later
 pub fn get_keystroke(user_index: impl Into<u32>, _reserved: ()) -> Result<Option<Keystroke>, Error> {
     fn_context!(xinput::get_keystroke => XInputGetKeystroke);
     #[allow(non_snake_case)] let XInputGetKeystroke = Imports::get().XInputGetKeystroke;

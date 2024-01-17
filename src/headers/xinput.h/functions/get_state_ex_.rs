@@ -12,9 +12,9 @@ use bytemuck::Zeroable;
 /// Silently falls back on [`XInputGetState`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetstate) if `XInputGetStateEx` is unavailable.
 ///
 /// ### Errors
-/// *   [error::INVALID_FUNCTION]       - Couldn't find an XInput DLL
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
 /// *   [error::DEVICE_NOT_CONNECTED]   - [`User`] gamepad not connected
+/// *   [error::INVALID_FUNCTION]       - API unavailable: XInput not loaded
 #[deprecated = "This undocumented function is reserved for system software to access Buttons::Guide."]
 pub fn get_state_ex(user_index: impl Into<u32>) -> Result<State, Error> {
     fn_context!(xinput::get_state_ex => XInputGetStateEx);
