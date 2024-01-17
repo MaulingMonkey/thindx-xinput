@@ -19,15 +19,10 @@ impl Error {
 }
 
 impl Debug   for Error { fn fmt(&self, fmt: &mut Formatter) -> fmt::Result { write!(fmt, "Error({:?}, {:?})", self.method(), self.1) } }
-impl Display for Error { fn fmt(&self, fmt: &mut Formatter) -> fmt::Result { write!(fmt, "{} failed with return == {}", self.method(), self.1) } }
+impl Display for Error { fn fmt(&self, fmt: &mut Formatter) -> fmt::Result { write!(fmt, "{} failed, returning {:?}", self.method(), self.1) } }
 
 impl std::error::Error for Error {}
 impl From<Error> for std::io::Error { fn from(err: Error) -> Self { std::io::Error::new(std::io::ErrorKind::Other, err) } }
-
-impl PartialEq<Option<Error>> for ErrorKind { fn eq(&self, other: &Option<Error>) -> bool { Some(*self) == other.as_ref().map(|e| e.kind()) } }
-impl PartialEq<ErrorKind> for Option<Error> { fn eq(&self, other: &ErrorKind)           -> bool { Some(*other) == self.as_ref().map(|e| e.kind()) } }
-impl<O> PartialEq<Result<O, Error>> for ErrorKind { fn eq(&self, other: &Result<O, Error>) -> bool { Some(*self) == other.as_ref().err().map(|e| e.kind()) } }
-impl<O> PartialEq<ErrorKind> for Result<O, Error> { fn eq(&self, other: &ErrorKind)              -> bool { Some(*other) == self.as_ref().err().map(|e| e.kind()) } }
 
 impl PartialEq<Error> for ErrorCode     { fn eq(&self, other: &Error        ) -> bool { other.kind() == *self } }
 impl PartialEq<Error> for HResultError  { fn eq(&self, other: &Error        ) -> bool { other.kind() == *self } }

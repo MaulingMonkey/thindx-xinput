@@ -12,10 +12,8 @@
 
 // #![warn(clippy::undocumented_unsafe_blocks)]    // too noisy to implement yet
 
-pub extern crate abibool;
-pub extern crate abistr;
-
-#[doc(hidden)] pub use abistr::cstr;
+#[doc(no_inline)] pub use ::winresult::ERROR;
+#[doc(no_inline)] pub use ::winresult::ErrorHResultOrCode as ErrorKind;
 
 
 
@@ -31,8 +29,6 @@ mods! {
     #[path="headers/guiddef.h/guiddef.rs"]          mod guiddef_h;
     #[path="headers/xinput.h/xinput.rs"]            mod xinput_h;
 
-    mod error_kind;
-    pub mod errors;
     mod error;
 }
 

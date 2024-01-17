@@ -57,6 +57,6 @@ pub(crate) fn check_error_success(fn_context: &'static crate::error_macros::FnCo
     if err == ERROR::SUCCESS.to_u32() {
         Ok(())
     } else {
-        Err(Error(fn_context, ErrorKind::from_winapi(err as _)))
+        Err(Error(fn_context, ErrorKind::from(err)))
     }
 }
