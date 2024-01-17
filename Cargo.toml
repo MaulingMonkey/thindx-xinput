@@ -12,6 +12,7 @@ readme                                  = "Readme.md"
 description                             = "Thin XInput wrappers"
 keywords                                = ["directx", "xinput", "gamepads"]
 categories                              = ["api-bindings", "os::windows-apis"] # https://crates.io/category_slugs
+rust-version                            = "1.71.0" # debugger_visualizer MSRV
 
 include = [
     # "doc/changelog.md", # N/A
