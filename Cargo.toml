@@ -61,7 +61,7 @@ winapi.features = [
 ]
 
 [target.'cfg(windows)'.dev-dependencies]
-mmrbi                                   = "0.0.19"
+mmrbi                                   = "0.0.20"
 winapi.version                          = "0.3.9"
 
 winapi.features = [
