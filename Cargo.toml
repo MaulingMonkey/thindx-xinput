@@ -14,15 +14,6 @@ keywords                                = ["directx", "xinput", "gamepads"]
 categories                              = ["api-bindings", "os::windows-apis"] # https://crates.io/category_slugs
 rust-version                            = "1.71.0" # debugger_visualizer MSRV
 
-include = [
-    # "doc/changelog.md", # N/A
-    "examples/*.rs",
-    "src/**",
-    "Readme.md",
-    "LICENSE*",
-    "*.natvis",
-]
-
 [package.metadata.docs.rs]
 default-target                          = "x86_64-pc-windows-msvc"
 targets                                 = ["x86_64-pc-windows-msvc", "i686-pc-windows-msvc"]
