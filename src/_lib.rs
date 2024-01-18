@@ -1,6 +1,5 @@
 #![doc = include_str!("../Readme.md")]
 
-#![debugger_visualizer(natvis_file = "../guid.natvis")]
 #![debugger_visualizer(natvis_file = "../xinput.natvis")]
 
 #![deny(unsafe_op_in_unsafe_fn)]
