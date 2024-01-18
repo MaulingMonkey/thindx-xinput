@@ -16,7 +16,7 @@ use bytemuck::{Pod, Zeroable};
     /// Documented as being unused?
     pub unicode:        u16,
 
-    /// [Keystroke::KeyDown] | [Keystroke::KeyUp] | [Keystroke::Repeat]
+    /// [`Keystroke::KeyDown`] | [`Keystroke::KeyUp`] | [`Keystroke::Repeat`]
     pub flags:          KeystrokeFlags,
 
     /// Index of the signed-in gamer associated with the device. Can be a value in the range 0–3.

@@ -3,7 +3,7 @@
 /// ### Usage
 /// ```ignore
 /// struct_mapping! {
-///     RustyStruct => D3D_STRUCT {
+///     RustyStruct => XINPUT_STRUCT {
 ///         rusty_field_a => CppFieldA,
 ///         rusty_field_b => CppFieldB,
 ///     }
@@ -99,19 +99,19 @@ macro_rules! struct_mapping {
     (@derive_from_meta #[derive(unsafe { $($d:ident),+$(,)? })] $(#[$($next:tt)+])* $thin_struct:ty => $d3d_struct:ty) => { $( struct_mapping! { @derive unsafe $d $thin_struct => $d3d_struct } )+ struct_mapping! { @derive_from_meta $(#[$($next)+])* $thin_struct => $d3d_struct } };
     (@derive_from_meta #[$($ignore:tt)*]                        $(#[$($next:tt)+])* $thin_struct:ty => $d3d_struct:ty) => { struct_mapping! { @derive_from_meta $(#[$($next)+])* $thin_struct => $d3d_struct } };
 
-    (@derive unsafe AsRefD3D $thin_struct:ty => $d3d_struct:ty) => {    impl AsRef<$d3d_struct> for $thin_struct { fn as_ref(&    self)         -> &    $d3d_struct     { unsafe { std::mem::transmute(self) } } } };
-    (@derive unsafe AsMutD3D $thin_struct:ty => $d3d_struct:ty) => {    impl AsMut<$d3d_struct> for $thin_struct { fn as_mut(&mut self)         -> &mut $d3d_struct     { unsafe { std::mem::transmute(self) } } } }; // XXX: Pointless?
+    (@derive unsafe AsRefDX  $thin_struct:ty => $d3d_struct:ty) => {    impl AsRef<$d3d_struct> for $thin_struct { fn as_ref(&    self)         -> &    $d3d_struct     { unsafe { std::mem::transmute(self) } } } };
+    (@derive unsafe AsMutDX  $thin_struct:ty => $d3d_struct:ty) => {    impl AsMut<$d3d_struct> for $thin_struct { fn as_mut(&mut self)         -> &mut $d3d_struct     { unsafe { std::mem::transmute(self) } } } }; // XXX: Pointless?
     (@derive unsafe AsRef    $thin_struct:ty => $d3d_struct:ty) => {    impl AsRef<$thin_struct> for $d3d_struct { fn as_ref(&self)             -> &$thin_struct        { unsafe { std::mem::transmute(self) } } }
                                                                         impl AsRef<$d3d_struct> for $thin_struct { fn as_ref(&self)             -> &$d3d_struct         { unsafe { std::mem::transmute(self) } } } }; // XXX: Footgun?
     (@derive unsafe AsMut    $thin_struct:ty => $d3d_struct:ty) => {    impl AsMut<$thin_struct> for $d3d_struct { fn as_mut(&mut self)         -> &mut $thin_struct    { unsafe { std::mem::transmute(self) } } }
                                                                         impl AsMut<$d3d_struct> for $thin_struct { fn as_mut(&mut self)         -> &mut $d3d_struct     { unsafe { std::mem::transmute(self) } } } };
     (@derive unsafe Deref    $thin_struct:ty => $d3d_struct:ty) => {    impl std::ops::Deref    for $thin_struct { fn deref(&self)              -> &Self::Target        { unsafe { std::mem::transmute(self) } } type Target = $d3d_struct; } };
     (@derive unsafe DerefMut $thin_struct:ty => $d3d_struct:ty) => {    impl std::ops::DerefMut for $thin_struct { fn deref_mut(&mut self)      -> &mut Self::Target    { unsafe { std::mem::transmute(self) } } } };
-    (@derive unsafe FromD3D  $thin_struct:ty => $d3d_struct:ty) => {    impl From<$d3d_struct>  for $thin_struct { fn from(value: $d3d_struct)  -> Self                 { unsafe { std::mem::transmute(value) } } } };
-    (@derive unsafe IntoD3D  $thin_struct:ty => $d3d_struct:ty) => {    impl From<$thin_struct> for $d3d_struct  { fn from(value: $thin_struct) -> Self                 { unsafe { std::mem::transmute(value) } } } };
+    (@derive unsafe FromDX   $thin_struct:ty => $d3d_struct:ty) => {    impl From<$d3d_struct>  for $thin_struct { fn from(value: $d3d_struct)  -> Self                 { unsafe { std::mem::transmute(value) } } } };
+    (@derive unsafe IntoDX   $thin_struct:ty => $d3d_struct:ty) => {    impl From<$thin_struct> for $d3d_struct  { fn from(value: $thin_struct) -> Self                 { unsafe { std::mem::transmute(value) } } } };
     (@derive unsafe FromInto $thin_struct:ty => $d3d_struct:ty) => {
-        struct_mapping! { @derive unsafe FromD3D $thin_struct => $d3d_struct }
-        struct_mapping! { @derive unsafe IntoD3D $thin_struct => $d3d_struct }
+        struct_mapping! { @derive unsafe FromDX  $thin_struct => $d3d_struct }
+        struct_mapping! { @derive unsafe IntoDX  $thin_struct => $d3d_struct }
     };
 
     // AsPtr?  AsPtrMut?
@@ -123,9 +123,9 @@ macro_rules! struct_mapping {
 
 /// ### Usage
 /// ```ignore
-/// enumish! { RustyEnum => D3D_ENUM; FQN; RustyEnum::A, RustyEnum::B, RustyEnum::C }
-/// enumish! { RustyEnum => D3D_ENUM;      A, B, C }
-/// enumish! { RustyEnum => D3D_ENUM }
+/// enumish! { RustyEnum => XINPUT_ENUM; FQN; RustyEnum::A, RustyEnum::B, RustyEnum::C }
+/// enumish! { RustyEnum => XINPUT_ENUM;      A, B, C }
+/// enumish! { RustyEnum => XINPUT_ENUM }
 /// ```
 macro_rules! enumish {
     ( $enumish:ty => $d3d:ty; FQN; $($a:ident :: $b:ident),* $(,)? ) => {
@@ -217,11 +217,11 @@ macro_rules! enumish {
             /// Initialize to 0.
             pub const fn zeroed() -> Self { Self(0) }
 
-            /// Convert from an underlying [winapi] `D3D...` type.
+            /// Convert from an underlying [`winapi`] type.
             /// This is *probably* safe... probably...
             pub const fn from_unchecked(d3d: $d3d) -> Self { Self(d3d as _) }
 
-            /// Convert back into an underlying [winapi] `D3D...` type.
+            /// Convert back into an underlying [`winapi`] type.
             pub const fn into_inner(self) -> $d3d { self.0 as _ }
         }
     };
@@ -229,7 +229,7 @@ macro_rules! enumish {
 
 /// ### Usage
 /// ```ignore
-/// flags! { RustyFlags => D3D_FLAGS; A, B, C }
+/// flags! { RustyFlags => XINPUT_FLAGS; A, B, C }
 /// ```
 macro_rules! flags {
     ( $flagish:ty => $d3d:ty; $($ident:ident),* $(,)? ) => {
@@ -286,11 +286,11 @@ macro_rules! flags {
             /// Initialize to 0.
             pub const fn none() -> Self { Self(0) }
 
-            /// Convert from an underlying [winapi] `D3D...` type.
+            /// Convert from an underlying [`winapi`] type.
             /// This is *probably* safe... probably...
             pub const fn from_unchecked(d3d: $d3d) -> Self { Self(d3d as _) }
 
-            /// Convert back into an underlying [winapi] `D3D...` type.
+            /// Convert back into an underlying [`winapi`] type.
             pub const fn into_inner(self) -> $d3d { self.0 as _ }
         }
 

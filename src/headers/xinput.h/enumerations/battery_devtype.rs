@@ -8,7 +8,7 @@ use winapi::um::xinput::*;
 /// BATTERY_DEVTYPE_\*
 ///
 /// ### See Also
-/// *   [get_battery_information]
+/// *   [`get_battery_information`]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[derive(Pod, Zeroable)]
 #[repr(transparent)] pub struct BatteryDevType(u8);

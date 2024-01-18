@@ -18,7 +18,7 @@ flags! { Flag => u32; None, Gamepad }
 
     /// [XINPUT_FLAG_GAMEPAD](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetcapabilities)
     ///
-    /// Limit [get_capabilities] to Xbox 360 controllers.
+    /// Limit [`get_capabilities`] to Xbox 360 controllers.
     pub const Gamepad : Flag = Flag(XINPUT_FLAG_GAMEPAD);
 }
 

@@ -1,13 +1,4 @@
 #![doc = include_str!("../Readme.md")]
-//!
-//! ### Structures
-//! | C++                               | Rust                  |
-//! | --------------------------------- | --------------------- |
-//! | <code>std::array&lt;[std::wstring], 2&gt;</code>  | [`AudioDeviceIds`]
-//! | <code>std::array&lt;[GUID], 2&gt;</code>          | [`DSoundAudioDeviceGuids`]
-//!
-//! [std::wstring]:                     https://learn.microsoft.com/en-us/cpp/standard-library/string-typedefs?view=msvc-170#wstring
-//! [GUID]:                             https://learn.microsoft.com/en-us/windows/win32/api/guiddef/ns-guiddef-guid
 
 #![debugger_visualizer(natvis_file = "../guid.natvis")]
 #![debugger_visualizer(natvis_file = "../xinput.natvis")]
@@ -20,7 +11,7 @@
 #![allow(clippy::identity_op)]                  // I like to `<< 0`, `+ 0`, etc. for consistency
 #![allow(clippy::missing_safety_doc)]           // I prefer ⚠️ Safety ⚠️ docs
 #![allow(clippy::derivable_impls)]              // I do this a lot for explicitness with d3d enums
-#![allow(clippy::too_many_arguments)]           // 1:1 mapping to D3D... I don't have much of a choice!
+#![allow(clippy::too_many_arguments)]           // 1:1 mapping to XInput... I don't have much of a choice!
 
 // #![warn(clippy::undocumented_unsafe_blocks)]    // too noisy to implement yet
 

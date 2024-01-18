@@ -25,7 +25,7 @@ use bytemuck::{Pod, Zeroable};
     /// | Value | Description   |
     /// | -----:| ------------- |
     /// |     0 | Not held
-    /// |    30 | [Gamepad::TRIGGER_THRESHOLD]
+    /// |    30 | [`Gamepad::TRIGGER_THRESHOLD`]
     /// |   255 | Fully held
     pub left_trigger: u8,
 
@@ -34,7 +34,7 @@ use bytemuck::{Pod, Zeroable};
     /// | Value | Description   |
     /// | -----:| ------------- |
     /// |     0 | Not held
-    /// |    30 | [Gamepad::TRIGGER_THRESHOLD]
+    /// |    30 | [`Gamepad::TRIGGER_THRESHOLD`]
     /// |   255 | Fully held
     pub right_trigger: u8,
 
@@ -43,9 +43,9 @@ use bytemuck::{Pod, Zeroable};
     /// | Value     | Description   |
     /// | ---------:| ------------- |
     /// |    -32768 | Fully left
-    /// |     -7849 | - [Gamepad::LEFT_THUMB_DEADZONE]
+    /// |     -7849 | <code>- [Gamepad::LEFT_THUMB_DEADZONE]</code>
     /// |         0 | Centered
-    /// |     +7849 | + [Gamepad::LEFT_THUMB_DEADZONE]
+    /// |     +7849 | <code>+ [Gamepad::LEFT_THUMB_DEADZONE]</code>
     /// |    +32767 | Fully right
     pub left_thumb_x: i16,
 
@@ -54,9 +54,9 @@ use bytemuck::{Pod, Zeroable};
     /// | Value     | Description   |
     /// | ---------:| ------------- |
     /// |    -32768 | Fully down
-    /// |     -7849 | - [Gamepad::LEFT_THUMB_DEADZONE]
+    /// |     -7849 | <code>- [Gamepad::LEFT_THUMB_DEADZONE]</code>
     /// |         0 | Centered
-    /// |     +7849 | + [Gamepad::LEFT_THUMB_DEADZONE]
+    /// |     +7849 | <code>+ [Gamepad::LEFT_THUMB_DEADZONE]</code>
     /// |    +32767 | Fully up
     pub left_thumb_y: i16,
 
@@ -65,9 +65,9 @@ use bytemuck::{Pod, Zeroable};
     /// | Value     | Description   |
     /// | ---------:| ------------- |
     /// |    -32768 | Fully left
-    /// |     -8689 | - [Gamepad::RIGHT_THUMB_DEADZONE]
+    /// |     -8689 | <code>- [Gamepad::RIGHT_THUMB_DEADZONE]</code>
     /// |         0 | Centered
-    /// |     +8689 | + [Gamepad::RIGHT_THUMB_DEADZONE]
+    /// |     +8689 | <code>+ [Gamepad::RIGHT_THUMB_DEADZONE]</code>
     /// |    +32767 | Fully right
     pub right_thumb_x: i16,
 
@@ -76,15 +76,15 @@ use bytemuck::{Pod, Zeroable};
     /// | Value     | Description   |
     /// | ---------:| ------------- |
     /// |    -32768 | Fully down
-    /// |     -8689 | - [Gamepad::RIGHT_THUMB_DEADZONE]
+    /// |     -8689 | <code>- [Gamepad::RIGHT_THUMB_DEADZONE]</code>
     /// |         0 | Centered
-    /// |     +8689 | + [Gamepad::RIGHT_THUMB_DEADZONE]
+    /// |     +8689 | <code>+ [Gamepad::RIGHT_THUMB_DEADZONE]</code>
     /// |    +32767 | Fully up
     pub right_thumb_y: i16,
 }
 
 impl Gamepad {
-    /// An optional default threshhold to compare [Gamepad::left_trigger] or [Gamepad::right_trigger] to, before which you might avoid registering a trigger pull.
+    /// An optional default threshhold to compare [`Gamepad::left_trigger`] or [`Gamepad::right_trigger`] to, before which you might avoid registering a trigger pull.
     ///
     /// In my experience, Xbox 360 controllers all perfectly report 0 trigger when untouched, so this is somewhat optional.
     /// On the other hand, there's no guarantee third party XInput compatible controllers behave the same, so perhaps you should use such a constant!
@@ -92,7 +92,7 @@ impl Gamepad {
 
     /// A default deadzone magnitude for the left thumbstick.
     ///
-    /// You might ignore [Gamepad::left_thumb_x] / [Gamepad::left_thumb_y] when they're within this magnitude of (0,0).
+    /// You might ignore [`Gamepad::left_thumb_x`] / [`Gamepad::left_thumb_y`] when they're within this magnitude of (0,0).
     /// While this is generally large enough to avoid drift on new controllers, I have seen more well used controllers rest outside of this magnitude, resulting in suprising drift.
     /// For maximum flexibility, consider making the user's deadzone customizeable, and perhaps using a higher threshhold for triggering game UI navigation.
     ///
@@ -101,7 +101,7 @@ impl Gamepad {
 
     /// A default deadzone magnitude for the right thumbstick.
     ///
-    /// You might ignore [Gamepad::right_thumb_x] / [Gamepad::right_thumb_y] when they're within this magnitude of (0,0).
+    /// You might ignore [`Gamepad::right_thumb_x`] / [`Gamepad::right_thumb_y`] when they're within this magnitude of (0,0).
     /// While this is generally large enough to avoid drift on new controllers, I have seen more well used controllers rest outside of this magnitude, resulting in suprising drift.
     /// For maximum flexibility, consider making the user's deadzone customizeable, and perhaps using a higher threshhold for triggering game UI navigation.
     ///

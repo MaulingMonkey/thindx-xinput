@@ -9,7 +9,7 @@ use core::hash::*;
 
 
 /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/guiddef/ns-guiddef-guid)\]
-/// DirectSound audio device GUID retrieved with [get_dsound_audio_device_guids]
+/// DirectSound audio device GUID retrieved with [`get_dsound_audio_device_guids`]
 #[derive(Clone, Copy)]
 #[repr(transparent)] pub struct DSoundAudioDeviceGuid(GUID);
 
@@ -52,7 +52,7 @@ impl DSoundAudioDeviceGuid {
 
 
 /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetdsoundaudiodeviceguids)\]
-/// DirectSound audio device GUIDs retrieved with [get_dsound_audio_device_guids]
+/// DirectSound audio device GUIDs retrieved with [`get_dsound_audio_device_guids`]
 #[derive(Clone, Copy, Debug)]
 #[derive(Default, Pod, Zeroable)]
 #[repr(C)] pub struct DSoundAudioDeviceGuids {

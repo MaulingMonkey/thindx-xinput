@@ -1,4 +1,4 @@
-//! Test basic [xinput] APIs
+//! Test basic [`xinput`] APIs
 
 use std::io::*;
 use std::ptr::null_mut;

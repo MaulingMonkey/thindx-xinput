@@ -41,7 +41,7 @@ pub fn get_audio_device_ids(user_index: impl Into<u32>) -> Result<AudioDeviceIds
     //  * `*_ptr`       is never null, should only be accessed during XInputGetAudioDeviceIds's scope
     //  * `*_len`       are in/out, properly initialized.
     let code = unsafe { XInputGetAudioDeviceIds(user_index.into(), render_id.as_mut_ptr(), &mut render_len, capture_id.as_mut_ptr(), &mut capture_len) };
-    // a dynamic alloc fallback might be appropriate...? what error is returned? experiment, as it's not documented? D3D's own docs show only 256 byte buffers, surely 16x that (4096) is enough?
+    // a dynamic alloc fallback might be appropriate...? what error is returned? experiment, as it's not documented? XInput's own docs show only 256 byte buffers, surely 16x that (4096) is enough?
     check_success!(code)?;
     let render_device_id    = OsString::from_wide(render_id .get(..render_len  as usize).ok_or(fn_param_error!(render_device_id,  error::BUFFER_TOO_SMALL))?.split(|c| *c==0).next().unwrap_or(&[]));
     let capture_device_id   = OsString::from_wide(capture_id.get(..capture_len as usize).ok_or(fn_param_error!(capture_device_id, error::BUFFER_TOO_SMALL))?.split(|c| *c==0).next().unwrap_or(&[]));
