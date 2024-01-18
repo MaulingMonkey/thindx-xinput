@@ -16,8 +16,8 @@
 // #![warn(clippy::undocumented_unsafe_blocks)]    // too noisy to implement yet
 
 #[cfg(doc)] #[doc = include_str!("../doc/apis.md")] pub mod apis {}
+//#[cfg(doc)] #[doc = include_str!("../doc/changelog.md")] pub mod changelog {}
 #[cfg(doc)] #[doc = include_str!("../doc/crates.md")] pub mod crates {}
-
 
 
 #[macro_use] mod macros;
@@ -81,6 +81,3 @@ pub(crate) fn check_error_success(fn_context: &'static crate::error_macros::FnCo
         Err(Error(fn_context, error::Kind::from_u32(err)))
     }
 }
-
-//#[cfg(doc)] #[doc = include_str!("../doc/changelog.md")] pub mod _changelog {}
-#[cfg(doc)] pub mod _headers;
