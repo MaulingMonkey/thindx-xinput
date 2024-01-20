@@ -15,21 +15,30 @@ use bytemuck::Zeroable;
 /// ### Example
 /// ```rust
 /// use xinput::BatteryDevType;
-/// let info = xinput::get_battery_information(0, BatteryDevType::Gamepad).unwrap_or_default();
-/// println!("{info:#?}");
+/// for battery_ty in [xinput::BatteryDevType::Gamepad, xinput::BatteryDevType::Headset] {
+///     let info = xinput::get_battery_information(0, battery_ty).unwrap_or_default();
+///     println!("{battery_ty:?} = {info:#?}");
+/// }
 /// ```
 ///
 /// ```text
-/// BatteryInformation {
+/// BatteryDevType::Gamepad = BatteryInformation {
+///     battery_type: BatteryType::Alkaline,
+///     battery_level: BatteryLevel::Full,
+/// }
+/// BatteryDevType::Headset = BatteryInformation {
 ///     battery_type: BatteryType::Alkaline,
 ///     battery_level: BatteryLevel::Full,
 /// }
 /// ```
 ///
+/// N.B. `Headset` battery was reported, even with no headset plugged into my XB1 controller (connected via Xbox One USB bluetooth dongle.)
+/// Xbox 360 controllers may behave differently?
+///
 /// ### Errors
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
 /// *   [error::DEVICE_NOT_CONNECTED]   - Disconnected [`User`]
-/// *   [error::DEVICE_NOT_CONNECTED]   - Invalid [`BatteryDevType`]
+/// *   [error::DEVICE_NOT_CONNECTED]   - Invalid [`BatteryDevType`] ?  Sometimes?
 /// *   [error::INVALID_FUNCTION]       - API unavailable: requires XInput 1.3 or later
 pub fn get_battery_information(user_index: impl TryInto<u32>, dev_type: impl Into<BatteryDevType>) -> Result<BatteryInformation, Error> {
     fn_context!(xinput::get_battery_information => XInputGetBatteryInformation);
@@ -60,8 +69,13 @@ pub fn get_battery_information(user_index: impl TryInto<u32>, dev_type: impl Int
 }
 
 #[test] fn test_bad_arguments() {
-    assert_eq!(error::DEVICE_NOT_CONNECTED, get_battery_information(User::Zero, BatteryDevType::from_unchecked(42))); // bad devtype
-    assert_eq!(error::BAD_ARGUMENTS,        get_battery_information(User::Any,  BatteryDevType::Gamepad));
+    // bad BatteryDevType is ignored?
+    if let Err(err) = get_battery_information(0, BatteryDevType::from_unchecked(  3)) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_battery_information(0, BatteryDevType::from_unchecked( 42)) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_battery_information(0, BatteryDevType::from_unchecked(250)) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+
+    assert_eq!(error::DEVICE_NOT_CONNECTED, get_battery_information(3, BatteryDevType::from_unchecked(42))); // disconnected gamepad takes precedence
+    assert_eq!(error::BAD_ARGUMENTS,        get_battery_information(User::Any, BatteryDevType::Gamepad));
     for u in User::iter_invalid() {
         assert_eq!(error::BAD_ARGUMENTS, get_battery_information(u, BatteryDevType::Gamepad));
     }
