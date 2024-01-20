@@ -7,6 +7,35 @@ use bytemuck::Zeroable;
 /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetcapabilities)\]
 /// XInputGetCapabilities
 ///
+/// ### Example
+/// ```rust
+/// let caps = xinput::get_capabilities(0, xinput::Flag::None);
+/// println!("{caps:#?}");
+/// ```
+///
+/// ```text
+/// Ok(
+///     Capabilities {
+///         ty: DevType::Gamepad,
+///         sub_type: DevSubType::Gamepad,
+///         flags: Caps::None,
+///         gamepad: Gamepad {
+///             buttons: Buttons::{DPadUp|DPadDown|DPadLeft|DPadRight|Start|Back|LeftThumb|RightThumb|LeftShoulder|RightShoulder|A|B|X|Y},
+///             left_trigger: 255,
+///             right_trigger: 255,
+///             left_thumb_x: -64,
+///             left_thumb_y: -64,
+///             right_thumb_x: -64,
+///             right_thumb_y: -64,
+///         },
+///         vibration: Vibration {
+///             left_motor_speed: 255,
+///             right_motor_speed: 255,
+///         },
+///     },
+/// )
+/// ```
+///
 /// ### Errors
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`Flag`]
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
