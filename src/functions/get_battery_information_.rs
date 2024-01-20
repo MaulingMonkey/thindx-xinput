@@ -12,6 +12,20 @@ use bytemuck::Zeroable;
 /// *   `user_index`    Identify which user's controller to get the battery information of
 /// *   `dev_type`      [BatteryDevType::Gamepad] or [BatteryDevType::Headset]
 ///
+/// ### Example
+/// ```rust
+/// use xinput::BatteryDevType;
+/// let info = xinput::get_battery_information(0u32, BatteryDevType::Gamepad).unwrap_or_default();
+/// println!("{info:#?}");
+/// ```
+///
+/// ```text
+/// BatteryInformation {
+///     battery_type: BatteryType::Disconnected,
+///     battery_level: BatteryLevel::Empty,
+/// }
+/// ```
+///
 /// ### Errors
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
 /// *   [error::DEVICE_NOT_CONNECTED]   - Disconnected [`User`]
