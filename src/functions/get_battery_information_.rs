@@ -21,8 +21,8 @@ use bytemuck::Zeroable;
 ///
 /// ```text
 /// BatteryInformation {
-///     battery_type: BatteryType::Disconnected,
-///     battery_level: BatteryLevel::Empty,
+///     battery_type: BatteryType::Alkaline,
+///     battery_level: BatteryLevel::Full,
 /// }
 /// ```
 ///

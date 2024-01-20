@@ -18,15 +18,15 @@ use bytemuck::Zeroable;
 ///
 /// ```text
 /// State {
-///     packet_number: 0,
+///     packet_number: 305,
 ///     gamepad: Gamepad {
 ///         buttons: Buttons::None,
 ///         left_trigger: 0,
 ///         right_trigger: 0,
-///         left_thumb_x: 0,
-///         left_thumb_y: 0,
-///         right_thumb_x: 0,
-///         right_thumb_y: 0,
+///         left_thumb_x: 2479,
+///         left_thumb_y: -707,
+///         right_thumb_x: -48,
+///         right_thumb_y: -1028,
 ///     },
 /// }
 /// ```
