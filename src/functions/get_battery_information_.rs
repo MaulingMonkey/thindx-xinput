@@ -21,6 +21,7 @@ use bytemuck::Zeroable;
 /// }
 /// ```
 ///
+/// ### Output
 /// ```text
 /// BatteryDevType::Gamepad = BatteryInformation {
 ///     battery_type: BatteryType::Alkaline,

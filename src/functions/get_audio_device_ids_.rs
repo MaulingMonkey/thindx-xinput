@@ -19,6 +19,7 @@ use std::os::windows::ffi::*;
 /// println!("{audio:#?}");
 /// ```
 ///
+/// ### Output
 /// ```text
 /// AudioDeviceIds {
 ///     render_device_id: None,

@@ -24,6 +24,7 @@ use bytemuck::Zeroable;
 /// }
 /// ```
 ///
+/// ### Output
 /// ```text
 /// Keystroke {
 ///     virtual_key: VK::PadStart,

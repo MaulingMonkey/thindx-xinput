@@ -13,6 +13,7 @@ use bytemuck::Zeroable;
 /// println!("{caps:#?}");
 /// ```
 ///
+/// ### Output
 /// ```text
 /// Ok(
 ///     Capabilities {

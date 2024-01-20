@@ -21,6 +21,7 @@ use bytemuck::Zeroable;
 /// println!("{state:#?}");
 /// ```
 ///
+/// ### Output
 /// ```text
 /// State {
 ///     packet_number: 305,
