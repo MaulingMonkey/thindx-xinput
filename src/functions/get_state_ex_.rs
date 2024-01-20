@@ -11,6 +11,31 @@ use bytemuck::Zeroable;
 ///
 /// Silently falls back on [`XInputGetState`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetstate) if `XInputGetStateEx` is unavailable.
 ///
+/// ### Example
+/// ```rust
+/// let gamepad : u32 = 0;
+///
+/// #[allow(deprecated)] // Intentionally targeting undocumented XInput 1.3 function (N/A on UAP)
+/// let state : xinput::State = xinput::get_state_ex(gamepad).unwrap_or_default();
+///
+/// println!("{state:#?}");
+/// ```
+///
+/// ```text
+/// State {
+///     packet_number: 0,
+///     gamepad: Gamepad {
+///         buttons: Buttons::None,
+///         left_trigger: 0,
+///         right_trigger: 0,
+///         left_thumb_x: 0,
+///         left_thumb_y: 0,
+///         right_thumb_x: 0,
+///         right_thumb_y: 0,
+///     },
+/// }
+/// ```
+///
 /// ### Errors
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
 /// *   [error::DEVICE_NOT_CONNECTED]   - [`User`] gamepad not connected
