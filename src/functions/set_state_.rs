@@ -7,6 +7,16 @@ use crate::*;
 ///
 /// Control the vibration of a controller.
 ///
+/// ### Example
+/// ```rust
+/// // No rumble
+/// let gamepad : u32 = 0;
+/// let _ = xinput::set_state(gamepad, xinput::Vibration {
+///     left_motor_speed:   0u16,
+///     right_motor_speed:  0u16,
+/// });
+/// ```
+///
 /// ### Errors
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
 /// *   [error::DEVICE_NOT_CONNECTED]   - [`User`] is not connected
