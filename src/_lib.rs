@@ -57,6 +57,7 @@ mods! {
         inl mod get_keystroke_;
         inl mod get_state_;
         inl mod get_state_ex_;
+        inl mod power_off_controller_;
         inl mod set_state_;
         #[cfg(doc)] pub mod todo;
     }
