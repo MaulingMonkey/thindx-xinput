@@ -10,6 +10,30 @@ use bytemuck::Zeroable;
 ///
 /// Retrieves gamepad input events.
 ///
+/// ### Example
+/// ```rust
+/// // Wait for any gamepad button
+/// let gamepad : u32 = 0;
+/// loop {
+///     match xinput::get_keystroke(gamepad, ()) {
+///         Ok(Some(keystroke)) => break println!("{keystroke:#?}"),
+/// #       Ok(None) if true    => break, // don't actually wait
+///         Ok(None)            => std::thread::yield_now(), // wait
+///         Err(err)            => break println!("no xinput or no gamepad: {err:?}"),
+///     }
+/// }
+/// ```
+///
+/// ```text
+/// Keystroke {
+///     virtual_key: VK::PadStart,
+///     unicode: 0,
+///     flags: Keystroke::KeyDown,
+///     user_index: 0,
+///     hid_code: 0,
+/// }
+/// ```
+///
 /// ### Errors
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`User`]
 /// *   [error::DEVICE_NOT_CONNECTED]   - Disconnected [`User`]
