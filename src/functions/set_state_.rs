@@ -10,7 +10,7 @@ use crate::*;
 /// ### Example
 /// ```rust
 /// // No rumble
-/// let gamepad : u32 = 0;
+/// let gamepad = 0;
 /// let _ = xinput::set_state(gamepad, xinput::Vibration {
 ///     left_motor_speed:   0u16,
 ///     right_motor_speed:  0u16,
@@ -21,24 +21,26 @@ use crate::*;
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
 /// *   [error::DEVICE_NOT_CONNECTED]   - [`User`] is not connected
 /// *   [error::INVALID_FUNCTION]       - API unavailable: XInput not loaded
-pub fn set_state(user_index: impl Into<u32>, mut vibration: Vibration) -> Result<(), Error> {
+pub fn set_state(user_index: impl TryInto<u32>, mut vibration: Vibration) -> Result<(), Error> {
     fn_context!(xinput::set_state => XInputSetState);
     #[allow(non_snake_case)] let XInputSetState = Imports::get().XInputSetState;
+    let user_index = user_index.try_into().map_err(|_| fn_param_error!(user_index, error::BAD_ARGUMENTS))?;
+
     // SAFETY: ✔️
     //  * fuzzed        in `fuzz-xinput.rs`
     //  * tested        in `d3d9-02-xinput.rs`
     //  * `user_index`  is well tested
     //  * `vibration`   is never null, fixed size, no `cbSize` field, all bit patterns are valid and reasonable
-    let code = unsafe { XInputSetState(user_index.into(), vibration.as_mut()) };
+    let code = unsafe { XInputSetState(user_index, vibration.as_mut()) };
     check_success!(code)
 }
 
 #[test] fn test_valid_params() {
     let v = Vibration::default();
-    if let Err(err) = set_state(0u32, v) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = set_state(1u32, v) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = set_state(2u32, v) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = set_state(3u32, v) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = set_state(0, v) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = set_state(1, v) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = set_state(2, v) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = set_state(3, v) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
 }
 
 #[test] fn test_bad_arguments() {

@@ -13,7 +13,7 @@ use bytemuck::Zeroable;
 ///
 /// ### Example
 /// ```rust
-/// let gamepad : u32 = 0;
+/// let gamepad = 0;
 ///
 /// #[allow(deprecated)] // Intentionally targeting undocumented XInput 1.3 function (N/A on UAP)
 /// let state : xinput::State = xinput::get_state_ex(gamepad).unwrap_or_default();
@@ -41,9 +41,11 @@ use bytemuck::Zeroable;
 /// *   [error::DEVICE_NOT_CONNECTED]   - [`User`] gamepad not connected
 /// *   [error::INVALID_FUNCTION]       - API unavailable: XInput not loaded
 #[deprecated = "This undocumented function is reserved for system software to access Buttons::Guide."]
-pub fn get_state_ex(user_index: impl Into<u32>) -> Result<State, Error> {
+pub fn get_state_ex(user_index: impl TryInto<u32>) -> Result<State, Error> {
     fn_context!(xinput::get_state_ex => XInputGetStateEx);
     #[allow(non_snake_case)] let XInputGetStateEx = Imports::get()._XInputGetStateEx;
+    let user_index = user_index.try_into().map_err(|_| fn_param_error!(user_index, error::BAD_ARGUMENTS))?;
+
     let mut state = State::zeroed();
     // SAFETY: ✔️
     //  * fuzzed        in `tests/fuzz-xinput.rs`
@@ -51,16 +53,16 @@ pub fn get_state_ex(user_index: impl Into<u32>) -> Result<State, Error> {
     //  * `user_index`  is well tested
     //  * `state`       is out-only, fixed size, no `cbSize` field, never null, all bit patterns sane
     //  * `fn`          should be `None` or valid if returned by `Imports::get()`
-    let code = unsafe { XInputGetStateEx(user_index.into(), state.as_mut()) };
+    let code = unsafe { XInputGetStateEx(user_index, state.as_mut()) };
     check_success!(code)?;
     Ok(state)
 }
 
 #[test] #[allow(deprecated)] fn test_valid_params() {
-    if let Err(err) = get_state_ex(0u32) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_state_ex(1u32) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_state_ex(2u32) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_state_ex(3u32) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_state_ex(0) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_state_ex(1) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_state_ex(2) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_state_ex(3) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
 }
 
 #[test] #[allow(deprecated)] fn test_bad_arguments() {

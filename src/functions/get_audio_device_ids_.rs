@@ -26,9 +26,10 @@ use std::os::windows::ffi::*;
 ///
 /// ### See Also
 /// *   [Getting Audio Device Identifiers](https://learn.microsoft.com/en-us/windows/win32/xinput/getting-started-with-xinput#getting-audio-device-identifiers)
-pub fn get_audio_device_ids(user_index: impl Into<u32>) -> Result<AudioDeviceIds, Error> {
+pub fn get_audio_device_ids(user_index: impl TryInto<u32>) -> Result<AudioDeviceIds, Error> {
     fn_context!(xinput::get_audio_device_ids => XInputGetAudioDeviceIds);
     #[allow(non_snake_case)] let XInputGetAudioDeviceIds = Imports::get().XInputGetAudioDeviceIds;
+    let user_index = user_index.try_into().map_err(|_| fn_param_error!(user_index, error::BAD_ARGUMENTS))?;
 
     let mut render_id  = [0u16; 4096];
     let mut capture_id = [0u16; 4096];
@@ -40,7 +41,7 @@ pub fn get_audio_device_ids(user_index: impl Into<u32>) -> Result<AudioDeviceIds
     //  * `user_index`  is well tested
     //  * `*_ptr`       is never null, should only be accessed during XInputGetAudioDeviceIds's scope
     //  * `*_len`       are in/out, properly initialized.
-    let code = unsafe { XInputGetAudioDeviceIds(user_index.into(), render_id.as_mut_ptr(), &mut render_len, capture_id.as_mut_ptr(), &mut capture_len) };
+    let code = unsafe { XInputGetAudioDeviceIds(user_index, render_id.as_mut_ptr(), &mut render_len, capture_id.as_mut_ptr(), &mut capture_len) };
     // a dynamic alloc fallback might be appropriate...? what error is returned? experiment, as it's not documented? XInput's own docs show only 256 byte buffers, surely 16x that (4096) is enough?
     check_success!(code)?;
     let render_device_id    = OsString::from_wide(render_id .get(..render_len  as usize).ok_or(fn_param_error!(render_device_id,  error::BUFFER_TOO_SMALL))?.split(|c| *c==0).next().unwrap_or(&[]));

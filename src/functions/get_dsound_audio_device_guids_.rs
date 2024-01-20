@@ -15,17 +15,17 @@ use bytemuck::Zeroable;
 /// *   [error::DEVICE_NOT_CONNECTED]?  - [`User`] in bounds, but without a gamepad?
 /// *   [error::INVALID_FUNCTION]       - API unavailable: requires XInput 1.3 or earlier
 #[deprecated = "Deprecated in favor of xinput::get_audio_device_ids.  Unavailable for Windows Store apps, may fail on Windows 8."]
-pub fn get_dsound_audio_device_guids(user_index: impl Into<User>) -> Result<DSoundAudioDeviceGuids, Error> {
+pub fn get_dsound_audio_device_guids(user_index: impl TryInto<u32>) -> Result<DSoundAudioDeviceGuids, Error> {
     fn_context!(xinput::get_dsound_audio_device_guids => XInputGetDSoundAudioDeviceGuids);
-
     #[allow(non_snake_case)] let XInputGetDSoundAudioDeviceGuids = Imports::get().XInputGetDSoundAudioDeviceGuids;
+    let user_index = user_index.try_into().map_err(|_| fn_param_error!(user_index, error::BAD_ARGUMENTS))?;
 
     let mut guids = DSoundAudioDeviceGuids::zeroed();
     // SAFETY: ❌ Untested (need a system actually defining XInputGetDSoundAudioDeviceGuids)
     //  * fuzzed        in `tests/fuzz-xinput.rs`
     //  * `user_index`  ❌ should be well tested
     //  * `*_guid`      are nice and fixed-size etc.
-    let code = unsafe { XInputGetDSoundAudioDeviceGuids(user_index.into().into(), guids.dsound_render_guid.as_mut(), guids.dsound_capture_guid.as_mut()) };
+    let code = unsafe { XInputGetDSoundAudioDeviceGuids(user_index, guids.dsound_render_guid.as_mut(), guids.dsound_capture_guid.as_mut()) };
     check_success!(code)?;
     Ok(guids)
 }

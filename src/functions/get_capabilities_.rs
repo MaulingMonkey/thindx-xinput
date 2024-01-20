@@ -13,30 +13,32 @@ use bytemuck::Zeroable;
 /// *   [error::DEVICE_NOT_CONNECTED]   - [`Flag::None`]
 /// *   [error::DEVICE_NOT_CONNECTED]   - [`User`] in bounds, but without a gamepad
 /// *   [error::INVALID_FUNCTION]       - API unavailable: XInput not loaded
-pub fn get_capabilities(user_index: impl Into<u32>, flags: Flag) -> Result<Capabilities, Error> {
+pub fn get_capabilities(user_index: impl TryInto<u32>, flags: Flag) -> Result<Capabilities, Error> {
     fn_context!(xinput::get_capabilities => XInputGetCapabilities);
     #[allow(non_snake_case)] let XInputGetCapabilities = Imports::get().XInputGetCapabilities;
+    let user_index = user_index.try_into().map_err(|_| fn_param_error!(user_index, error::BAD_ARGUMENTS))?;
+
     let mut caps = Capabilities::zeroed();
     // SAFETY: ✔️
     //  * fuzzed        in `tests/fuzz-xinput.rs`
     //  * `user_index`  is well tested
     //  * `flags`       is decently tested (0, 1, 2 (OOB), 4, 8, 16, 32, 64, 128, 0xFFFFFFFF)
     //  * `caps`        is out-only, no cbSize field, fixed size, sane
-    let code = unsafe { XInputGetCapabilities(user_index.into(), flags.into(), caps.as_mut()) };
+    let code = unsafe { XInputGetCapabilities(user_index, flags.into(), caps.as_mut()) };
     check_success!(code)?;
     Ok(caps)
 }
 
 #[test] fn test_valid_params() {
-    if let Err(err) = get_capabilities(0u32, Flag::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(1u32, Flag::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(2u32, Flag::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(3u32, Flag::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_capabilities(0, Flag::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_capabilities(1, Flag::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_capabilities(2, Flag::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_capabilities(3, Flag::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
 
-    if let Err(err) = get_capabilities(0u32, Flag::None   ) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(1u32, Flag::None   ) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(2u32, Flag::None   ) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(3u32, Flag::None   ) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_capabilities(0, Flag::None   ) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_capabilities(1, Flag::None   ) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_capabilities(2, Flag::None   ) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    if let Err(err) = get_capabilities(3, Flag::None   ) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
 }
 
 #[test] fn test_bad_arguments() {
