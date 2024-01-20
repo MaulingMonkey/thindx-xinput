@@ -13,6 +13,19 @@ use std::os::windows::ffi::*;
 ///
 /// **NOTE:** This tends to succeed, even when no gamepad is connected, with empty/None paths.
 ///
+/// ### Example
+/// ```rust
+/// let audio = xinput::get_audio_device_ids(0).unwrap_or_default();
+/// println!("{audio:#?}");
+/// ```
+///
+/// ```text
+/// AudioDeviceIds {
+///     render_device_id: None,
+///     capture_device_id: None,
+/// }
+/// ```
+///
 /// ### Errors
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
 /// *   [error::BUFFER_TOO_SMALL]       - Audio device paths exceedingly large (doesn't fit in e.g. `[wchar_t; 4096]`.)
@@ -23,6 +36,7 @@ use std::os::windows::ffi::*;
 /// | ----------------- | ----------------- | --------------------- | -------- |
 /// | Github Actions    | 10.0.17763.2366   | Windows 2019 Server   | [error::DEVICE_NOT_CONNECTED] observed.
 /// | "SACRILEGE"       | 10.0.19041.1415   | Windows 10 Pro        | Succeeds when called on missing gamepads
+/// | "NECROMANCY"      | 10.0.19045.3930   | Windows 10 Pro        | [error::DEVICE_NOT_CONNECTED] on a valid XB1 gamepad <br> connected via XB1 wireless dongle <br> (would USB work better? XB360 controllers?)
 ///
 /// ### See Also
 /// *   [Getting Audio Device Identifiers](https://learn.microsoft.com/en-us/windows/win32/xinput/getting-started-with-xinput#getting-audio-device-identifiers)
