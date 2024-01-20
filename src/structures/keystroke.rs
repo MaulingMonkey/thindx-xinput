@@ -8,7 +8,7 @@ use bytemuck::{Pod, Zeroable};
 ///
 /// Describes a gamepad-provided keystroke.
 #[derive(Clone, Copy, Debug)]
-#[derive(Pod, Zeroable)]
+#[derive(Default, Pod, Zeroable)]
 #[repr(C)] pub struct Keystroke {
     /// Virtual key code of the key/button/stick movement.
     pub virtual_key:    VK,
