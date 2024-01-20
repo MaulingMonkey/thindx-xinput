@@ -15,7 +15,7 @@ const XINPUT_DEVSUBTYPE_FLIGHT_STICK : u8 = 0x04; // winapi missing def
 #[derive(Default, Pod, Zeroable)] // 0 = Unknown
 #[repr(transparent)] pub struct DevSubType(u8);
 
-enumish! { DevSubType => u8; Unknown }
+enumish! { DevSubType => u8; Unknown, Gamepad, Wheel, ArcadeStick, FlightStick, DancePad, Guitar, GuitarAlternate, DrumKit, GuitarBass, ArcadePad }
 
 #[allow(non_upper_case_globals)] impl DevSubType {
     /// An unknown style of Xbox 360 controller.
