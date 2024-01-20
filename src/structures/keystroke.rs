@@ -20,7 +20,7 @@ use bytemuck::{Pod, Zeroable};
     pub flags:          KeystrokeFlags,
 
     /// Index of the signed-in gamer associated with the device. Can be a value in the range 0–3.
-    pub user_index:     User,
+    pub user_index:     u8,
 
     /// HID code corresponding to the input. If there is no corresponding HID code, this value is zero.
     pub hid_code:       u8,
