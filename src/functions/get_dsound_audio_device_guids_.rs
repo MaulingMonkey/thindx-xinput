@@ -10,6 +10,19 @@ use bytemuck::Zeroable;
 ///
 /// Get DirectSound Audio Device GUIDs (N/A for Windows Store apps, isn't supported by Windows 8.)
 ///
+/// ### Example
+/// ```rust
+/// let audio = xinput::get_dsound_audio_device_guids(0).unwrap_or_default();
+/// println!("{audio:#?}");
+/// ```
+///
+/// ```text
+/// DSoundAudioDeviceGuids {
+///     dsound_render_guid: {00000000-0000-0000-0000-000000000000},
+///     dsound_capture_guid: {00000000-0000-0000-0000-000000000000},
+/// }
+/// ```
+///
 /// ### Errors
 /// *   [error::BAD_ARGUMENTS]?         - [`User`] out of bounds?
 /// *   [error::DEVICE_NOT_CONNECTED]?  - [`User`] in bounds, but without a gamepad?
