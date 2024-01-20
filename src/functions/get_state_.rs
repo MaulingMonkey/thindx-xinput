@@ -9,6 +9,28 @@ use bytemuck::Zeroable;
 ///
 /// Retrieves the current state of the specified controller.
 ///
+/// ### Example
+/// ```rust
+/// let gamepad : u32 = 0;
+/// let state : xinput::State = xinput::get_state(gamepad).unwrap_or_default();
+/// println!("{state:#?}");
+/// ```
+///
+/// ```text
+/// State {
+///     packet_number: 0,
+///     gamepad: Gamepad {
+///         buttons: Buttons::None,
+///         left_trigger: 0,
+///         right_trigger: 0,
+///         left_thumb_x: 0,
+///         left_thumb_y: 0,
+///         right_thumb_x: 0,
+///         right_thumb_y: 0,
+///     },
+/// }
+/// ```
+///
 /// ### Errors
 /// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
 /// *   [error::DEVICE_NOT_CONNECTED]   - [`User`] gamepad not connected
