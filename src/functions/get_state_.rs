@@ -33,8 +33,8 @@ use bytemuck::Zeroable;
 /// ```
 ///
 /// ### Errors
-/// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
-/// *   [error::DEVICE_NOT_CONNECTED]   - [`User`] gamepad not connected
+/// *   [error::BAD_ARGUMENTS]          - Invalid `user_index` (expected <code>0 .. [xuser::MAX_COUNT]</code>)
+/// *   [error::DEVICE_NOT_CONNECTED]   - No gamepad connected for `user_index`.
 /// *   [error::INVALID_FUNCTION]       - API unavailable: XInput not loaded
 pub fn get_state(user_index: impl TryInto<u32>) -> Result<State, Error> {
     fn_context!(xinput::get_state => XInputGetState);
@@ -60,8 +60,8 @@ pub fn get_state(user_index: impl TryInto<u32>) -> Result<State, Error> {
 }
 
 #[test] fn test_bad_arguments() {
-    assert_eq!(error::BAD_ARGUMENTS, get_state(User::Any));
-    for u in User::iter_invalid() {
+    assert_eq!(error::BAD_ARGUMENTS, get_state(xuser::INDEX_ANY));
+    for u in xuser::invalids() {
         assert_eq!(error::BAD_ARGUMENTS, get_state(u));
     }
 }

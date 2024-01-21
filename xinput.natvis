@@ -54,11 +54,6 @@
         <DisplayString>xinput::DevType({__0,x})</DisplayString>
     </Type>
 
-    <Type Name="xinput::enumerations::user::User">
-        <DisplayString Condition="__0 == 0xFF">xinput::User::Any</DisplayString>
-        <DisplayString>xinput::User({__0,x})</DisplayString>
-    </Type>
-
     <Type Name="xinput::enumerations::vk::VK">
         <DisplayString Condition="__0 == 0x0000">xinput::VK::None</DisplayString>
 

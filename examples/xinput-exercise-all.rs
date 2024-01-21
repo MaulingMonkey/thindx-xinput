@@ -25,7 +25,7 @@ fn main() {
 
         let timeout = Instant::now() + Duration::from_secs(10);
         while Instant::now() < timeout {
-            match xinput::get_keystroke(User::Any, ()) {
+            match xinput::get_keystroke(xuser::INDEX_ANY, ()) {
                 Ok(Some(e)) if vk == e.virtual_key => {
                     println!("✔️ pressed");
                     continue 'vks
@@ -57,7 +57,7 @@ fn main() {
 
         let timeout = Instant::now() + Duration::from_secs(10);
         while Instant::now() < timeout {
-            for user in xinput::User::iter_valid() {
+            for user in xuser::iter() {
                 #[allow(deprecated)] match xinput::get_state_ex(user) {
                     Ok(e) if buttons == e.buttons => {
                         println!("✔️ pressed");

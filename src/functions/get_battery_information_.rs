@@ -37,8 +37,8 @@ use bytemuck::Zeroable;
 /// Xbox 360 controllers may behave differently?
 ///
 /// ### Errors
-/// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
-/// *   [error::DEVICE_NOT_CONNECTED]   - Disconnected [`User`]
+/// *   [error::BAD_ARGUMENTS]          - Invalid `user_index` (expected <code>0 .. [xuser::MAX_COUNT]</code>)
+/// *   [error::DEVICE_NOT_CONNECTED]   - No gamepad connected for `user_index`.
 /// *   [error::DEVICE_NOT_CONNECTED]   - Invalid [`BatteryDevType`] ?  Sometimes?
 /// *   [error::INVALID_FUNCTION]       - API unavailable: requires XInput 1.3 or later
 pub fn get_battery_information(user_index: impl TryInto<u32>, dev_type: impl Into<BatteryDevType>) -> Result<BatteryInformation, Error> {
@@ -76,8 +76,8 @@ pub fn get_battery_information(user_index: impl TryInto<u32>, dev_type: impl Int
     if let Err(err) = get_battery_information(0, BatteryDevType::from_unchecked(250)) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
 
     assert_eq!(error::DEVICE_NOT_CONNECTED, get_battery_information(3, BatteryDevType::from_unchecked(42))); // disconnected gamepad takes precedence
-    assert_eq!(error::BAD_ARGUMENTS,        get_battery_information(User::Any, BatteryDevType::Gamepad));
-    for u in User::iter_invalid() {
+    assert_eq!(error::BAD_ARGUMENTS,        get_battery_information(xuser::INDEX_ANY, BatteryDevType::Gamepad));
+    for u in xuser::invalids() {
         assert_eq!(error::BAD_ARGUMENTS, get_battery_information(u, BatteryDevType::Gamepad));
     }
 }

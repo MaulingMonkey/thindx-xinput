@@ -27,6 +27,10 @@ pub mod error; #[doc(no_inline)] pub use error::Error;
 macro_rules! check_success { ( $err:expr ) => { $crate::check_error_success(&_THINDX_FN_CONTEXT, $err) } }
 
 mods! {
+    inl mod constants {
+        pub mod xuser;
+    }
+
     inl mod dll {
         inl mod imports;
     }
@@ -37,7 +41,6 @@ mods! {
         inl mod battery_type;
         inl mod devsubtype;
         inl mod devtype;
-        inl mod user;
         inl mod vk;
     }
 

@@ -28,7 +28,7 @@ use std::os::windows::ffi::*;
 /// ```
 ///
 /// ### Errors
-/// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
+/// *   [error::BAD_ARGUMENTS]          - Invalid `user_index` (expected <code>0 .. [xuser::MAX_COUNT]</code>)
 /// *   [error::BUFFER_TOO_SMALL]       - Audio device paths exceedingly large (doesn't fit in e.g. `[wchar_t; 4096]`.)
 /// *   [error::DEVICE_NOT_CONNECTED]   - **Unreliably.**
 /// *   [error::INVALID_FUNCTION]       - API unavailable: requires XInput 1.4 or later
@@ -68,17 +68,17 @@ pub fn get_audio_device_ids(user_index: impl TryInto<u32>) -> Result<AudioDevice
 }
 
 #[test] fn test_returns() {
-    if get_audio_device_ids(User::Zero) == error::INVALID_FUNCTION { return }
+    if get_audio_device_ids(0) == error::INVALID_FUNCTION { return }
 
     // May or may not succeed, even if gamepad not connected
-    if let Err(err) = get_audio_device_ids(User::Zero ) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
-    if let Err(err) = get_audio_device_ids(User::One  ) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
-    if let Err(err) = get_audio_device_ids(User::Two  ) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
-    if let Err(err) = get_audio_device_ids(User::Three) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
+    if let Err(err) = get_audio_device_ids(0) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
+    if let Err(err) = get_audio_device_ids(1) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
+    if let Err(err) = get_audio_device_ids(2) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
+    if let Err(err) = get_audio_device_ids(3) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
 
-    // Invalid User s
-    assert_eq!(error::BAD_ARGUMENTS, get_audio_device_ids(User::Any));
-    for u in User::iter_invalid() {
+    // Invalid `user_index`s
+    assert_eq!(error::BAD_ARGUMENTS, get_audio_device_ids(xuser::INDEX_ANY));
+    for u in xuser::invalids() {
         assert_eq!(error::BAD_ARGUMENTS, get_audio_device_ids(u));
     }
 }

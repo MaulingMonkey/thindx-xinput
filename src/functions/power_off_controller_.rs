@@ -20,8 +20,8 @@ use crate::*;
 /// ```
 ///
 /// ### Errors
-/// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
-/// *   [error::DEVICE_NOT_CONNECTED]   - [`User`] is not connected
+/// *   [error::BAD_ARGUMENTS]          - Invalid `user_index` (expected <code>0 .. [xuser::MAX_COUNT]</code>)
+/// *   [error::DEVICE_NOT_CONNECTED]   - No gamepad connected for `user_index`.
 /// *   [error::DEVICE_NOT_CONNECTED]   - XB1 controller connected through XB1 wireless dongle cannot be turned off.
 /// *   [error::INVALID_FUNCTION]       - API unavailable: requires XInput 1.3 or 1.4
 #[deprecated = "This undocumented function is reserved for system software."]
@@ -46,8 +46,8 @@ pub fn power_off_controller(user_index: impl TryInto<u32>) -> Result<(), Error> 
 #[test] #[allow(deprecated)] fn test_bad_arguments() {
     if power_off_controller(128) == error::INVALID_FUNCTION { return }
 
-    assert_eq!(error::BAD_ARGUMENTS, power_off_controller(User::Any));
-    for u in User::iter_invalid() {
+    assert_eq!(error::BAD_ARGUMENTS, power_off_controller(xuser::INDEX_ANY));
+    for u in xuser::invalids() {
         assert_eq!(error::BAD_ARGUMENTS, power_off_controller(u));
     }
 }

@@ -36,8 +36,8 @@ use bytemuck::Zeroable;
 /// ```
 ///
 /// ### Errors
-/// *   [error::BAD_ARGUMENTS]          - Invalid [`User`]
-/// *   [error::DEVICE_NOT_CONNECTED]   - Disconnected [`User`]
+/// *   [error::BAD_ARGUMENTS]          - Invalid `user_index` (expected <code>0 .. [xuser::MAX_COUNT]</code> or [`xuser::INDEX_ANY`])
+/// *   [error::DEVICE_NOT_CONNECTED]   - No gamepad connected for `user_index`.
 /// *   ~~error::EMPTY~~                - No [`Keystroke`]s available.  Returns <code>[Ok]\([None]\)</code> instead.
 /// *   [error::INVALID_FUNCTION]       - API unavailable: requires XInput 1.3 or later
 pub fn get_keystroke(user_index: impl TryInto<u32>, _reserved: ()) -> Result<Option<Keystroke>, Error> {
@@ -57,16 +57,16 @@ pub fn get_keystroke(user_index: impl TryInto<u32>, _reserved: ()) -> Result<Opt
 }
 
 #[test] fn test_valid_args() {
-    if let Err(err) = get_keystroke(User::Zero,  ()) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
-    if let Err(err) = get_keystroke(User::One,   ()) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
-    if let Err(err) = get_keystroke(User::Two,   ()) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
-    if let Err(err) = get_keystroke(User::Three, ()) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
-    if let Err(err) = get_keystroke(User::Any,   ()) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
+    if let Err(err) = get_keystroke(0,                ()) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
+    if let Err(err) = get_keystroke(1,                ()) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
+    if let Err(err) = get_keystroke(2,                ()) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
+    if let Err(err) = get_keystroke(3,                ()) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
+    if let Err(err) = get_keystroke(xuser::INDEX_ANY, ()) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
 }
 
 #[test] fn test_invalid_args() {
-    // User::Any is valid
-    for u in User::iter_invalid() {
+    // xuser::INDEX_ANY is valid
+    for u in xuser::invalids() {
         assert_eq!(error::BAD_ARGUMENTS, get_keystroke(u, ()));
     }
 }

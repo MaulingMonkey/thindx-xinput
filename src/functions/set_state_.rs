@@ -18,8 +18,8 @@ use crate::*;
 /// ```
 ///
 /// ### Errors
-/// *   [error::BAD_ARGUMENTS]          - Invalid [`User`] or [`User::Any`]
-/// *   [error::DEVICE_NOT_CONNECTED]   - [`User`] is not connected
+/// *   [error::BAD_ARGUMENTS]          - Invalid `user_index` (expected <code>0 .. [xuser::MAX_COUNT]</code>)
+/// *   [error::DEVICE_NOT_CONNECTED]   - No gamepad connected for `user_index`.
 /// *   [error::INVALID_FUNCTION]       - API unavailable: XInput not loaded
 pub fn set_state(user_index: impl TryInto<u32>, mut vibration: Vibration) -> Result<(), Error> {
     fn_context!(xinput::set_state => XInputSetState);
@@ -45,8 +45,8 @@ pub fn set_state(user_index: impl TryInto<u32>, mut vibration: Vibration) -> Res
 
 #[test] fn test_bad_arguments() {
     let v = Vibration::default();
-    assert_eq!(error::BAD_ARGUMENTS, set_state(User::Any, v));
-    for u in User::iter_invalid() {
+    assert_eq!(error::BAD_ARGUMENTS, set_state(xuser::INDEX_ANY, v));
+    for u in xuser::invalids() {
         assert_eq!(error::BAD_ARGUMENTS, set_state(u, v));
     }
 }

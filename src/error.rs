@@ -61,13 +61,13 @@ impl<O, E: PartialEq<Kind>> PartialEq<Result<O, E>> for Kind { fn eq(&self, othe
 
 
 
-/// Invalid [`User`] or [`Flag`] passed to an XInput function.
+/// Invalid `user_index` or [`Flag`] passed to an XInput function.
 pub const BAD_ARGUMENTS : Kind = Kind::new(ERROR::BAD_ARGUMENTS);
 
 /// XAudio2 device IDs are too large (> 4096 characters) for [`get_audio_device_ids`] to read onto the stack.
 pub const BUFFER_TOO_SMALL : Kind = Kind::new(ERROR::BUFFER_TOO_SMALL);
 
-/// No gamepad is connected for [`User`].  N.B. this can be unreliable for [`get_audio_device_ids`].
+/// No gamepad is connected for `user_index`.  N.B. this can be unreliable for [`get_audio_device_ids`].
 pub const DEVICE_NOT_CONNECTED : Kind = Kind::new(ERROR::DEVICE_NOT_CONNECTED);
 
 /// A corresponding XInput function was missing, or XInput itself couldn't be loaded.
