@@ -13,6 +13,9 @@ use std::os::windows::ffi::*;
 ///
 /// **NOTE:** This tends to succeed, even when no gamepad is connected, with empty/None paths.
 ///
+/// ### Arguments
+/// *   `user_index`    &mdash; The controller to get headset/microphone ids for (<code>0 .. [xuser::MAX_COUNT]</code>.)
+///
 /// ### Example
 /// ```rust
 /// let audio = xinput::get_audio_device_ids(0).unwrap_or_default();

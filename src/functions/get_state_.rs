@@ -9,6 +9,9 @@ use bytemuck::Zeroable;
 ///
 /// Retrieves the current state of the specified controller.
 ///
+/// ### Arguments
+/// *   `user_index`    &mdash; The controller to get the state of (<code>0 .. [xuser::MAX_COUNT]</code>.)
+///
 /// ### Example
 /// ```rust
 /// let gamepad = 0;

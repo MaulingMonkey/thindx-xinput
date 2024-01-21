@@ -15,7 +15,7 @@ use crate::*;
 /// *   Cause [`get_state`] to retrieve neutral data (no buttons held, 0 axises)
 ///
 /// ### Arguments
-/// *   `enable` - `true` to accept input and allow vibration, `false` to block input and vibration
+/// *   `enable`        &mdash; `true` to accept input and allow vibration, `false` to block input and vibration.
 ///
 /// ### Example
 /// ```rust

@@ -10,6 +10,9 @@ use bytemuck::Zeroable;
 ///
 /// Get DirectSound Audio Device GUIDs (N/A for Windows Store apps, isn't supported by Windows 8.)
 ///
+/// ### Arguments
+/// *   `user_index`    &mdash; The controller to get headset/microphone ids for (<code>0 .. [xuser::MAX_COUNT]</code>.)
+///
 /// ### Example
 /// ```rust
 /// let audio = xinput::get_dsound_audio_device_guids(0).unwrap_or_default();

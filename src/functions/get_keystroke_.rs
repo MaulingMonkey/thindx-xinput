@@ -10,6 +10,10 @@ use bytemuck::Zeroable;
 ///
 /// Retrieves gamepad input events.
 ///
+/// ### Argumen.t
+/// *   `user_index`    &mdash; The controller to get button/keystrokes for (<code>0 .. [xuser::MAX_COUNT]</code> or [`xuser::INDEX_ANY`].)
+/// *   `_reserved`     &mdash; Reserved for future use, simply pass `()`.
+///
 /// ### Example
 /// ```rust
 /// // Wait for any gamepad button

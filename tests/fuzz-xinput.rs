@@ -164,7 +164,7 @@ fn fuzz<T>(title: &str, file: &str, line: u32, codes: &[xinput::error::Kind], f:
         }
     }
 
-    for u in (0 ..= 255) {
+    for u in 0 ..= 255 {
         if let Err(err) = f(u) {
             let kind = err.kind();
             if !codes.contains(&kind) { fatal!(at: file, line: line as _, "when fuzzing {}: unexpected error {:?}", title, kind); }

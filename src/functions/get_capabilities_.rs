@@ -7,6 +7,10 @@ use bytemuck::Zeroable;
 /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetcapabilities)\]
 /// XInputGetCapabilities
 ///
+/// ### Arguments
+/// *   `user_index`    &mdash; The controller to get capabilities and features for (<code>0 .. [xuser::MAX_COUNT]</code>.)
+/// *   `flags`         &mdash; [`Flag::None`] or [`Flag::Gamepad`].
+///
 /// ### Example
 /// ```rust
 /// let caps = xinput::get_capabilities(0, xinput::Flag::None);

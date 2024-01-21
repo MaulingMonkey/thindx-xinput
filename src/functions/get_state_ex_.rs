@@ -11,6 +11,9 @@ use bytemuck::Zeroable;
 ///
 /// Silently falls back on [`XInputGetState`](https://learn.microsoft.com/en-us/windows/win32/api/xinput/nf-xinput-xinputgetstate) if `XInputGetStateEx` is unavailable.
 ///
+/// ### Arguments
+/// *   `user_index`    &mdash; The controller to get the state of (<code>0 .. [xuser::MAX_COUNT]</code>.)
+///
 /// ### Example
 /// ```rust
 /// let gamepad = 0;

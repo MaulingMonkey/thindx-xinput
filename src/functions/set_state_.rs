@@ -7,6 +7,9 @@ use crate::*;
 ///
 /// Control the vibration of a controller.
 ///
+/// ### Arguments
+/// *   `user_index`    &mdash; The controller to vibrate (<code>0 .. [xuser::MAX_COUNT]</code>.)
+///
 /// ### Example
 /// ```rust
 /// // No rumble

@@ -9,8 +9,8 @@ use bytemuck::Zeroable;
 /// <span style="opacity: 50%">(1.3+)</span>
 ///
 /// ### Arguments
-/// *   `user_index`    Identify which user's controller to get the battery information of
-/// *   `dev_type`      [BatteryDevType::Gamepad] or [BatteryDevType::Headset]
+/// *   `user_index`    &mdash; The controller to get battery status for (<code>0 .. [xuser::MAX_COUNT]</code>.)
+/// *   `dev_type`      &mdash; [BatteryDevType::Gamepad] or [BatteryDevType::Headset].
 ///
 /// ### Example
 /// ```rust

@@ -11,7 +11,7 @@ use crate::*;
 /// ⚠️ **NOTE** ⚠️ This undocumented function is reserved for system software.
 ///
 /// ### Arguments
-/// *   `user_index`    The controller to power off
+/// *   `user_index`    &mdash; The controller to power off (<code>0 .. [xuser::MAX_COUNT]</code>.)
 ///
 /// ### Example
 /// ```rust
