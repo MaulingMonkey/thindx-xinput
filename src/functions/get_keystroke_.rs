@@ -46,7 +46,7 @@ use bytemuck::Zeroable;
 /// *   [error::INVALID_FUNCTION]       - API unavailable: requires XInput 1.3 or later
 pub fn get_keystroke(user_index: impl TryInto<u32>, _reserved: ()) -> Result<Option<Keystroke>, Error> {
     fn_context!(xinput::get_keystroke => XInputGetKeystroke);
-    #[allow(non_snake_case)] let XInputGetKeystroke = Imports::get().XInputGetKeystroke;
+    #[allow(non_snake_case)] let XInputGetKeystroke = imports::XInputGetKeystroke.load(core::sync::atomic::Ordering::Relaxed);
     let user_index = user_index.try_into().map_err(|_| fn_param_error!(user_index, error::BAD_ARGUMENTS))?;
 
     let mut keystroke = Keystroke::zeroed();

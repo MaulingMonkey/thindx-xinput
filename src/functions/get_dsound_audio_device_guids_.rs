@@ -34,7 +34,7 @@ use bytemuck::Zeroable;
 #[deprecated = "Deprecated in favor of xinput::get_audio_device_ids.  Unavailable for Windows Store apps, may fail on Windows 8."]
 pub fn get_dsound_audio_device_guids(user_index: impl TryInto<u32>) -> Result<DSoundAudioDeviceGuids, Error> {
     fn_context!(xinput::get_dsound_audio_device_guids => XInputGetDSoundAudioDeviceGuids);
-    #[allow(non_snake_case)] let XInputGetDSoundAudioDeviceGuids = Imports::get().XInputGetDSoundAudioDeviceGuids;
+    #[allow(non_snake_case)] let XInputGetDSoundAudioDeviceGuids = imports::XInputGetDSoundAudioDeviceGuids.load(core::sync::atomic::Ordering::Relaxed);
     let user_index = user_index.try_into().map_err(|_| fn_param_error!(user_index, error::BAD_ARGUMENTS))?;
 
     let mut guids = DSoundAudioDeviceGuids::zeroed();

@@ -43,7 +43,7 @@ use bytemuck::Zeroable;
 /// *   [error::INVALID_FUNCTION]       - API unavailable: requires XInput 1.3 or later
 pub fn get_battery_information(user_index: impl TryInto<u32>, dev_type: impl Into<BatteryDevType>) -> Result<BatteryInformation, Error> {
     fn_context!(xinput::get_battery_information => XInputGetBatteryInformation);
-    #[allow(non_snake_case)] let XInputGetBatteryInformation = Imports::get().XInputGetBatteryInformation;
+    #[allow(non_snake_case)] let XInputGetBatteryInformation = imports::XInputGetBatteryInformation.load(core::sync::atomic::Ordering::Relaxed);
     let user_index = user_index.try_into().map_err(|_| fn_param_error!(user_index, error::BAD_ARGUMENTS))?;
 
     let mut info = BatteryInformation::zeroed();

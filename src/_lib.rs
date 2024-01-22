@@ -32,7 +32,7 @@ mods! {
     }
 
     inl mod dll {
-        inl mod imports;
+        pub(crate) mod imports;
     }
 
     inl mod enumerations {

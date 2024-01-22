@@ -49,7 +49,7 @@ use bytemuck::Zeroable;
 /// *   [error::INVALID_FUNCTION]       - API unavailable: XInput not loaded
 pub fn get_capabilities(user_index: impl TryInto<u32>, flags: Flag) -> Result<Capabilities, Error> {
     fn_context!(xinput::get_capabilities => XInputGetCapabilities);
-    #[allow(non_snake_case)] let XInputGetCapabilities = Imports::get().XInputGetCapabilities;
+    #[allow(non_snake_case)] let XInputGetCapabilities = imports::XInputGetCapabilities.load(core::sync::atomic::Ordering::Relaxed);
     let user_index = user_index.try_into().map_err(|_| fn_param_error!(user_index, error::BAD_ARGUMENTS))?;
 
     let mut caps = Capabilities::zeroed();

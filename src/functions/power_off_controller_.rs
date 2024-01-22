@@ -27,7 +27,7 @@ use crate::*;
 #[deprecated = "This undocumented function is reserved for system software."]
 pub fn power_off_controller(user_index: impl TryInto<u32>) -> Result<(), Error> {
     fn_context!(xinput::power_off_controller => XInputPowerOffController);
-    #[allow(non_snake_case)] let XInputPowerOffController = Imports::get()._XInputPowerOffController;
+    #[allow(non_snake_case)] let XInputPowerOffController = imports::_XInputPowerOffController.load(core::sync::atomic::Ordering::Relaxed);
     let user_index = user_index.try_into().map_err(|_| fn_param_error!(user_index, error::BAD_ARGUMENTS))?;
 
     let code = unsafe { XInputPowerOffController(user_index) };

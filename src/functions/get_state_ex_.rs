@@ -47,7 +47,7 @@ use bytemuck::Zeroable;
 #[deprecated = "This undocumented function is reserved for system software to access Buttons::Guide."]
 pub fn get_state_ex(user_index: impl TryInto<u32>) -> Result<State, Error> {
     fn_context!(xinput::get_state_ex => XInputGetStateEx);
-    #[allow(non_snake_case)] let XInputGetStateEx = Imports::get()._XInputGetStateEx;
+    #[allow(non_snake_case)] let XInputGetStateEx = imports::_XInputGetStateEx.load(core::sync::atomic::Ordering::Relaxed);
     let user_index = user_index.try_into().map_err(|_| fn_param_error!(user_index, error::BAD_ARGUMENTS))?;
 
     let mut state = State::zeroed();

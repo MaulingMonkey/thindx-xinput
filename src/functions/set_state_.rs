@@ -26,7 +26,7 @@ use crate::*;
 /// *   [error::INVALID_FUNCTION]       - API unavailable: XInput not loaded
 pub fn set_state(user_index: impl TryInto<u32>, mut vibration: Vibration) -> Result<(), Error> {
     fn_context!(xinput::set_state => XInputSetState);
-    #[allow(non_snake_case)] let XInputSetState = Imports::get().XInputSetState;
+    #[allow(non_snake_case)] let XInputSetState = imports::XInputSetState.load(core::sync::atomic::Ordering::Relaxed);
     let user_index = user_index.try_into().map_err(|_| fn_param_error!(user_index, error::BAD_ARGUMENTS))?;
 
     // SAFETY: ✔️

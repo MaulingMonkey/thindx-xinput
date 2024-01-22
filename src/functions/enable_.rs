@@ -39,7 +39,7 @@ use crate::*;
 /// *   [error::INVALID_FUNCTION]       - API unavailable: requires XInput 1.1 or later
 pub fn enable(enable: bool) -> Result<(), Error> {
     fn_context!(xinput::enable => XInputEnable);
-    #[allow(non_snake_case)] let XInputEnable = Imports::get().XInputEnable;
+    #[allow(non_snake_case)] let XInputEnable = imports::XInputEnable.load(core::sync::atomic::Ordering::Relaxed);
     // SAFETY: ✔️
     //  * fuzzed        in `tests/fuzz-xinput.rs`
     //  * `enable`      can be true or false.  Pretty easy to have exhaustive test coverage.
