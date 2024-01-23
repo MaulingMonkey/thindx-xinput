@@ -28,9 +28,10 @@ use bytemuck::Zeroable;
 /// ```
 ///
 /// ### Errors
-/// *   [error::BAD_ARGUMENTS]?         - Invalid `user_index` (expected <code>0 .. [xuser::MAX_COUNT]</code>)?
-/// *   [error::DEVICE_NOT_CONNECTED]?  - No gamepad connected for `user_index`?
+/// *   [error::BAD_ARGUMENTS]          - Invalid `user_index` (expected <code>0 .. [xuser::MAX_COUNT]</code>)
+/// *   [error::DEVICE_NOT_CONNECTED]   - No gamepad connected for `user_index`
 /// *   [error::INVALID_FUNCTION]       - API unavailable: requires XInput 1.3 or earlier
+/// *   <span style="opacity: 50%">None</span>  - No audio device(s) connected to gamepad.
 #[deprecated = "Deprecated in favor of xinput::get_audio_device_ids.  Unavailable for Windows Store apps, may fail on Windows 8."]
 pub fn get_dsound_audio_device_guids(user_index: impl TryInto<u32>) -> Result<DSoundAudioDeviceGuids, Error> {
     fn_context!(xinput::get_dsound_audio_device_guids => XInputGetDSoundAudioDeviceGuids);
@@ -47,12 +48,19 @@ pub fn get_dsound_audio_device_guids(user_index: impl TryInto<u32>) -> Result<DS
     Ok(guids)
 }
 
-#[test] fn test() {
-    #[allow(deprecated)] let r = get_dsound_audio_device_guids(0);
-    if r != error::INVALID_FUNCTION {
-        mmrbi::warning!(at: file!(), line: line!() as usize,
-            "xinput::get_dsound_audio_device_guids(0) returned {:?}: may be implemented on this platform: add test coverage!",
-            r
-        );
+
+
+#[test] #[allow(deprecated)] fn test_valid_args() {
+    for user_index in 0 .. 4 {
+        if let Err(err) = get_dsound_audio_device_guids(user_index) {
+            assert!(matches!(err.kind(), error::DEVICE_NOT_CONNECTED | error::INVALID_FUNCTION | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
+        }
+    }
+}
+
+#[test] #[allow(deprecated)] fn test_bad_user_index() {
+    for user_index in xuser::invalids().chain(Some(xuser::INDEX_ANY)) {
+        let err = get_dsound_audio_device_guids(user_index).expect_err("get_dsound_audio_device_guids should return an error for invalid users");
+        assert!(matches!(err.kind(), error::BAD_ARGUMENTS | error::INVALID_FUNCTION | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
     }
 }

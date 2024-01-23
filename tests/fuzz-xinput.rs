@@ -50,13 +50,13 @@ macro_rules! fuzz {
                     #[allow(deprecated)] |u| xinput::get_audio_device_ids(u),
                     error::BAD_ARGUMENTS,
                     error::DEVICE_NOT_CONNECTED,    // only on some systems
-                    error::INVALID_FUNCTION,        // untested
+                    error::INVALID_FUNCTION,
                 );
 
                 fuzz!(
                     #[allow(deprecated)] |u| xinput::get_dsound_audio_device_guids(u),
-                    error::BAD_ARGUMENTS,           // untested
-                    error::DEVICE_NOT_CONNECTED,    // untested
+                    error::BAD_ARGUMENTS,
+                    error::DEVICE_NOT_CONNECTED,
                     error::INVALID_FUNCTION,
                 );
 
