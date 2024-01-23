@@ -24,8 +24,17 @@
         },
         {
             "label":   "test",
-            "command": "cargo t",
             "group":   { "kind": "build", "isDefault": true },
+            "dependsOrder": "parallel",
+            "dependsOn": [
+                "cargo t",
+                "THINDX_XINPUT=uap cargo t",
+                "THINDX_XINPUT=1.4 cargo t",
+                "THINDX_XINPUT=1.3 cargo t",
+                "THINDX_XINPUT=1.2 cargo t",
+                "THINDX_XINPUT=1.1 cargo t",
+                "THINDX_XINPUT=9.1 cargo t",
+            ],
         },
         {
             "label":   "build",
@@ -58,6 +67,40 @@
         {
             "label":   "git log --format=oneline",
             "command": "git log --format=oneline",
+        },
+        {
+            "label":    "cargo t",
+            "command":  "cargo t",
+        },
+        {
+            "label":    "THINDX_XINPUT=uap cargo t",
+            "command":  "cargo t --target-dir=target/uap",
+            "options":  { "env": { "TESTFAST": "1", "THINDX_XINPUT": "uap" } },
+        },
+        {
+            "label":    "THINDX_XINPUT=1.4 cargo t",
+            "command":  "cargo t --target-dir=target/1.4",
+            "options":  { "env": { "TESTFAST": "1", "THINDX_XINPUT": "1.4" } },
+        },
+        {
+            "label":    "THINDX_XINPUT=1.3 cargo t",
+            "command":  "cargo t --target-dir=target/1.3",
+            "options":  { "env": { "TESTFAST": "1", "THINDX_XINPUT": "1.3" } },
+        },
+        {
+            "label":    "THINDX_XINPUT=1.2 cargo t",
+            "command":  "cargo t --target-dir=target/1.2",
+            "options":  { "env": { "TESTFAST": "1", "THINDX_XINPUT": "1.2" } },
+        },
+        {
+            "label":    "THINDX_XINPUT=1.1 cargo t",
+            "command":  "cargo t --target-dir=target/1.1",
+            "options":  { "env": { "TESTFAST": "1", "THINDX_XINPUT": "1.1" } },
+        },
+        {
+            "label":    "THINDX_XINPUT=9.1 cargo t",
+            "command":  "cargo t --target-dir=target/19.1",
+            "options":  { "env": { "TESTFAST": "1", "THINDX_XINPUT": "9.1" } },
         },
         {
             "label":   "cargo b --example xinput-exercise-all",
