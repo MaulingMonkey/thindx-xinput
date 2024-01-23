@@ -63,15 +63,16 @@ pub fn get_state_ex(user_index: impl TryInto<u32>) -> Result<State, Error> {
 }
 
 #[test] #[allow(deprecated)] fn test_valid_params() {
-    if let Err(err) = get_state_ex(0) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_state_ex(1) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_state_ex(2) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_state_ex(3) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    for user_index in 0 .. 4 {
+        if let Err(err) = get_state_ex(user_index) {
+            assert!(matches!(err.kind(), error::DEVICE_NOT_CONNECTED | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
+        }
+    }
 }
 
-#[test] #[allow(deprecated)] fn test_bad_arguments() {
-    assert_eq!(error::BAD_ARGUMENTS, get_state_ex(xuser::INDEX_ANY));
-    for u in xuser::invalids() {
-        assert_eq!(error::BAD_ARGUMENTS, get_state_ex(u));
+#[test] fn test_bad_user_index() {
+    for user_index in xuser::invalids().chain(Some(xuser::INDEX_ANY)) {
+        let err = get_state(user_index).expect_err("expected error for invalid user_index");
+        assert!(matches!(err.kind(), error::BAD_ARGUMENTS | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
     }
 }

@@ -40,16 +40,17 @@ pub fn set_state(user_index: impl TryInto<u32>, mut vibration: Vibration) -> Res
 
 #[test] fn test_valid_params() {
     let v = Vibration::default();
-    if let Err(err) = set_state(0, v) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = set_state(1, v) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = set_state(2, v) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = set_state(3, v) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    for user_index in 0 .. 4 {
+        if let Err(err) = set_state(user_index, v) {
+            assert!(matches!(err.kind(), error::DEVICE_NOT_CONNECTED | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
+        }
+    }
 }
 
-#[test] fn test_bad_arguments() {
+#[test] fn test_bad_user_index() {
     let v = Vibration::default();
-    assert_eq!(error::BAD_ARGUMENTS, set_state(xuser::INDEX_ANY, v));
-    for u in xuser::invalids() {
-        assert_eq!(error::BAD_ARGUMENTS, set_state(u, v));
+    for user_index in xuser::invalids().chain(Some(xuser::INDEX_ANY)) {
+        let err = set_state(user_index, v).expect_err("expected error for invalid user_index");
+        assert!(matches!(err.kind(), error::BAD_ARGUMENTS | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
     }
 }

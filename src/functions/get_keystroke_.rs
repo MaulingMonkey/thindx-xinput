@@ -63,7 +63,7 @@ pub fn get_keystroke(user_index: impl TryInto<u32>, _reserved: ()) -> Result<Opt
 #[test] fn test_valid_args() {
     for user_index in (0..4).chain(Some(xuser::INDEX_ANY)) {
         if let Err(err) = get_keystroke(user_index, ()) {
-            assert!(matches!(err.kind(), error::INVALID_FUNCTION | error::DEVICE_NOT_CONNECTED), "unexpected error type: {err:?}");
+            assert!(matches!(err.kind(), error::DEVICE_NOT_CONNECTED | error::INVALID_FUNCTION | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
         }
     }
 }

@@ -48,17 +48,9 @@ pub fn enable(enable: bool) -> Result<(), Error> {
 }
 
 #[test] fn spam_xinput_enable() {
-    let _ = enable(true);
-    let _ = enable(true);
-    let _ = enable(true);
-    let _ = enable(false);
-    let _ = enable(false);
-    let _ = enable(false);
-    let _ = enable(true);
-    let _ = enable(false);
-    let _ = enable(true);
-    let _ = enable(false);
-    let _ = enable(true);
-    let _ = enable(false);
-    let _ = enable(true);
+    for e in [true, true, true, false, false, false, true, false, true, false, true, false, true] {
+        if let Err(err) = enable(e) {
+            assert!(matches!(err.kind(), error::INVALID_FUNCTION | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
+        }
+    }
 }

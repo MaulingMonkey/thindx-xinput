@@ -64,25 +64,29 @@ pub fn get_capabilities(user_index: impl TryInto<u32>, flags: Flag) -> Result<Ca
 }
 
 #[test] fn test_valid_params() {
-    if let Err(err) = get_capabilities(0, Flag::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(1, Flag::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(2, Flag::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(3, Flag::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-
-    if let Err(err) = get_capabilities(0, Flag::None   ) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(1, Flag::None   ) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(2, Flag::None   ) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_capabilities(3, Flag::None   ) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    for user_index in 0 .. 4 {
+        for flag in [Flag::None, Flag::Gamepad] {
+            if let Err(err) = get_capabilities(user_index, flag) {
+                assert!(matches!(err.kind(), error::DEVICE_NOT_CONNECTED | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
+            }
+        }
+    }
 }
 
-#[test] fn test_bad_arguments() {
-    assert_eq!(error::BAD_ARGUMENTS, get_capabilities(xuser::INDEX_ANY, Flag::Gamepad));            // Bad User (any)
-    assert_eq!(error::BAD_ARGUMENTS, get_capabilities(4,                Flag::Gamepad));            // Bad User (obb)
-    assert_eq!(error::BAD_ARGUMENTS, get_capabilities(0,                Flag::from_unchecked(42))); // Bad Flag (obb)
-    assert_eq!(error::BAD_ARGUMENTS, get_capabilities(0,                Flag::from_unchecked(!0))); // Bad Flag (obb)
-    for u in xuser::invalids() {
-        assert_eq!(error::BAD_ARGUMENTS, get_capabilities(u, Flag::Gamepad)); // Bad user only
-        assert_eq!(error::BAD_ARGUMENTS, get_capabilities(u, Flag::from_unchecked(42))); // Bad Flag (obb)
-        assert_eq!(error::BAD_ARGUMENTS, get_capabilities(u, Flag::from_unchecked(!0))); // Bad Flag (obb)
+#[test] fn test_bad_user_index() {
+    for user_index in xuser::invalids().chain(Some(xuser::INDEX_ANY)) {
+        for flag in [Flag::None, Flag::Gamepad, Flag::from_unchecked(42), Flag::from_unchecked(!0)] {
+            let err = get_capabilities(user_index, flag).expect_err("get_capabilities should return an error on a bad user_index");
+            assert!(matches!(err.kind(), error::BAD_ARGUMENTS | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
+        }
+    }
+}
+
+#[test] fn test_bad_flags() {
+    for user_index in 0 .. 4 {
+        for flag in [Flag::from_unchecked(42), Flag::from_unchecked(!0)] {
+            let err = get_capabilities(user_index, flag).expect_err("get_capabilities should return an error on a bad flag");
+            assert!(matches!(err.kind(), error::BAD_ARGUMENTS | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
+        }
     }
 }

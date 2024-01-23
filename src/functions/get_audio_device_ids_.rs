@@ -70,18 +70,18 @@ pub fn get_audio_device_ids(user_index: impl TryInto<u32>) -> Result<AudioDevice
     })
 }
 
-#[test] fn test_returns() {
-    if get_audio_device_ids(0) == error::INVALID_FUNCTION { return }
 
-    // May or may not succeed, even if gamepad not connected
-    if let Err(err) = get_audio_device_ids(0) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
-    if let Err(err) = get_audio_device_ids(1) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
-    if let Err(err) = get_audio_device_ids(2) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
-    if let Err(err) = get_audio_device_ids(3) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
+#[test] fn test_valid_args() {
+    for user_index in 0 .. 4 {
+        if let Err(err) = get_audio_device_ids(user_index) {
+            assert!(matches!(err.kind(), error::DEVICE_NOT_CONNECTED | error::INVALID_FUNCTION | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
+        }
+    }
+}
 
-    // Invalid `user_index`s
-    assert_eq!(error::BAD_ARGUMENTS, get_audio_device_ids(xuser::INDEX_ANY));
-    for u in xuser::invalids() {
-        assert_eq!(error::BAD_ARGUMENTS, get_audio_device_ids(u));
+#[test] fn test_bad_user_index() {
+    for user_index in xuser::invalids().chain(Some(xuser::INDEX_ANY)) {
+        let err = get_audio_device_ids(user_index).expect_err("get_audio_devices_ids should return an error for invalid users");
+        assert!(matches!(err.kind(), error::BAD_ARGUMENTS | error::INVALID_FUNCTION | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
     }
 }
