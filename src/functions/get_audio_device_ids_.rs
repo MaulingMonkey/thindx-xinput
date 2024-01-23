@@ -65,8 +65,8 @@ pub fn get_audio_device_ids(user_index: impl TryInto<u32>) -> Result<AudioDevice
     let render_device_id    = OsString::from_wide(render_id .get(..render_len  as usize).ok_or(fn_param_error!(render_device_id,  error::BUFFER_TOO_SMALL))?.split(|c| *c==0).next().unwrap_or(&[]));
     let capture_device_id   = OsString::from_wide(capture_id.get(..capture_len as usize).ok_or(fn_param_error!(capture_device_id, error::BUFFER_TOO_SMALL))?.split(|c| *c==0).next().unwrap_or(&[]));
     Ok(AudioDeviceIds {
-        render_device_id:   if render_device_id .is_empty() { None } else { Some(render_device_id ) },
-        capture_device_id:  if capture_device_id.is_empty() { None } else { Some(capture_device_id) },
+        render_device_id:   if render_device_id .is_empty() { None } else { Some(render_device_id.into() ) },
+        capture_device_id:  if capture_device_id.is_empty() { None } else { Some(capture_device_id.into()) },
     })
 }
 

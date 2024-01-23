@@ -1,5 +1,6 @@
 #[cfg(doc)] use crate::*;
-use std::ffi::OsString;
+use std::ffi::OsStr;
+use std::sync::Arc;
 
 
 
@@ -9,10 +10,10 @@ use std::ffi::OsString;
 #[derive(Default)]
 pub struct AudioDeviceIds {
     /// Windows Core Audio device ID string for render (speakers).
-    pub render_device_id:   Option<OsString>,
+    pub render_device_id:   Option<Arc<OsStr>>,
 
     /// Windows Core Audio device ID string for capture (microphone).
-    pub capture_device_id:  Option<OsString>,
+    pub capture_device_id:  Option<Arc<OsStr>>,
 }
 
 #[test] fn test_traits_for_coverage() {
