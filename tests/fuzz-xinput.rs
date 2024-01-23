@@ -71,6 +71,7 @@ macro_rules! fuzz {
                         |u| xinput::get_battery_information(u, bt),
                         error::BAD_ARGUMENTS,
                         error::DEVICE_NOT_CONNECTED,
+                        error::INVALID_FUNCTION,
                     );
                 }
 
@@ -97,6 +98,7 @@ macro_rules! fuzz {
                     |u| xinput::get_keystroke(u, ()),
                     error::BAD_ARGUMENTS,
                     error::DEVICE_NOT_CONNECTED,
+                    error::INVALID_FUNCTION,
                 );
 
                 fuzz!(

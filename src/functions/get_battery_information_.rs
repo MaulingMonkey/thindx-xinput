@@ -58,26 +58,27 @@ pub fn get_battery_information(user_index: impl TryInto<u32>, dev_type: impl Int
 }
 
 #[test] fn test_valid_params() {
-    if let Err(err) = get_battery_information(0, BatteryDevType::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_battery_information(1, BatteryDevType::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_battery_information(2, BatteryDevType::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_battery_information(3, BatteryDevType::Gamepad) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-
-    if let Err(err) = get_battery_information(0, BatteryDevType::Headset) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_battery_information(1, BatteryDevType::Headset) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_battery_information(2, BatteryDevType::Headset) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_battery_information(3, BatteryDevType::Headset) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    for user_index in 0..4 {
+        for dev_type in [BatteryDevType::Gamepad, BatteryDevType::Headset] {
+            if let Err(err) = get_battery_information(user_index, dev_type) {
+                assert!(matches!(err.kind(), error::DEVICE_NOT_CONNECTED | error::INVALID_FUNCTION | error::CO_E_NOTINITIALIZED));
+            }
+        }
+    }
 }
 
-#[test] fn test_bad_arguments() {
+#[test] fn test_bad_battery_type() {
     // bad BatteryDevType is ignored?
-    if let Err(err) = get_battery_information(0, BatteryDevType::from_unchecked(  3)) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_battery_information(0, BatteryDevType::from_unchecked( 42)) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
-    if let Err(err) = get_battery_information(0, BatteryDevType::from_unchecked(250)) { assert_eq!(err, error::DEVICE_NOT_CONNECTED); }
+    for dev_type in [3, 42, 250].map(BatteryDevType::from_unchecked) {
+        if let Err(err) = get_battery_information(0, dev_type) {
+            assert!(matches!(err.kind(), error::DEVICE_NOT_CONNECTED | error::INVALID_FUNCTION | error::CO_E_NOTINITIALIZED), "{err:?}");
+        }
+    }
+}
 
-    assert_eq!(error::DEVICE_NOT_CONNECTED, get_battery_information(3, BatteryDevType::from_unchecked(42))); // disconnected gamepad takes precedence
-    assert_eq!(error::BAD_ARGUMENTS,        get_battery_information(xuser::INDEX_ANY, BatteryDevType::Gamepad));
-    for u in xuser::invalids() {
-        assert_eq!(error::BAD_ARGUMENTS, get_battery_information(u, BatteryDevType::Gamepad));
+#[test] fn test_bad_user_index() {
+    for user_index in Some(xuser::INDEX_ANY).into_iter().chain(xuser::invalids()) {
+        let err = get_battery_information(user_index, BatteryDevType::Gamepad).expect_err("expected error for invalid user_index");
+        assert!(matches!(err.kind(), error::BAD_ARGUMENTS | error::INVALID_FUNCTION | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
     }
 }

@@ -67,6 +67,9 @@ pub const BAD_ARGUMENTS : Kind = Kind::new(ERROR::BAD_ARGUMENTS);
 /// XAudio2 device IDs are too large (> 4096 characters) for [`get_audio_device_ids`] to read onto the stack.
 pub const BUFFER_TOO_SMALL : Kind = Kind::new(ERROR::BUFFER_TOO_SMALL);
 
+/// COM not initialized.  Only observed being returned from `xinputuap.dll`.
+pub const CO_E_NOTINITIALIZED : Kind = Kind::from_u32(winresult::CO::E_NOTINITIALIZED.to_u32());
+
 /// No gamepad is connected for `user_index`.  N.B. this can be unreliable for [`get_audio_device_ids`].
 pub const DEVICE_NOT_CONNECTED : Kind = Kind::new(ERROR::DEVICE_NOT_CONNECTED);
 

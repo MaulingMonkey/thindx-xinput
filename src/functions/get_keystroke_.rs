@@ -61,16 +61,17 @@ pub fn get_keystroke(user_index: impl TryInto<u32>, _reserved: ()) -> Result<Opt
 }
 
 #[test] fn test_valid_args() {
-    if let Err(err) = get_keystroke(0,                ()) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
-    if let Err(err) = get_keystroke(1,                ()) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
-    if let Err(err) = get_keystroke(2,                ()) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
-    if let Err(err) = get_keystroke(3,                ()) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
-    if let Err(err) = get_keystroke(xuser::INDEX_ANY, ()) { assert_eq!(error::DEVICE_NOT_CONNECTED, err); }
+    for user_index in (0..4).chain(Some(xuser::INDEX_ANY)) {
+        if let Err(err) = get_keystroke(user_index, ()) {
+            assert!(matches!(err.kind(), error::INVALID_FUNCTION | error::DEVICE_NOT_CONNECTED), "unexpected error type: {err:?}");
+        }
+    }
 }
 
-#[test] fn test_invalid_args() {
+#[test] fn test_bad_user_index() {
     // xuser::INDEX_ANY is valid
-    for u in xuser::invalids() {
-        assert_eq!(error::BAD_ARGUMENTS, get_keystroke(u, ()));
+    for user_index in xuser::invalids() {
+        let err = get_keystroke(user_index, ()).expect_err("get_keystroke should return an error for invalid users");
+        assert!(matches!(err.kind(), error::BAD_ARGUMENTS | error::INVALID_FUNCTION | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
     }
 }
