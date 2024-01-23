@@ -139,7 +139,22 @@ fn init() {
         //  * We assume `hmodule`, if retrieved, is a valid xinput DLL.
         //  * We assume specific magic ordinals always map to specific un-named functions.
         unsafe {
-            let lib = try_find_loaded_xinput()
+            let xinput_env_dll = std::env::var_os("THINDX_XINPUT").map(|env| {
+                let env = env.to_string_lossy();
+                match &*env {
+                    "uap"                               => "xinputuap.dll",
+                    "1.4" | "1_4"                       => "xinput1_4.dll",
+                    "1.3" | "1_3"                       => "xinput1_3.dll",
+                    "1.2" | "1_2"                       => "xinput1_2.dll",
+                    "1.1" | "1_1"                       => "xinput1_1.dll",
+                    "9.1" | "9_1" | "9.1.0" | "9_1_0"   => "xinput9_1_0.dll",
+                    _                                   => panic!("invalid value for %THINDX_XINPUT%: {env:?}"),
+                }
+            });
+
+            let lib =
+                xinput_env_dll.and_then(|dll| Library::load(dll).ok())
+                .or_else(|| try_find_loaded_xinput())
                 .or_else(|| Library::load("xinput1_4.dll").ok())
                 .or_else(|| Library::load("xinput1_3.dll").ok())
                 .or_else(|| Library::load("xinput1_2.dll").ok())
