@@ -99,7 +99,7 @@
         },
         {
             "label":    "THINDX_XINPUT=9.1 cargo t",
-            "command":  "cargo t --target-dir=target/19.1",
+            "command":  "cargo t --target-dir=target/9.1",
             "options":  { "env": { "TESTFAST": "1", "THINDX_XINPUT": "9.1" } },
         },
         {
