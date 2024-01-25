@@ -15,12 +15,7 @@
 
 // #![warn(clippy::undocumented_unsafe_blocks)]    // too noisy to implement yet
 
-#[cfg(doc)] #[doc = include_str!("../doc/apis.md")] pub mod apis {}
-//#[cfg(doc)] #[doc = include_str!("../doc/changelog.md")] pub mod changelog {}
-#[cfg(doc)] #[doc = include_str!("../doc/crates.md")] pub mod crates {}
-#[cfg(doc)] #[doc = include_str!("../doc/design.md")] pub mod design {}
-
-
+#[cfg(doc)] #[path = "../doc/_doc.rs"] pub mod _doc;
 #[macro_use] mod macros;
 #[macro_use] mod error_macros;
 
