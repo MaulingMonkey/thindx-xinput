@@ -26,6 +26,10 @@ use bytemuck::{Pod, Zeroable};
     pub right_motor_speed:  u16,
 }
 
+impl From<()        > for Vibration { fn from(_:      ()        ) -> Self { Self { left_motor_speed: 0, right_motor_speed: 0 } } }
+impl From<(u16, u16)> for Vibration { fn from((l, r): (u16, u16)) -> Self { Self { left_motor_speed: l, right_motor_speed: r } } }
+impl From<[u16; 2]  > for Vibration { fn from([l, r]: [u16; 2]  ) -> Self { Self { left_motor_speed: l, right_motor_speed: r } } }
+
 struct_mapping! {
     #[derive(unsafe { AsRef, AsMut, FromInto })]
     Vibration => winapi::um::xinput::XINPUT_VIBRATION {
