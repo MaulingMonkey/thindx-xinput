@@ -17,6 +17,7 @@
 #[cfg(doc)] #[doc = include_str!("../doc/apis.md")] pub mod apis {}
 //#[cfg(doc)] #[doc = include_str!("../doc/changelog.md")] pub mod changelog {}
 #[cfg(doc)] #[doc = include_str!("../doc/crates.md")] pub mod crates {}
+#[cfg(doc)] #[doc = include_str!("../doc/design.md")] pub mod design {}
 
 
 #[macro_use] mod macros;
