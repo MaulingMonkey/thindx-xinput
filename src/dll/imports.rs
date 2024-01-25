@@ -132,6 +132,25 @@ pub(crate) static _XInputPowerOffController:        AtomicFn<unsafe extern "syst
 
 
 
+const THINDX_XINPUT_PANIC_MESSAGE : &'static str = "invalid value for `%THINDX_XINPUT%`: expected one of `1.4`, `1.3`, `1.2`, `1.1`, `9.1`, `9.1.0`, or `uap`";
+
+const THINDX_XINPUT_DLL_BUILD_TIME : Option<&'static str> = match option_env!("THINDX_XINPUT") {
+    None => None,
+    Some(ver) => Some(thindx_xinput_var_to_dll_name(ver)),
+};
+
+const fn thindx_xinput_var_to_dll_name(thindx_xinput: &str) -> &'static str {
+    match thindx_xinput.as_bytes() {
+        b"uap"                                  => "XInputUap.dll",
+        b"1.4" | b"1_4"                         => "XInput1_4.dll",
+        b"1.3" | b"1_3"                         => "xinput1_3.dll",
+        b"1.2" | b"1_2"                         => "xinput1_2.dll",
+        b"1.1" | b"1_1"                         => "xinput1_1.dll",
+        b"9.1" | b"9_1" | b"9.1.0" | b"9_1_0"   => "XInput9_1_0.dll",
+        _                                       => panic!("{}", THINDX_XINPUT_PANIC_MESSAGE),
+    }
+}
+
 fn init() {
     static ONCE : Once = Once::new();
     ONCE.call_once(||{
@@ -140,27 +159,19 @@ fn init() {
         //  * We assume specific magic ordinals always map to specific un-named functions.
         unsafe {
             let xinput_env_dll = std::env::var_os("THINDX_XINPUT").map(|env| {
-                let env = env.to_string_lossy();
-                match &*env {
-                    "uap"                               => "xinputuap.dll",
-                    "1.4" | "1_4"                       => "xinput1_4.dll",
-                    "1.3" | "1_3"                       => "xinput1_3.dll",
-                    "1.2" | "1_2"                       => "xinput1_2.dll",
-                    "1.1" | "1_1"                       => "xinput1_1.dll",
-                    "9.1" | "9_1" | "9.1.0" | "9_1_0"   => "xinput9_1_0.dll",
-                    _                                   => panic!("invalid value for %THINDX_XINPUT%: {env:?}"),
-                }
-            });
+                let env = env.to_str().unwrap_or_else(|| panic!("{}", THINDX_XINPUT_PANIC_MESSAGE));
+                thindx_xinput_var_to_dll_name(env)
+            }).or(THINDX_XINPUT_DLL_BUILD_TIME);
 
             let lib =
                 xinput_env_dll.and_then(|dll| Library::load(dll).ok())
                 .or_else(|| try_find_loaded_xinput())
-                .or_else(|| Library::load("xinput1_4.dll").ok())
+                .or_else(|| Library::load("XInput1_4.dll").ok())
                 .or_else(|| Library::load("xinput1_3.dll").ok())
                 .or_else(|| Library::load("xinput1_2.dll").ok())
                 .or_else(|| Library::load("xinput1_1.dll").ok())
-                .or_else(|| Library::load("xinput9_1_0.dll").ok())
-                .or_else(|| Library::load("xinputuap.dll").ok())    // absolute last resort, breaks shutdown in non-uwp/uap desktop apps
+                .or_else(|| Library::load("XInput9_1_0.dll").ok())
+                .or_else(|| Library::load("XInputUap.dll").ok())    // absolute last resort, breaks shutdown in non-uwp/uap desktop apps
                 ;
 
             let get_state : unsafe extern "system" fn(dwUserIndex: DWORD, pState: *mut XINPUT_STATE) -> DWORD = lib.and_then(|lib| lib.sym_opt("XInputGetState\0")).unwrap_or(fallback::XInputGetState);
