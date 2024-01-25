@@ -14,10 +14,15 @@ keywords                                = ["directx", "xinput", "gamepads"]
 categories                              = ["api-bindings", "os::windows-apis"] # https://crates.io/category_slugs
 rust-version                            = "1.71.0" # debugger_visualizer MSRV
 
-[package.metadata.docs.rs]
+[package.metadata.docs.rs]              # https://docs.rs/about/metadata
 default-target                          = "x86_64-pc-windows-msvc"
 targets                                 = ["x86_64-pc-windows-msvc", "i686-pc-windows-msvc"]
 all-features                            = true
+rustdoc-args                            = ["--cfg", "doc_cfg"]
+
+[features]
+# default                               = []
+undocumented                            = [] # allow the use of undocumented APIs
 
 [lib]
 path                                    = "src/_lib.rs"

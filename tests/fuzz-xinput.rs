@@ -107,7 +107,7 @@ macro_rules! fuzz {
                     error::DEVICE_NOT_CONNECTED,
                 );
 
-                fuzz!(
+                #[cfg(feature = "undocumented")] fuzz!(
                     #[allow(deprecated)] |u| xinput::get_state_ex(u),
                     error::BAD_ARGUMENTS,
                     error::DEVICE_NOT_CONNECTED,

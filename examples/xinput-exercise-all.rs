@@ -48,7 +48,7 @@ fn main() {
         Buttons::RightShoulder, Buttons::LeftShoulder,
         Buttons::DPadUp, Buttons::DPadDown, Buttons::DPadLeft, Buttons::DPadRight,
         Buttons::Start,
-        #[allow(deprecated)] Buttons::Guide,
+        #[cfg(feature = "undocumented")] Buttons::Guide,
         Buttons::Back,
         Buttons::RightThumb, Buttons::LeftThumb,
     ].iter().copied() {
@@ -58,7 +58,8 @@ fn main() {
         let timeout = Instant::now() + Duration::from_secs(10);
         while Instant::now() < timeout {
             for user in xuser::iter() {
-                #[allow(deprecated)] match xinput::get_state_ex(user) {
+                #[cfg(feature = "undocumented")] use xinput::get_state_ex as get_state;
+                match get_state(user) {
                     Ok(e) if buttons == e.buttons => {
                         println!("✔️ pressed");
                         continue 'buttons

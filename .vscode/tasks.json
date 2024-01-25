@@ -46,7 +46,8 @@
         },
         {
             "label":   "help",
-            "command": "cargo doc --open",
+            "command": "cargo +nightly doc --open --target-dir=target/nightly --all-features",
+            "options": { "env": { "RUSTDOCFLAGS": "--cfg doc_cfg" } },
         },
         {
             "label":   "vsc",
@@ -74,32 +75,32 @@
         },
         {
             "label":    "THINDX_XINPUT=uap cargo t",
-            "command":  "cargo t --target-dir=target/uap",
+            "command":  "cargo t --all-features --target-dir=target/uap",
             "options":  { "env": { "TESTFAST": "1", "THINDX_XINPUT": "uap" } },
         },
         {
             "label":    "THINDX_XINPUT=1.4 cargo t",
-            "command":  "cargo t --target-dir=target/1.4",
+            "command":  "cargo t --all-features --target-dir=target/1.4",
             "options":  { "env": { "TESTFAST": "1", "THINDX_XINPUT": "1.4" } },
         },
         {
             "label":    "THINDX_XINPUT=1.3 cargo t",
-            "command":  "cargo t --target-dir=target/1.3",
+            "command":  "cargo t --all-features --target-dir=target/1.3",
             "options":  { "env": { "TESTFAST": "1", "THINDX_XINPUT": "1.3" } },
         },
         {
             "label":    "THINDX_XINPUT=1.2 cargo t",
-            "command":  "cargo t --target-dir=target/1.2",
+            "command":  "cargo t --all-features --target-dir=target/1.2",
             "options":  { "env": { "TESTFAST": "1", "THINDX_XINPUT": "1.2" } },
         },
         {
             "label":    "THINDX_XINPUT=1.1 cargo t",
-            "command":  "cargo t --target-dir=target/1.1",
+            "command":  "cargo t --all-features --target-dir=target/1.1",
             "options":  { "env": { "TESTFAST": "1", "THINDX_XINPUT": "1.1" } },
         },
         {
             "label":    "THINDX_XINPUT=9.1 cargo t",
-            "command":  "cargo t --target-dir=target/9.1",
+            "command":  "cargo t --all-features --target-dir=target/9.1",
             "options":  { "env": { "TESTFAST": "1", "THINDX_XINPUT": "9.1" } },
         },
         {

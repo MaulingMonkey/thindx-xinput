@@ -1,6 +1,7 @@
 #![doc = include_str!("../Readme.md")]
 
 #![debugger_visualizer(natvis_file = "../xinput.natvis")]
+#![cfg_attr(doc_cfg, feature(doc_cfg))]
 
 #![deny(unsafe_op_in_unsafe_fn)]
 #![warn(rustdoc::broken_intra_doc_links)]
@@ -60,8 +61,6 @@ mods! {
         inl mod get_dsound_audio_device_guids_;
         inl mod get_keystroke_;
         inl mod get_state_;
-        inl mod get_state_ex_;
-        inl mod power_off_controller_;
         inl mod set_state_;
         #[cfg(doc)] pub mod todo;
     }
@@ -77,6 +76,9 @@ mods! {
         inl mod vibration;
     }
 }
+
+include!("functions/get_state_ex_.rs");
+include!("functions/power_off_controller_.rs");
 
 pub(crate) fn check_error_success(fn_context: &'static crate::error_macros::FnContext, err: u32) -> Result<(), Error> {
     if err == winresult::ERROR::SUCCESS.to_u32() {

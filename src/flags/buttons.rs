@@ -140,8 +140,11 @@ impl Buttons {
     /// *   Under `Controller` > `General Controller Settings`:
     ///     *   Disable `Guide Button Focuses Steam`
     ///
-    #[deprecated = "This undocumented button is not returned by most APIs, being reserved for system software.  See thindx's docs for details."]
+    #[cfg(feature = "undocumented")] #[cfg_attr(doc_cfg, doc(cfg(feature = "undocumented")))]
     pub const Guide : Buttons = Buttons(1 << 10);
+
+    #[cfg(not(feature = "undocumented"))]
+    pub(crate) const Guide : Buttons = Buttons(1 << 10);
 
     /// Typically synonymous select/accept in menus on Xbox 360 style controllers/games/console.
     ///

@@ -1,8 +1,3 @@
-use crate::*;
-use bytemuck::Zeroable;
-
-
-
 /// \[<strike>microsoft.com</strike>\]
 /// XInputGetStateEx
 /// <span style="opacity: 50%">(1.3 ..= 1.4)</span>
@@ -44,13 +39,13 @@ use bytemuck::Zeroable;
 /// *   [error::BAD_ARGUMENTS]          - Invalid `user_index` (expected <code>0 .. [xuser::MAX_COUNT]</code>)
 /// *   [error::DEVICE_NOT_CONNECTED]   - No gamepad connected for `user_index`.
 /// *   [error::INVALID_FUNCTION]       - API unavailable: XInput not loaded
-#[deprecated = "This undocumented function is reserved for system software to access Buttons::Guide."]
+#[cfg(feature = "undocumented")] #[cfg_attr(doc_cfg, doc(cfg(feature = "undocumented")))]
 pub fn get_state_ex(user_index: impl TryInto<u32>) -> Result<State, Error> {
     fn_context!(xinput::get_state_ex => XInputGetStateEx);
     #[allow(non_snake_case)] let XInputGetStateEx = imports::_XInputGetStateEx.load(core::sync::atomic::Ordering::Relaxed);
     let user_index = user_index.try_into().map_err(|_| fn_param_error!(user_index, error::BAD_ARGUMENTS))?;
 
-    let mut state = State::zeroed();
+    let mut state = State::default();
     // SAFETY: ✔️
     //  * fuzzed        in `tests/fuzz-xinput.rs`
     //  * tested        in `examples/xinput-exercise-all.rs` (Guide button works)
@@ -62,17 +57,21 @@ pub fn get_state_ex(user_index: impl TryInto<u32>) -> Result<State, Error> {
     Ok(state)
 }
 
-#[test] #[allow(deprecated)] fn test_valid_params() {
-    for user_index in 0 .. 4 {
-        if let Err(err) = get_state_ex(user_index) {
-            assert!(matches!(err.kind(), error::DEVICE_NOT_CONNECTED | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
+#[cfg(all(test, feature = "undocumented"))] mod get_state_ex_tests {
+    use super::*;
+
+    #[test] fn valid_params() {
+        for user_index in 0 .. 4 {
+            if let Err(err) = get_state_ex(user_index) {
+                assert!(matches!(err.kind(), error::DEVICE_NOT_CONNECTED | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
+            }
         }
     }
-}
 
-#[test] fn test_bad_user_index() {
-    for user_index in xuser::invalids().chain(Some(xuser::INDEX_ANY)) {
-        let err = get_state(user_index).expect_err("expected error for invalid user_index");
-        assert!(matches!(err.kind(), error::BAD_ARGUMENTS | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
+    #[test] fn bad_user_index() {
+        for user_index in xuser::invalids().chain(Some(xuser::INDEX_ANY)) {
+            let err = get_state(user_index).expect_err("expected error for invalid user_index");
+            assert!(matches!(err.kind(), error::BAD_ARGUMENTS | error::CO_E_NOTINITIALIZED), "unexpected error type: {err:?}");
+        }
     }
 }
