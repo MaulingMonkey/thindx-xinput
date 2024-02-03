@@ -72,7 +72,7 @@ windows-sys-0-52                        = { package = "windows-sys", version = "
 windows-sys-0-48                        = { package = "windows-sys", version = "0.48.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
 windows-sys-0-45                        = { package = "windows-sys", version = "0.45.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
 windows-sys-0-42                        = { package = "windows-sys", version = "0.42.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
-windows-sys-0-36                        = { package = "windows-sys", version = "0.36.1", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-sys-0-36                        = { package = "windows-sys", version = "0.36.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
 windows-sys-0-35                        = { package = "windows-sys", version = "0.35.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
 windows-sys-0-34                        = { package = "windows-sys", version = "0.34.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
 windows-sys-0-33                        = { package = "windows-sys", version = "0.33.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
