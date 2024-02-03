@@ -11,7 +11,7 @@ use core::hash::*;
 /// \[[microsoft.com](https://learn.microsoft.com/en-us/windows/win32/api/guiddef/ns-guiddef-guid)\]
 /// DirectSound audio device GUID retrieved with [`get_dsound_audio_device_guids`]
 #[derive(Clone, Copy)]
-#[repr(transparent)] pub struct DSoundAudioDeviceGuid(GUID);
+#[repr(transparent)] pub struct DSoundAudioDeviceGuid(pub(crate) GUID);
 
 impl DSoundAudioDeviceGuid {
     /// `{00000000-0000-0000-0000-000000000000}` - the "null" guid
@@ -25,14 +25,8 @@ impl Default            for DSoundAudioDeviceGuid { fn default() -> Self { Self:
 impl Debug              for DSoundAudioDeviceGuid { fn fmt(&self, fmt: &mut Formatter) -> fmt::Result { self.fmt_impl(fmt) } }
 impl Display            for DSoundAudioDeviceGuid { fn fmt(&self, fmt: &mut Formatter) -> fmt::Result { self.fmt_impl(fmt) } }
 
-impl AsRef<DSoundAudioDeviceGuid> for DSoundAudioDeviceGuid { fn as_ref(&    self) -> &    DSoundAudioDeviceGuid {      self } }
-impl AsMut<DSoundAudioDeviceGuid> for DSoundAudioDeviceGuid { fn as_mut(&mut self) -> &mut DSoundAudioDeviceGuid {      self } }
-impl AsRef<GUID> for DSoundAudioDeviceGuid { fn as_ref(&    self) -> &    GUID { &    self.0 } }
-impl AsMut<GUID> for DSoundAudioDeviceGuid { fn as_mut(&mut self) -> &mut GUID { &mut self.0 } }
-impl AsRef<DSoundAudioDeviceGuid> for GUID { fn as_ref(&    self) -> &    DSoundAudioDeviceGuid { unsafe { std::mem::transmute(self) } } }
-impl AsMut<DSoundAudioDeviceGuid> for GUID { fn as_mut(&mut self) -> &mut DSoundAudioDeviceGuid { unsafe { std::mem::transmute(self) } } }
-impl From<GUID> for DSoundAudioDeviceGuid { fn from(guid: GUID) -> Self { Self(guid) } }
-impl From<DSoundAudioDeviceGuid> for GUID { fn from(guid: DSoundAudioDeviceGuid) -> Self { guid.0 } }
+impl AsRef<Self>        for DSoundAudioDeviceGuid { fn as_ref(&    self) -> &    Self { self } }
+impl AsMut<Self>        for DSoundAudioDeviceGuid { fn as_mut(&mut self) -> &mut Self { self } }
 
 impl Eq                 for DSoundAudioDeviceGuid {}
 impl PartialEq          for DSoundAudioDeviceGuid { fn eq(&self, other: &Self) -> bool { self.as_bytes() == other.as_bytes() } }

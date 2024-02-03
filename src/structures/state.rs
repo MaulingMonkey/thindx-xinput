@@ -19,22 +19,17 @@ use bytemuck::{Pod, Zeroable};
     pub gamepad:        Gamepad,
 }
 
+impl AsRef<Self> for State { fn as_ref(&    self) -> &    Self { self } }
+impl AsMut<Self> for State { fn as_mut(&mut self) -> &mut Self { self } }
+
 // N.B. these deref to Gamepad, not to XINPUT_STATE
-impl std::ops::Deref for State {
+impl core::ops::Deref for State {
     type Target = Gamepad;
     fn deref(&self) -> &Gamepad { &self.gamepad }
 }
 
-impl std::ops::DerefMut for State {
+impl core::ops::DerefMut for State {
     fn deref_mut(&mut self) -> &mut Gamepad { &mut self.gamepad }
-}
-
-struct_mapping! {
-    #[derive(unsafe { AsRef, AsMut, FromInto })]
-    State => winapi::um::xinput::XINPUT_STATE {
-        packet_number   => dwPacketNumber,
-        gamepad         => Gamepad,
-    }
 }
 
 #[test] fn test_traits_for_coverage() {

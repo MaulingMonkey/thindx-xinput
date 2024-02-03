@@ -23,11 +23,22 @@
             "command": "cargo +nightly clippy",
         },
         {
+            "label":    "check-file",
+            "dependsOn":["cargo t --all-features"],
+        },
+        {
             "label":   "test",
             "group":   { "kind": "build", "isDefault": true },
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "cargo t --all-features",
+                "THINDX_XINPUT=* cargo t",
+            ]
+        },
+        {
+            "label":    "THINDX_XINPUT=* cargo t",
             "dependsOrder": "parallel",
             "dependsOn": [
-                "cargo t",
                 "THINDX_XINPUT=uap cargo t",
                 "THINDX_XINPUT=1.4 cargo t",
                 "THINDX_XINPUT=1.3 cargo t",
@@ -46,7 +57,7 @@
         },
         {
             "label":   "help",
-            "command": "cargo +nightly doc --open --target-dir=target/nightly --all-features",
+            "command": "cargo +nightly doc --open --target-dir=target/nightly --features xxx-docs",
             "options": { "env": { "RUSTDOCFLAGS": "--cfg doc_cfg" } },
         },
         {
@@ -70,8 +81,8 @@
             "command": "git log --format=oneline",
         },
         {
-            "label":    "cargo t",
-            "command":  "cargo t",
+            "label":    "cargo t --all-features",
+            "command":  "cargo t --all-features",
         },
         {
             "label":    "THINDX_XINPUT=uap cargo t",

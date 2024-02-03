@@ -20,6 +20,7 @@
 #[macro_use] mod error_macros;
 
 pub mod error; #[doc(no_inline)] pub use error::Error;
+#[path = "interop/_interop.rs"] mod interop;
 
 macro_rules! check_success { ( $err:expr ) => { $crate::check_error_success(&_THINDX_FN_CONTEXT, $err) } }
 

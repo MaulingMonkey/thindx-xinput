@@ -18,13 +18,8 @@ use bytemuck::{Pod, Zeroable};
     pub battery_level:  BatteryLevel,
 }
 
-struct_mapping! {
-    #[derive(unsafe { AsRef, AsMut, FromInto })]
-    BatteryInformation => winapi::um::xinput::XINPUT_BATTERY_INFORMATION {
-        battery_type    => BatteryType,
-        battery_level   => BatteryLevel,
-    }
-}
+impl AsRef<Self> for BatteryInformation { fn as_ref(&    self) -> &    Self { self } }
+impl AsMut<Self> for BatteryInformation { fn as_mut(&mut self) -> &mut Self { self } }
 
 #[test] fn test_traits_for_coverage() {
     let _info = BatteryInformation::default();

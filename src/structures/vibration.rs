@@ -30,13 +30,8 @@ impl From<()        > for Vibration { fn from(_:      ()        ) -> Self { Self
 impl From<(u16, u16)> for Vibration { fn from((l, r): (u16, u16)) -> Self { Self { left_motor_speed: l, right_motor_speed: r } } }
 impl From<[u16; 2]  > for Vibration { fn from([l, r]: [u16; 2]  ) -> Self { Self { left_motor_speed: l, right_motor_speed: r } } }
 
-struct_mapping! {
-    #[derive(unsafe { AsRef, AsMut, FromInto })]
-    Vibration => winapi::um::xinput::XINPUT_VIBRATION {
-        left_motor_speed    => wLeftMotorSpeed,
-        right_motor_speed   => wRightMotorSpeed,
-    }
-}
+impl AsRef<Self> for Vibration { fn as_ref(&    self) -> &    Self { self } }
+impl AsMut<Self> for Vibration { fn as_mut(&mut self) -> &mut Self { self } }
 
 #[test] fn test_traits_for_coverage() {
     let _vibration = Vibration::default();

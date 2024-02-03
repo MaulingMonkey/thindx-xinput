@@ -109,18 +109,8 @@ impl Gamepad {
     pub const RIGHT_THUMB_DEADZONE : i16 = XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
 }
 
-struct_mapping! {
-    #[derive(unsafe { AsRef, AsMut, FromInto })]
-    Gamepad => winapi::um::xinput::XINPUT_GAMEPAD {
-        buttons         => wButtons,
-        left_trigger    => bLeftTrigger,
-        right_trigger   => bRightTrigger,
-        #[renamed] left_thumb_x    => sThumbLX,
-        #[renamed] left_thumb_y    => sThumbLY,
-        #[renamed] right_thumb_x   => sThumbRX,
-        #[renamed] right_thumb_y   => sThumbRY,
-    }
-}
+impl AsRef<Self> for Gamepad { fn as_ref(&    self) -> &    Self { self } }
+impl AsMut<Self> for Gamepad { fn as_mut(&mut self) -> &mut Self { self } }
 
 #[test] fn test_traits_for_coverage() {
     let _gamepad = Gamepad::default();

@@ -28,16 +28,8 @@ use bytemuck::{Pod, Zeroable};
     pub vibration:  Vibration,
 }
 
-struct_mapping! {
-    #[derive(unsafe { AsRef, AsMut, FromInto })]
-    Capabilities => winapi::um::xinput::XINPUT_CAPABILITIES {
-        ty          => Type,
-        sub_type    => SubType,
-        flags       => Flags,
-        gamepad     => Gamepad,
-        vibration   => Vibration,
-    }
-}
+impl AsRef<Self> for Capabilities { fn as_ref(&    self) -> &    Self { self } }
+impl AsMut<Self> for Capabilities { fn as_mut(&mut self) -> &mut Self { self } }
 
 #[test] fn test_traits_for_coverage() {
     let _caps = Capabilities::zeroed();

@@ -17,12 +17,25 @@ rust-version                            = "1.71.0" # debugger_visualizer MSRV
 [package.metadata.docs.rs]              # https://docs.rs/about/metadata
 default-target                          = "x86_64-pc-windows-msvc"
 targets                                 = ["x86_64-pc-windows-msvc", "i686-pc-windows-msvc"]
-all-features                            = true
+features                                = ["xxx-docs"]
 rustdoc-args                            = ["--cfg", "doc_cfg"]
 
 [features]
 # default                               = []
 undocumented                            = [] # allow the use of undocumented APIs
+
+winapi-0-3                              = []
+# winapi-0-2                            = [] # feature defined by optional dependency
+# winapi-0-1                            = [] # XXX: doesn't compile on modern rustc? spams e.g.: error: type `HKEY__` is private
+
+xxx-docs = [
+    "undocumented",
+    "winapi-0-3",
+    # "winapi-0-2", # clutter
+    # "winapi-0-1", # clutter
+]
+
+
 
 [lib]
 path                                    = "src/_lib.rs"
@@ -36,6 +49,7 @@ minidl                                  = "0.1.6"
 #minidl.git                              = "https://github.com/MaulingMonkey/minidl"
 #minidl.rev                              = "e1e86cb7a6e48a3ed1aff4a1e927311d90039e82"
 winapi.version                          = "0.3.9"
+winapi-0-2                              = { package = "winapi", version = "0.2", optional = true }
 winresult.version                       = "0.1.2"
 #winresult.git                           = "https://github.com/MaulingMonkey/winresult"
 #winresult.rev                           = "9b877bf59efd8cc89fae4fd5f791a0e51cc53712"

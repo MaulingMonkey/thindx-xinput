@@ -26,16 +26,8 @@ use bytemuck::{Pod, Zeroable};
     pub hid_code:       u8,
 }
 
-struct_mapping! {
-    #[derive(unsafe { AsRef, AsMut, FromInto })]
-    Keystroke => winapi::um::xinput::XINPUT_KEYSTROKE {
-        virtual_key     => VirtualKey,
-        unicode         => Unicode,
-        flags           => Flags,
-        user_index      => UserIndex,
-        hid_code        => HidCode,
-    }
-}
+impl AsRef<Self> for Keystroke { fn as_ref(&    self) -> &    Self { self } }
+impl AsMut<Self> for Keystroke { fn as_mut(&mut self) -> &mut Self { self } }
 
 #[test] fn test_traits_for_coverage() {
     let _keystroke = Keystroke::zeroed();

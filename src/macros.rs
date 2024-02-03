@@ -37,8 +37,8 @@ macro_rules! struct_mapping {
 
                 let thin = MaybeUninit::<$thin_struct>::uninit();
                 let d3d  = MaybeUninit::<$d3d_struct >::uninit();
-                let thin = thin.as_ptr();
-                let d3d  = d3d .as_ptr();
+                #[allow(unused_variables)] let thin = thin.as_ptr();
+                #[allow(unused_variables)] let d3d  = d3d .as_ptr();
 
                 let ignore_align = struct_mapping!(@meta_ignore_align $($($meta_struct)*)*);
 

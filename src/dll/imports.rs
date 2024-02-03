@@ -1,15 +1,13 @@
-#![allow(non_snake_case, non_upper_case_globals)] // fn names
+#![allow(non_camel_case_types, non_snake_case, non_upper_case_globals)] // fn names
 
 use crate::*;
 
 use minidl::Library;
 
-use winapi::shared::guiddef::GUID;
 use winapi::shared::minwindef::*;
 use winapi::um::processthreadsapi::*;
 use winapi::um::psapi::*;
 use winapi::um::winnt::*;
-use winapi::um::xinput::*;
 
 use std::sync::Once;
 
@@ -19,6 +17,13 @@ use core::marker::PhantomData;
 use core::mem::*;
 use core::ptr::null_mut;
 use core::sync::atomic::{AtomicPtr, Ordering, Ordering::Relaxed};
+
+type XINPUT_BATTERY_INFORMATION = crate::BatteryInformation;
+type XINPUT_CAPABILITIES        = crate::Capabilities;
+type XINPUT_KEYSTROKE           = crate::Keystroke;
+type XINPUT_STATE               = crate::State;
+type XINPUT_VIBRATION           = crate::Vibration;
+type GUID                       = crate::DSoundAudioDeviceGuid;
 
 
 
@@ -112,7 +117,7 @@ pub(crate) static XInputGetBatteryInformation: AtomicFn<unsafe extern "system" f
 /// | 1.2   | N/A           |
 /// | 1.1   | N/A           |
 /// | 9.1.0 | N/A           |
-pub(crate) static XInputGetKeystroke: AtomicFn<unsafe extern "system" fn(dwUserIndex: u32, dwReserved: u32, pKeystroke: PXINPUT_KEYSTROKE) -> DWORD> = AtomicFn::new(lazy::XInputGetKeystroke);
+pub(crate) static XInputGetKeystroke: AtomicFn<unsafe extern "system" fn(dwUserIndex: u32, dwReserved: u32, pKeystroke: *mut XINPUT_KEYSTROKE) -> DWORD> = AtomicFn::new(lazy::XInputGetKeystroke);
 
 
 
@@ -210,7 +215,7 @@ mod fallback {
     pub extern "system" fn XInputGetAudioDeviceIds(         dwUserIndex: DWORD, pRenderDeviceId: LPWSTR, pRenderCount: *mut UINT, pCaptureDeviceId: LPWSTR, pCaptureCount: *mut UINT    ) -> DWORD { ERROR_INVALID_FUNCTION }
     pub extern "system" fn XInputEnable(                    enable: BOOL                                                                                                                ) {}
     pub extern "system" fn XInputGetBatteryInformation(     dwUserIndex: DWORD, devType: BYTE, pBatteryInformation: *mut XINPUT_BATTERY_INFORMATION                                     ) -> DWORD { ERROR_INVALID_FUNCTION }
-    pub extern "system" fn XInputGetKeystroke(              dwUserIndex: u32, dwReserved: u32, pKeystroke: PXINPUT_KEYSTROKE                                                            ) -> DWORD { ERROR_INVALID_FUNCTION }
+    pub extern "system" fn XInputGetKeystroke(              dwUserIndex: u32, dwReserved: u32, pKeystroke: *mut XINPUT_KEYSTROKE                                                        ) -> DWORD { ERROR_INVALID_FUNCTION }
 
     //b extern "system" fn _XInputGetStateEx(               dwUserIndex: DWORD, pState: *mut XINPUT_STATE                                                                               ) -> DWORD { ERROR_INVALID_FUNCTION }
     pub extern "system" fn _XInputWaitForGuideButton(       dwUserIndex: DWORD, dwFlag: DWORD, pUnknown: *mut c_void                                                                    ) -> DWORD { ERROR_INVALID_FUNCTION }
@@ -228,7 +233,7 @@ mod lazy {
     pub unsafe extern "system" fn XInputGetAudioDeviceIds(         dwUserIndex: DWORD, pRenderDeviceId: LPWSTR, pRenderCount: *mut UINT, pCaptureDeviceId: LPWSTR, pCaptureCount: *mut UINT    ) -> DWORD { super::init(); unsafe { super::XInputGetAudioDeviceIds.load(Relaxed)(dwUserIndex, pRenderDeviceId, pRenderCount, pCaptureDeviceId, pCaptureCount) } }
     pub unsafe extern "system" fn XInputEnable(                    enable: BOOL                                                                                                                )          { super::init(); unsafe { super::XInputEnable.load(Relaxed)(enable) } }
     pub unsafe extern "system" fn XInputGetBatteryInformation(     dwUserIndex: DWORD, devType: BYTE, pBatteryInformation: *mut XINPUT_BATTERY_INFORMATION                                     ) -> DWORD { super::init(); unsafe { super::XInputGetBatteryInformation.load(Relaxed)(dwUserIndex, devType, pBatteryInformation) } }
-    pub unsafe extern "system" fn XInputGetKeystroke(              dwUserIndex: u32, dwReserved: u32, pKeystroke: PXINPUT_KEYSTROKE                                                            ) -> DWORD { super::init(); unsafe { super::XInputGetKeystroke.load(Relaxed)(dwUserIndex, dwReserved, pKeystroke) } }
+    pub unsafe extern "system" fn XInputGetKeystroke(              dwUserIndex: u32, dwReserved: u32, pKeystroke: *mut XINPUT_KEYSTROKE                                                        ) -> DWORD { super::init(); unsafe { super::XInputGetKeystroke.load(Relaxed)(dwUserIndex, dwReserved, pKeystroke) } }
 
     pub unsafe extern "system" fn _XInputGetStateEx(               dwUserIndex: DWORD, pState: *mut XINPUT_STATE                                                                               ) -> DWORD { super::init(); unsafe { super::_XInputGetStateEx.load(Relaxed)(dwUserIndex, pState) } }
     pub unsafe extern "system" fn _XInputWaitForGuideButton(       dwUserIndex: DWORD, dwFlag: DWORD, pUnknown: *mut c_void                                                                    ) -> DWORD { super::init(); unsafe { super::_XInputWaitForGuideButton.load(Relaxed)(dwUserIndex, dwFlag, pUnknown) } }
