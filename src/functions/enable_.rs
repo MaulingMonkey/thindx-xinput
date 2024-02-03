@@ -48,13 +48,13 @@ use crate::*;
 ///
 /// [WM_ACTIVATEAPP]:   https://learn.microsoft.com/en-us/windows/win32/winmsg/wm-activateapp
 /// [WM_ACTIVATE]:      https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-activate
-pub fn enable(enable: bool) -> Result<(), Error> {
+pub fn enable(enable: impl Into<bool>) -> Result<(), Error> {
     fn_context!(xinput::enable => XInputEnable);
     #[allow(non_snake_case)] let XInputEnable = imports::XInputEnable.load(core::sync::atomic::Ordering::Relaxed);
     // SAFETY: ✔️
     //  * fuzzed        in `tests/fuzz-xinput.rs`
     //  * `enable`      can be true or false.  Pretty easy to have exhaustive test coverage.
-    unsafe { XInputEnable(enable.into()) };
+    unsafe { XInputEnable(enable.into().into()) };
     Ok(())
 }
 
