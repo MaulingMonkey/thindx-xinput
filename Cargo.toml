@@ -68,6 +68,34 @@ winapi.features = [
     "xinput",
 ]
 
+windows-0-52                            = { package = "windows", version = "0.52.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-51                            = { package = "windows", version = "0.51.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-48                            = { package = "windows", version = "0.48.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-46                            = { package = "windows", version = "0.46.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-44                            = { package = "windows", version = "0.44.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-43                            = { package = "windows", version = "0.43.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-42                            = { package = "windows", version = "0.42.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-41                            = { package = "windows", version = "0.41.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-40                            = { package = "windows", version = "0.40.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-39                            = { package = "windows", version = "0.39.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-38                            = { package = "windows", version = "0.38.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-37                            = { package = "windows", version = "0.37.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-36                            = { package = "windows", version = "0.36.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-35                            = { package = "windows", version = "0.35.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-34                            = { package = "windows", version = "0.34.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-33                            = { package = "windows", version = "0.33.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-32                            = { package = "windows", version = "0.32.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-30                            = { package = "windows", version = "0.30.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-29                            = { package = "windows", version = "0.29.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-28                            = { package = "windows", version = "0.28.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-27                            = { package = "windows", version = "0.27.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-26                            = { package = "windows", version = "0.26.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-25                            = { package = "windows", version = "0.25.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-24                            = { package = "windows", version = "0.24.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
+windows-0-23                            = { package = "windows", version = "0.23.0", optional = true, features = ["Win32_UI_XInput"] }
+windows-0-22                            = { package = "windows", version = "0.22.0", optional = true, features = ["Win32_UI_XInput"] }
+# windows-0-21 is codegen only?
+
 windows-sys-0-52                        = { package = "windows-sys", version = "0.52.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
 windows-sys-0-48                        = { package = "windows-sys", version = "0.48.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
 windows-sys-0-45                        = { package = "windows-sys", version = "0.45.0", optional = true, features = ["Win32_UI_Input_XboxController"] }
