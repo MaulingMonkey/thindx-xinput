@@ -5,10 +5,10 @@ use crate::*;
 use minidl::Library;
 
 use winapi::shared::minwindef::*;
-use winapi::um::processthreadsapi::*;
-use winapi::um::psapi::*;
+use winapi::um::libloaderapi::*;
 use winapi::um::winnt::*;
 
+use std::os::windows::ffi::OsStrExt;
 use std::sync::Once;
 
 use core::convert::*;
@@ -168,16 +168,18 @@ fn init() {
                 thindx_xinput_var_to_dll_name(env)
             }).or(THINDX_XINPUT_DLL_BUILD_TIME);
 
-            let lib =
-                xinput_env_dll.and_then(|dll| Library::load(dll).ok())
-                .or_else(|| try_find_loaded_xinput())
-                .or_else(|| Library::load("XInput1_4.dll").ok())
-                .or_else(|| Library::load("xinput1_3.dll").ok())
-                .or_else(|| Library::load("xinput1_2.dll").ok())
-                .or_else(|| Library::load("xinput1_1.dll").ok())
-                .or_else(|| Library::load("XInput9_1_0.dll").ok())
-                .or_else(|| Library::load("XInputUap.dll").ok())    // absolute last resort, breaks shutdown in non-uwp/uap desktop apps
-                ;
+            let known_dlls = &[
+                "XInput1_4.dll",
+                "xinput1_3.dll",
+                "xinput1_2.dll",
+                "xinput1_1.dll",
+                "XInput9_1_0.dll",
+                "XInputUap.dll",    // absolute last resort, breaks shutdown in non-uwp/uap desktop apps
+            ];
+
+            let lib = xinput_env_dll.and_then(|dll| Library::load(dll).ok());                       // use specified xinput first
+            let lib = lib.or_else(|| known_dlls.iter().find_map(|dll| library_get(dll)));           // search already loaded XInputs
+            let lib = lib.or_else(|| known_dlls.iter().find_map(|dll| Library::load(dll).ok()));    // search not yet loaded XInputs last
 
             let get_state : unsafe extern "system" fn(dwUserIndex: DWORD, pState: *mut XINPUT_STATE) -> DWORD = lib.and_then(|lib| lib.sym_opt("XInputGetState\0")).unwrap_or(fallback::XInputGetState);
 
@@ -243,80 +245,13 @@ mod lazy {
 
 
 
-/// Tries to find the most XInput-y looking, already loaded, DLL:
-/// *   DLLs that don't export `XInputGetState` will be straight up ignored.
-/// *   DLLs with more characters matching the `xinput_` prefix will be prefered.
-/// *   DLLs with shorter filenames will be prefered (e.g. `XInput1_4.dll` wins out over `xinput_9_0_3.dll`)
-///
-/// ### ⚠️ Safety ⚠️
-/// Microsoft's PSAPI documentation makes it clear that some of the stuff this relies on for e.g. process module enumeration
-/// are best effort debug functionality, not battle tested production quality tooling:
-///
-/// > "The EnumProcessModulesEx function is primarily designed for use by debuggers and similar applications that must
-/// > extract module information from another process. If the module list in the target process is corrupted or not
-/// > yet initialized, or if the module list changes during the function call as a result of DLLs being loaded or
-/// > unloaded, EnumProcessModulesEx may fail or return incorrect information."
-/// >
-/// > <https://learn.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-enumprocessmodulesex>
-///
-/// Additionally, there's technically nothing stopping you from loading an evil `xinput_.dll`, that takes priority over
-/// the real xinput DLLs, that defines XInputGetState and exposes unsound functions, which immediately invokes undefined
-/// behavior if you call into it.  Which means relying on the returned HMODULE to do just about anything is, *technically*,
-/// unsound.
-///
-/// Well, perhaps eventually I'll verify xinput.dll is code-signed by Microsoft, which would fix that well enough for my
-/// tastes, but for now this is good enough for me ;)
-unsafe fn try_find_loaded_xinput() -> Option<Library> {
-    let proc = unsafe { GetCurrentProcess() };
-    let mut modules = Vec::<HMODULE>::new();
-
-    let mut max_retries = 64;
-
-    loop {
-        let available_bytes = u32::try_from(std::mem::size_of_val(&modules[..])).unwrap_or(!0);
-        let mut needed_bytes : u32 = 0;
-        let ok = unsafe { EnumProcessModulesEx(proc, modules.as_mut_ptr(), available_bytes, &mut needed_bytes, LIST_MODULES_DEFAULT) };
-        if ok == FALSE {
-            if max_retries == 0 { return None; }
-            max_retries -= 1;
-            continue; // temporary failure? retry!
-        }
-        let needed_elements = usize::try_from(needed_bytes).unwrap_or(!0usize) / size_of::<HMODULE>();
-        if needed_bytes <= available_bytes {
-            modules.truncate(needed_elements);
-            break // success!
-        } else {
-            modules.resize(needed_elements, null_mut());
-            modules.resize(modules.capacity(), null_mut());
-            continue // not enough modules
-        }
-    }
-
-    // SAFETY: ⚠️ `m` should be a permanently loaded library... probably...
-    modules.retain(|&m| unsafe { Library::from_ptr(m.cast()) }.map_or(false, |m| m.has_sym("XInputGetState\0")));
-
-    let hmodule = match modules[..] {
-        [] => None,
-        [module] => Some(module),
-        ref mut multiple => {
-            let mut name = [0u8; 4096];
-            multiple.sort_by_cached_key(|&m|{
-                let len = unsafe { GetModuleBaseNameA(proc, m, name.as_mut_ptr().cast(), name.len() as _) } as usize;
-                let name = &mut name[..len];
-                name.make_ascii_lowercase();
-                let prefix = b"xinput_";
-                let matching = prefix.iter().copied().zip(name.iter().copied()).position(|(x,y)| x != y).unwrap_or(prefix.len());
-                (matching * 1000 + 1000).saturating_sub(name.len()) // prioritize prefix matching "xinput_", then secondarilly prioritize shorter names.
-            });
-            multiple.last().copied()
-        },
-    };
-
-    // SAFETY: ✔️ `hmodule` should be a valid HMODULE
-    hmodule.and_then(|hmodule| unsafe { Library::from_ptr(hmodule.cast()) })
+fn library_get(name: impl AsRef<std::ffi::OsStr>) -> Option<Library> {
+    let name = name.as_ref();
+    let name = name.encode_wide().chain(Some(0)).collect::<Vec<_>>();
+    let mut hmodule = null_mut();
+    if 0 == unsafe { GetModuleHandleExW(GET_MODULE_HANDLE_EX_FLAG_PIN, name.as_ptr(), &mut hmodule) } { return None }
+    unsafe { Library::from_ptr(hmodule.cast()) }
 }
-
-
 
 pub(crate) struct AtomicFn<F: Copy>(AtomicPtr<c_void>, PhantomData<F>);
 impl<F: Copy> AtomicFn<F> {

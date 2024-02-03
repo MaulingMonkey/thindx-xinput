@@ -62,8 +62,7 @@ winapi.features = [
     "winerror",
 
     # um
-    "processthreadsapi",
-    "psapi",
+    "libloaderapi",
     "winnt",
     "xinput",
 ]
