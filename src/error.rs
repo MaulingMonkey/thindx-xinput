@@ -4,7 +4,7 @@
 #[cfg(doc)] use crate::*;
 use crate::error_macros::FnContext;
 
-use winresult::*;
+use winresult::{*, ErrorCode};
 
 use core::fmt::{self, Debug, Display, Formatter};
 
