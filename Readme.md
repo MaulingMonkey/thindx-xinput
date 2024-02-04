@@ -23,7 +23,7 @@ Types, fns, tests, real docs, intellisense, examples, debug visualizers, ...
 
 
 
-<h2 name="license">License</h2>
+## License
 
 Licensed under either of
 
@@ -34,7 +34,7 @@ at your option.
 
 
 
-<h2 name="contribution">Contribution</h2>
+## Contribution
 
 Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
