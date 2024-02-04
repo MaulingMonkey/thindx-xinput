@@ -1,4 +1,5 @@
 //! [Alternative APIs](apis),
+//! [Assumptions](assumptions),
 //! [Alternative Crates](crates),
 //! [Crate Features](features),
 //! [Design Decisions](design),
@@ -15,6 +16,7 @@ macro_rules! docs {
 
 docs! {
     apis,
+    assumptions,
     crates,
     design,
     environment,
