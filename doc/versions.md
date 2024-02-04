@@ -1,5 +1,7 @@
 # XInput Versions
 
+You can specify the XInput version to use with `%THINDX_XINPUT%` at build time (sets default) and run time (overrides default.)
+
 | `%THINDX_XINPUT%`                                     <br> DLL                | Ships With                                                                                <br> Minimum OS                                                                                 | API changes   |
 |:-----------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:| --------------|
 | `uap`                                                 <br> XInputUap.dll      | <span style="opacity: 50%">Windows 10?</span>                                             <br> <span style="opacity: 50%">Windows 10?</span>                                              | All undocumented functions removed. <br> [On-exit bugs](https://github.com/microsoft/win32metadata/issues/1274) and COM initialization requirements added.
