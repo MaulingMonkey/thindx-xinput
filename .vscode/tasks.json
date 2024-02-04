@@ -143,5 +143,12 @@
             "osx":          { "command": "open          \"https://docs.rs/thindx-xinput\"" },
             "presentation": { "clear": true, "panel": "shared", "reveal": "silent" },
         },
+        {
+            "label":        "open changelog",
+            "windows":      { "command": "start \"\"    \"https://github.com/MaulingMonkey/thindx-xinput/wiki/Changelog\"" },
+            "linux":        { "command": "xdg-open      \"https://github.com/MaulingMonkey/thindx-xinput/wiki/Changelog\"" },
+            "osx":          { "command": "open          \"https://github.com/MaulingMonkey/thindx-xinput/wiki/Changelog\"" },
+            "presentation": { "clear": true, "panel": "shared", "reveal": "silent" },
+        },
     ]
 }
