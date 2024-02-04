@@ -23,13 +23,6 @@ Types, fns, tests, real docs, intellisense, examples, debug visualizers, ...
 
 
 
-### ⚠️ API major version churn ⚠️
-
-`0.0.0-yyyy-mm-dd` doesn't follow semver.
-Still stabilizing interop.
-
-
-
 <h2 name="license">License</h2>
 
 Licensed under either of
