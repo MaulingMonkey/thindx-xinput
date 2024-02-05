@@ -1,10 +1,10 @@
-//! [`Error`], [`Kind`],
+//! [`Error`], [`Kind`].  Error codes are *rarely* `HRESULT`s (`XInputUap.dll` can return [`CO_E_NOTINITIALIZED`].)<br>
 //! [`BAD_ARGUMENTS`], [`BUFFER_TOO_SMALL`], [`DEVICE_NOT_CONNECTED`], [`INVALID_FUNCTION`]
 
 #[cfg(doc)] use crate::*;
 use crate::error_macros::FnContext;
 
-use winresult::{*, ErrorCode};
+use winresult::*;
 
 use core::fmt::{self, Debug, Display, Formatter};
 
