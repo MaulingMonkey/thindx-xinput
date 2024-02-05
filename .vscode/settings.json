@@ -8,6 +8,6 @@
         120,    // author preference
         160,    // author preference
     ],
-    "rust-analyzer.cargo.features": "all",
+    "rust-analyzer.cargo.features": ["xxx-docs"],
     "dotnet.defaultSolution": "disable",
 }
